@@ -13,6 +13,7 @@ import markus.wieland.pushygame.engine.entity.interactable.Flower;
 import markus.wieland.pushygame.engine.entity.interactable.Pirate;
 import markus.wieland.pushygame.engine.entity.interactable.SlingShot;
 import markus.wieland.pushygame.engine.entity.interactable.Tower;
+import markus.wieland.pushygame.engine.entity.movable.Barrel;
 import markus.wieland.pushygame.engine.entity.movable.Bomb;
 import markus.wieland.pushygame.engine.entity.movable.Bottle;
 import markus.wieland.pushygame.engine.entity.movable.Box;
@@ -21,6 +22,8 @@ import markus.wieland.pushygame.engine.entity.movable.Coconut;
 import markus.wieland.pushygame.engine.entity.movable.Count;
 import markus.wieland.pushygame.engine.entity.movable.CrabBaby;
 import markus.wieland.pushygame.engine.entity.movable.Leaf;
+import markus.wieland.pushygame.engine.entity.movable.Octopus;
+import markus.wieland.pushygame.engine.entity.movable.PushShell;
 import markus.wieland.pushygame.engine.entity.statics.PirateHut;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.entity.movable.SeaStar;
@@ -31,7 +34,9 @@ import markus.wieland.pushygame.engine.entity.statics.Stone;
 import markus.wieland.pushygame.engine.entity.statics.Tree;
 import markus.wieland.pushygame.engine.exceptions.UnknownTileException;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.terrain.BarrelFinish;
 import markus.wieland.pushygame.engine.terrain.Boat;
+import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnelFinish;
 import markus.wieland.pushygame.engine.terrain.FlowerFinish;
@@ -49,6 +54,7 @@ import markus.wieland.pushygame.engine.terrain.pressure.SpikePressurePlate;
 import markus.wieland.pushygame.engine.terrain.Spikes;
 import markus.wieland.pushygame.engine.terrain.pressure.Spring;
 import markus.wieland.pushygame.engine.terrain.StatueFinish;
+import markus.wieland.pushygame.engine.terrain.pressure.StringPressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.Water;
@@ -125,6 +131,16 @@ public class TileMapBuilder {
             case FLOWER_RED_PRESSURE_PLATE:
             case FLOWER_YELLOW_PRESSURE_PLATE:
                 return new FlowerFinish(coordinate, terrainType);
+
+            case STRING_PRESSURE_PLATE:
+                return new StringPressurePlate(coordinate);
+
+            case CHANGEABLE_FLOWER_GREEN:
+            case CHANGEABLE_FLOWER_RED:
+                return new ChangeableFlower(coordinate, terrainType);
+
+            case BARREL_FINISH:
+                return new BarrelFinish(coordinate);
             default:
                 throw new UnknownTileException(terrainType);
         }
@@ -203,6 +219,15 @@ public class TileMapBuilder {
             case COUNT_FIVE:
                 return new Count(coordinate,  entityType);
 
+            case SHELL_1:
+            case SHELL_2:
+            case SHELL_3:
+                return new PushShell(coordinate, entityType);
+
+            case BARREL:
+                return new Barrel(coordinate);
+            case OCTOPUS:
+                return new Octopus(coordinate);
             default:
                 throw new UnknownTileException(entityType);
         }

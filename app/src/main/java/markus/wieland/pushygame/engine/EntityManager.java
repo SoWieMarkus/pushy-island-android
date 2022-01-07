@@ -9,6 +9,7 @@ import markus.wieland.pushygame.engine.entity.interactable.Pirate;
 import markus.wieland.pushygame.engine.entity.movable.Box;
 import markus.wieland.pushygame.engine.entity.movable.CrabBaby;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
+import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Inventory;
 import markus.wieland.pushygame.engine.helper.Manager;
 import markus.wieland.pushygame.engine.helper.Matrix;
@@ -25,6 +26,9 @@ public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
 
     //Check if the coconut tunnel finish event was executed successfully (for performance)
     private boolean coconutTunnelFinishEventDone;
+
+    private boolean isStringActive;
+    private Direction stringDirection;
 
     public EntityManager(Matrix<PushyFieldView<Entity>> pushyFieldViews) {
         super(pushyFieldViews);
@@ -45,7 +49,26 @@ public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
         if (pirate != null) pirate.setNeedItemsAmount(inventory.getAmount(Coin.class) + inventory.getAmount(Key.class));
         currentCount = 1;
         coconutTunnelFinishEventDone = false;
+        stringDirection = null;
+        isStringActive = false;
 
+    }
+
+
+    public Direction getStringDirection() {
+        return stringDirection;
+    }
+
+    public void setStringDirection(Direction stringDirection) {
+        this.stringDirection = stringDirection;
+    }
+
+    public boolean isStringActive() {
+        return isStringActive;
+    }
+
+    public void setStringActive(boolean stringActive) {
+        isStringActive = stringActive;
     }
 
     public Pirate getPirate() {

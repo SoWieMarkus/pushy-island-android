@@ -49,5 +49,11 @@ public enum TerrainType implements Tag {
     @SerializedName("flower_red_pressure_plate") FLOWER_RED_PRESSURE_PLATE,
     @SerializedName("flower_pressure_plate") FLOWER_YELLOW_PRESSURE_PLATE,
 
+    @SerializedName("string_pressure_plate") STRING_PRESSURE_PLATE,
+    @SerializedName("changable_flower_red") CHANGEABLE_FLOWER_RED,
+    @SerializedName("changable_flower_green") CHANGEABLE_FLOWER_GREEN,
+
+    @SerializedName("barrel_finish") BARREL_FINISH,
+
 
 }

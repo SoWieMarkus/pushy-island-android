@@ -5,8 +5,11 @@ import markus.wieland.pushygame.engine.entity.interactable.CrabMama;
 import markus.wieland.pushygame.engine.entity.interactable.Flower;
 import markus.wieland.pushygame.engine.entity.interactable.rewards.CrabMamaReward;
 import markus.wieland.pushygame.engine.entity.interactable.rewards.PirateReward;
+import markus.wieland.pushygame.engine.entity.movable.Barrel;
 import markus.wieland.pushygame.engine.entity.movable.Box;
 import markus.wieland.pushygame.engine.entity.movable.Count;
+import markus.wieland.pushygame.engine.entity.movable.Octopus;
+import markus.wieland.pushygame.engine.entity.movable.PushShell;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.entity.movable.SeaStar;
 import markus.wieland.pushygame.engine.entity.movable.Statue;
@@ -19,6 +22,8 @@ import markus.wieland.pushygame.engine.helper.Inventory;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
+import markus.wieland.pushygame.engine.terrain.BarrelFinish;
+import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.FlowerFinish;
 import markus.wieland.pushygame.engine.terrain.StatueFinish;
 import markus.wieland.pushygame.engine.terrain.Terrain;
@@ -108,6 +113,8 @@ public class Game {
     public boolean checkGameState() {
         if (entityManager.getPirate() != null && inventory.getAmount(PirateReward.class) == 0)
             return false;
+
+
         for (Entity entity : entityManager.getAll()) {
             if (entity instanceof SeaStar) return false;
             if (entity instanceof Statue) {
@@ -120,12 +127,21 @@ public class Game {
             if (entity instanceof CrabMama && inventory.getAmount(CrabMamaReward.class) == 0)
                 return false;
             if (entity instanceof Count && !((Count) entity).isUncovered()) return false;
+            if (entity instanceof PushShell && ((PushShell) entity).getCount() != PushShell.HAPPY) return false;
+            if (entity instanceof Barrel && !(terrainManager.getObject(entity) instanceof BarrelFinish)) return false;
+            if (entity instanceof Octopus) return false;
         }
         for (FlowerFinish flowerFinish : terrainManager.getOfType(FlowerFinish.class)) {
             Entity entity = entityManager.getObject(flowerFinish);
             if (entity == null) return false;
             if (!(entity instanceof Flower)) return false;
             if (((Flower) entity).getEntityType() != flowerFinish.getFlowerType()) return false;
+        }
+
+        TerrainType changeableFlowerTerrainType = null;
+        for (ChangeableFlower changeableFlower : terrainManager.getOfType(ChangeableFlower.class)) {
+            if (changeableFlowerTerrainType == null) changeableFlowerTerrainType = changeableFlower.getTerrainType();
+            if (changeableFlowerTerrainType != changeableFlower.getTerrainType()) return false;
         }
 
         return true;

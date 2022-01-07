@@ -31,5 +31,6 @@ public class StatueEvent extends Event {
         }
 
         game.getEntityManager().setObject(pushy.getCoordinate().getNextCoordinate(direction), pushy);
+        pushy.executeAfterMove(pushy.getCoordinate().getNextCoordinate(direction), game);
     }
 }

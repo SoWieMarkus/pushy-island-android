@@ -40,5 +40,10 @@ public enum EntityType implements Tag {
     @SerializedName("count_five") COUNT_FIVE,
     @SerializedName("flower") FLOWER_YELLOW,
     @SerializedName("flower_red") FLOWER_RED,
+    @SerializedName("shell_1") SHELL_1,
+    @SerializedName("shell_2") SHELL_2,
+    @SerializedName("shell_3") SHELL_3,
+    @SerializedName("octopus") OCTOPUS,
+    @SerializedName("barrel") BARREL,
 
 }
