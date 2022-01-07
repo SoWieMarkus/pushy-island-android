@@ -38,7 +38,8 @@ public class ShotEvent extends Event {
 
             nextCoordinate = nextCoordinate.getNextCoordinate(direction);
             if ((entity != null && entity.destroysFlyingStone()) || terrain.destroysFlyingStone()) {
-                if (entity instanceof Tree && !game.getEntityManager().isNotInsideField(nextCoordinate))
+                if (entity instanceof Tree && !game.getEntityManager().isNotInsideField(nextCoordinate)
+                        && game.getTerrainManager().getObject(nextCoordinate).getElevation() == Terrain.ELEVATION_SAND)
                     game.getEntityManager().setObject(nextCoordinate, TileMapBuilder.build(EntityType.COCONUT, nextCoordinate));
                 break;
             }

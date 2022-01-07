@@ -44,8 +44,8 @@
 
         <ImageButton
             android:id="@+id/activity_game_up"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:alpha="0.7"
             app:layout_constraintBottom_toTopOf="@+id/activity_game_down"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,8 +55,8 @@
 
         <ImageButton
             android:id="@+id/activity_game_left"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:alpha="0.7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +64,8 @@
 
         <ImageButton
             android:id="@+id/activity_game_right"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:alpha="0.7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -73,8 +73,8 @@
 
         <ImageButton
             android:id="@+id/activity_game_down"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:alpha="0.7"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/activity_game_right"

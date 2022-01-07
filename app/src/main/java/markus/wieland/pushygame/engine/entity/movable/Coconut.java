@@ -32,7 +32,7 @@ public class Coconut extends MovableEntity {
             wasMoved = true;
             executeMove(nextCoordinate, game);
             Terrain terrain = game.getTerrainManager().getObject(this);
-            if (terrain instanceof Hole) {
+            if (terrain instanceof Hole && !((Hole) terrain).isFilled()) {
                 ((Hole) terrain).setFilled();
                 game.getTerrainManager().invalidate(terrain);
                 game.getEntityManager().remove(this);

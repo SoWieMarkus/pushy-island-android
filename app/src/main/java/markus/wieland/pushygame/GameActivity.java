@@ -6,6 +6,8 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +26,7 @@ import markus.wieland.pushygame.engine.level.Level;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.engine.level.LevelLoader;
 import markus.wieland.pushygame.engine.terrain.Terrain;
+import markus.wieland.pushygame.persistence.LevelViewModel;
 import markus.wieland.pushygame.ui.InventoryAdapter;
 import markus.wieland.pushygame.ui.InventoryItem;
 import markus.wieland.pushygame.ui.PushyFieldView;
@@ -49,6 +52,9 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
     private RecyclerView recyclerView;
     private InventoryAdapter inventoryAdapter;
+    private LevelViewModel levelViewModel;
+    private LevelDisplayItem levelDisplayItem;
+
 
     public GameActivity() {
         super(R.layout.activity_game);
@@ -72,6 +78,7 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
         levelNumber = findViewById(R.id.activity_game_level_number);
         restart = findViewById(R.id.activity_game_restart);
         recyclerView = findViewById(R.id.activity_game_recycler_view);
+        levelViewModel = ViewModelProviders.of(this).get(LevelViewModel.class);
     }
 
     @Override
@@ -91,7 +98,7 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
         inventoryAdapter = new InventoryAdapter();
         recyclerView.setAdapter(inventoryAdapter);
         String path = getIntent().getStringExtra(LEVEL_PATH);
-        LevelDisplayItem levelDisplayItem = new LevelDisplayItem(path);
+        levelDisplayItem = new LevelDisplayItem(path);
         levelNumber.setText(levelDisplayItem.getNumber());
         levelName.setText(levelDisplayItem.getName());
         Level level = LevelLoader.buildLevel(this, path);
@@ -125,6 +132,8 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
     @Override
     public void onFinish() {
+        levelDisplayItem.setSolved(true);
+        levelViewModel.update(levelDisplayItem);
         String nextLevel = LevelLoader.getNextLevel(this, getIntent().getStringExtra(LEVEL_PATH));
         if (nextLevel != null) {
             startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_PATH, nextLevel));

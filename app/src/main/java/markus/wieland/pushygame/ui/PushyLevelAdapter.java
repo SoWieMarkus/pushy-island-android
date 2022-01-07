@@ -1,11 +1,13 @@
 package markus.wieland.pushygame.ui;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 
 import markus.wieland.defaultappelements.uielements.adapter.DefaultViewHolder;
 import markus.wieland.defaultappelements.uielements.adapter.QueryableAdapter;
@@ -34,6 +36,7 @@ public class PushyLevelAdapter extends QueryableAdapter<String, LevelDisplayItem
 
         private TextView number;
         private TextView name;
+        private CardView cardView;
 
         public PushyLevelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +46,7 @@ public class PushyLevelAdapter extends QueryableAdapter<String, LevelDisplayItem
         public void bindViews() {
             number = findViewById(R.id.item_level_campaign_number);
             name = findViewById(R.id.item_level_campaign_name);
+            cardView = findViewById(R.id.item_level_campaign_card);
         }
 
         @Override
@@ -50,6 +54,7 @@ public class PushyLevelAdapter extends QueryableAdapter<String, LevelDisplayItem
             number.setText(levelDisplayItem.getNumber());
             name.setText(levelDisplayItem.getName());
             itemView.setOnClickListener(view -> getOnItemInteractListener().onClick(levelDisplayItem));
+            cardView.setBackgroundColor(levelDisplayItem.isSolved() ? Color.BLUE : Color.GRAY);
         }
     }
 }
