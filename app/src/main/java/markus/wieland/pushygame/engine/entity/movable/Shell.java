@@ -5,7 +5,7 @@ import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.collectible.Pearl;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 
-public class Shell extends MovableEntity{
+public class Shell extends MovableEntity {
 
     private boolean isOpen;
     private boolean hasPearl;
@@ -14,6 +14,12 @@ public class Shell extends MovableEntity{
         super(coordinate, R.drawable.shell);
         isOpen = false;
         hasPearl = true;
+    }
+
+    public Shell(Coordinate coordinate, boolean isOpen, boolean hasPearl) {
+        super(coordinate, R.drawable.shell);
+        this.isOpen = isOpen;
+        this.hasPearl = hasPearl;
     }
 
     public boolean isOpen() {

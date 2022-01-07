@@ -33,6 +33,7 @@ public enum EntityType implements Tag {
     @SerializedName("tower") TOWER,
     @SerializedName("pearl") PEARL,
     @SerializedName("shell") SHELL,
+    @SerializedName("shell_open_with_pearl") SHELL_OPEN_WITH_PEARL,
     @SerializedName("count_one") COUNT_ONE,
     @SerializedName("count_two") COUNT_TWO,
     @SerializedName("count_three") COUNT_THREE,
@@ -45,5 +46,9 @@ public enum EntityType implements Tag {
     @SerializedName("shell_3") SHELL_3,
     @SerializedName("octopus") OCTOPUS,
     @SerializedName("barrel") BARREL,
+    @SerializedName("leaf_changer_east") LEAF_CHANGER_EAST,
+    @SerializedName("leaf_changer_west") LEAF_CHANGER_WEST,
+    @SerializedName("leaf_changer_north") LEAF_CHANGER_NORTH,
+    @SerializedName("leaf_changer_south") LEAF_CHANGER_SOUTH,
 
 }

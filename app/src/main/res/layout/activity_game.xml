@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/press_start_2p"
             android:text="TextView"
             android:textColor="@color/white" />
 
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/press_start_2p"
             android:text="TextView"
             android:textColor="@color/white" />
     </LinearLayout>

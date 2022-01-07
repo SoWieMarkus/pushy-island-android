@@ -38,17 +38,19 @@
                     android:id="@+id/item_level_campaign_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/press_start_2p"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textSize="30sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/item_level_campaign_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/press_start_2p"
                     android:gravity="center"
                     android:text="TextView"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

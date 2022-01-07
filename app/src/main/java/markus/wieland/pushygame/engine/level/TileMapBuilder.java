@@ -10,6 +10,7 @@ import markus.wieland.pushygame.engine.entity.interactable.Chest;
 import markus.wieland.pushygame.engine.entity.interactable.CrabMama;
 import markus.wieland.pushygame.engine.entity.interactable.Finish;
 import markus.wieland.pushygame.engine.entity.interactable.Flower;
+import markus.wieland.pushygame.engine.entity.interactable.LeafDirectionChanger;
 import markus.wieland.pushygame.engine.entity.interactable.Pirate;
 import markus.wieland.pushygame.engine.entity.interactable.SlingShot;
 import markus.wieland.pushygame.engine.entity.interactable.Tower;
@@ -205,6 +206,8 @@ public class TileMapBuilder {
                 return new Pearl(coordinate);
             case TOWER:
                 return new Tower(coordinate);
+            case SHELL_OPEN_WITH_PEARL:
+                return new Shell(coordinate, true, true);
             case SHELL:
                 return new Shell(coordinate);
 
@@ -228,6 +231,11 @@ public class TileMapBuilder {
                 return new Barrel(coordinate);
             case OCTOPUS:
                 return new Octopus(coordinate);
+            case LEAF_CHANGER_EAST:
+            case LEAF_CHANGER_SOUTH:
+            case LEAF_CHANGER_WEST:
+            case LEAF_CHANGER_NORTH:
+                return new LeafDirectionChanger(coordinate, entityType);
             default:
                 throw new UnknownTileException(entityType);
         }
