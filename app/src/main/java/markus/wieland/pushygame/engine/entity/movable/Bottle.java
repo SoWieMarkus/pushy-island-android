@@ -35,7 +35,7 @@ public class Bottle extends MovableEntity {
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         super.executeMove(nextCoordinate, game);
         Terrain terrain = game.getTerrainManager().getObject(this);
-        if (terrain instanceof Farm && ((Farm) terrain).hasSeed()) {
+        if (terrain instanceof Farm && ((Farm) terrain).hasSeed() && isFilled()) {
             game.getTerrainManager().setObject(getCoordinate(), TileMapBuilder.build(TerrainType.SPRING, getCoordinate()));
             game.getEntityManager().remove(this);
         }
