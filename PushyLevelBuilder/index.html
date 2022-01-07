@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pushy Level Builder</title>
+
+    <link rel="icon" href="../app/src/main/res/drawable/pushy.png">
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js"></script>
+</head>
+<body ondragstart="return false;">
+
+
+<div>
+    <label>
+        Width:
+        <input id="height" value="12" type="number">
+    </label>
+    <label>
+        Height:
+        <input id="width" value="20" type="number">
+    </label>
+    <label>
+        Name:
+        <input id="name" type="text">
+    </label>
+    <label>
+        Number:
+        <input id="number" type="number">
+    </label>
+
+    <button onclick="create()">Create</button>
+    <button onclick="save()">Save</button>
+
+    <label>
+        Import
+        <input type="file" id="fileUpload">
+    </label>
+</div>
+
+<div id="tools" style="overflow: auto"></div>
+
+
+<div style="position: relative">
+    <div class="gameField" id="terrain"></div>
+    <div class="gameField" id="entity"></div>
+</div>
+
+<a id="download" style="display: none;"></a>
+
+<script>
+    init();
+
+    document.getElementById("fileUpload").addEventListener("change", function () {
+        let file = document.getElementById('fileUpload').files[0];
+
+        let reader = new FileReader();
+        reader.onload = function () {
+            let content = JSON.parse(reader.result);
+            console.log(content);
+            document.getElementById("height").value = content.height + "";
+            document.getElementById("width").value = content.width + "";
+            create();
+            document.getElementById("name").value = content.name;
+            document.getElementById("number").value = content.number + "";
+
+            terrain = content.terrain;
+            entities = content.entities;
+
+            for (let i = 0; i < content.height; i++) {
+                for (let j = 0; j < content.width; j++) {
+                    document.getElementById(buildId(true,i,j)).style.backgroundImage = "url('../app/src/main/res/drawable/" + entities[i][j] + ".png')";
+                    document.getElementById(buildId(false,i,j)).style.backgroundImage = "url('../app/src/main/res/drawable/" + terrain[i][j] + ".png')";
+                }
+            }
+
+        };
+        reader.readAsText(file);
+
+
+    });
+
+</script>
+
+</body>
+</html>

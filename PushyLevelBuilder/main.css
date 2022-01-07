@@ -1,0 +1,16 @@
+.field {
+    height: 16px;
+    width: 16px;
+    float: left;
+    border: 1px solid black;
+    z-index: 1;
+}
+
+.entity {
+    z-index: 10;
+}
+
+.gameField {
+    overflow: auto;
+    position: absolute;
+}
