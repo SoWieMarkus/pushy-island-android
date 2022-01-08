@@ -5,7 +5,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class Leaf  extends MovableEntity{
+public class Leaf extends MovableEntity{
 
     private Direction direction;
 
@@ -47,5 +47,19 @@ public class Leaf  extends MovableEntity{
 
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public EntityType getType() {
+        switch (direction) {
+            case SOUTH:
+                return EntityType.LEAF_DOWN;
+            case NORTH:
+                return EntityType.LEAF_UP;
+            case WEST:
+                return EntityType.LEAF_LEFT;
+            default:
+                return EntityType.LEAF_RIGHT;
+        }
     }
 }

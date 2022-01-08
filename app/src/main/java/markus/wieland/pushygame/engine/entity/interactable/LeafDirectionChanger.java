@@ -55,4 +55,18 @@ public class LeafDirectionChanger extends InteractableEntity {
     public boolean canInteractFromThisDirection(Direction direction) {
         return true;
     }
+
+    @Override
+    public EntityType getType() {
+        switch (direction) {
+            case EAST:
+                return EntityType.LEAF_CHANGER_EAST;
+            case WEST:
+                return EntityType.LEAF_CHANGER_WEST;
+            case NORTH:
+                return EntityType.LEAF_CHANGER_NORTH;
+            default:
+                return EntityType.LEAF_CHANGER_SOUTH;
+        }
+    }
 }

@@ -25,7 +25,7 @@ public class StatueEvent extends Event {
         Statue statue = (Statue) game.getEntityManager().getObject(currentCoordinate);
 
         for (Statue statueFromList : game.getEntityManager().getOfType(Statue.class)) {
-            if (statue.getEntityType() == statueFromList.getEntityType() && statueFromList.isMovePossible(statueFromList.getCoordinate().getNextCoordinate(direction), game)) {
+            if (statue.getType() == statueFromList.getType() && statueFromList.isMovePossible(statueFromList.getCoordinate().getNextCoordinate(direction), game)) {
                 game.getEntityManager().swapFields(statueFromList.getCoordinate(), statueFromList.getCoordinate().getNextCoordinate(direction));
             }
         }

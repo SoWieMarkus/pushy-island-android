@@ -6,6 +6,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.events.BombEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class BombField extends PressurePlateTerrain {
     public BombField(Coordinate coordinate) {
@@ -17,5 +18,10 @@ public class BombField extends PressurePlateTerrain {
         if (entity instanceof Pushy) {
             game.execute(new BombEvent());
         }
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.BOMB_FIELD;
     }
 }

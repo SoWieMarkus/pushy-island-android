@@ -1,6 +1,6 @@
 .field {
-    height: 16px;
-    width: 16px;
+    height: 32px;
+    width: 32px;
     float: left;
     border: 1px solid black;
     z-index: 1;

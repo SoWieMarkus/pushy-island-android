@@ -10,9 +10,11 @@ public class Count extends MovableEntity{
 
     private final int countValue;
     private boolean isUncovered;
+    private EntityType entityType;
 
     public Count(Coordinate coordinate, EntityType entityType) {
         super(coordinate, R.drawable.count_hidden);
+        this.entityType = entityType;
         this.isUncovered = false;
         switch (entityType) {
             case COUNT_TWO:
@@ -62,5 +64,10 @@ public class Count extends MovableEntity{
         isUncovered = true;
         game.getEntityManager().invalidate(this);
         game.execute(new CountEvent(countValue));
+    }
+
+    @Override
+    public EntityType getType() {
+        return entityType;
     }
 }

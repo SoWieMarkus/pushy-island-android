@@ -5,6 +5,7 @@ import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.InteractableEntity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Finish extends InteractableEntity {
 
@@ -21,5 +22,10 @@ public class Finish extends InteractableEntity {
     @Override
     public boolean canInteractFromThisDirection(Direction direction) {
         return direction == Direction.SOUTH;
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.FINISH;
     }
 }

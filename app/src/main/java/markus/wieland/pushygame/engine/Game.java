@@ -119,7 +119,7 @@ public class Game {
             if (entity instanceof SeaStar) return false;
             if (entity instanceof Statue) {
                 Terrain terrain = terrainManager.getObject(entity);
-                if (!(terrain instanceof StatueFinish && ((StatueFinish) terrain).equalsType(((Statue) entity).getEntityType())))
+                if (!(terrain instanceof StatueFinish && ((StatueFinish) terrain).equalsType(((Statue) entity).getType())))
                     return false;
             }
             if (entity instanceof CrabMama && inventory.getAmount(CrabMamaReward.class) == 0)
@@ -135,7 +135,7 @@ public class Game {
             Entity entity = entityManager.getObject(flowerFinish);
             if (entity == null) return false;
             if (!(entity instanceof Flower)) return false;
-            if (((Flower) entity).getEntityType() != flowerFinish.getFlowerType()) return false;
+            if (((Flower) entity).getType() != flowerFinish.getFlowerType()) return false;
         }
 
         TerrainType changeableFlowerTerrainType = null;

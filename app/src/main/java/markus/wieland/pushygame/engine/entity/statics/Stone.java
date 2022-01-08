@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine.entity.statics;
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Stone extends Entity {
 
@@ -13,6 +14,11 @@ public class Stone extends Entity {
     @Override
     public boolean isExplodable() {
         return true;
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.STONE;
     }
 
     @Override

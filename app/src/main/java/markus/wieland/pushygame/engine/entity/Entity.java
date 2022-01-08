@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine.entity;
 import markus.wieland.pushygame.engine.entity.movable.MovableEntity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Field;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public abstract class Entity extends Field {
 
@@ -35,4 +36,6 @@ public abstract class Entity extends Field {
     public void setTeleported(boolean teleported) {
         this.teleported = teleported;
     }
+
+    public abstract EntityType getType();
 }

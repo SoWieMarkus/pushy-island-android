@@ -1,7 +1,7 @@
 package markus.wieland.pushygame.engine.events;
 
 import markus.wieland.pushygame.engine.entity.movable.Coconut;
-import markus.wieland.pushygame.engine.terrain.CoconutTunnelFinish;
+import markus.wieland.pushygame.engine.terrain.pressure.CoconutTunnelFinish;
 import markus.wieland.pushygame.engine.terrain.Hole;
 
 public class CoconutTunnelFinishEvent extends Event {

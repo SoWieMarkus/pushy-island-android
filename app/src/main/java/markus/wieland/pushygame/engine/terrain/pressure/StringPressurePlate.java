@@ -6,6 +6,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.events.StringEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class StringPressurePlate extends PressurePlateTerrain{
 
@@ -28,5 +29,10 @@ public class StringPressurePlate extends PressurePlateTerrain{
             game.execute(new StringEvent());
             game.getTerrainManager().invalidate(this);
         }
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.STRING_PRESSURE_PLATE;
     }
 }

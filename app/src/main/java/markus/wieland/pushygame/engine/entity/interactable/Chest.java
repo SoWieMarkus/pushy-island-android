@@ -7,6 +7,7 @@ import markus.wieland.pushygame.engine.entity.collectible.Coin;
 import markus.wieland.pushygame.engine.entity.collectible.Key;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Chest extends RewardEntity {
 
@@ -28,5 +29,10 @@ public class Chest extends RewardEntity {
     @Override
     public boolean canInteractFromThisDirection(Direction direction) {
         return direction == Direction.SOUTH;
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.CHEST;
     }
 }

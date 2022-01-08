@@ -2,6 +2,7 @@ package markus.wieland.pushygame.engine.terrain;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class InvisibleWater extends Terrain {
 
@@ -32,5 +33,10 @@ public class InvisibleWater extends Terrain {
     @Override
     public boolean coconutCanEnterFromTunnel() {
         return true;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.WATER_INVISIBLE;
     }
 }

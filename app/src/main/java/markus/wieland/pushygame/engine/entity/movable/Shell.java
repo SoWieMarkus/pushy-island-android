@@ -4,6 +4,7 @@ import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.collectible.Pearl;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Shell extends MovableEntity {
 
@@ -60,4 +61,8 @@ public class Shell extends MovableEntity {
         return false;
     }
 
+    @Override
+    public EntityType getType() {
+        return EntityType.SHELL;
+    }
 }

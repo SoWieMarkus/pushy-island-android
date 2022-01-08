@@ -5,6 +5,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.exceptions.StringDirectionException;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class String extends Entity {
 
@@ -91,11 +92,11 @@ public class String extends Entity {
                 }
                 break;
         }
+    }
 
-
-
-
-
-
+    // Can not be placed by user
+    @Override
+    public EntityType getType() {
+        return null;
     }
 }

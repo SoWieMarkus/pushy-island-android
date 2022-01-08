@@ -6,6 +6,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.events.TeleportEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 
 public class Spring extends PressurePlateTerrain {
@@ -17,6 +18,11 @@ public class Spring extends PressurePlateTerrain {
     @Override
     public int getElevation() {
         return ELEVATION_SAND;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.SPRING;
     }
 
     @Override

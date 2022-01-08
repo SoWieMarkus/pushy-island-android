@@ -4,6 +4,7 @@ import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
 import markus.wieland.pushygame.engine.terrain.Hole;
 import markus.wieland.pushygame.engine.terrain.Terrain;
@@ -41,5 +42,10 @@ public class Coconut extends MovableEntity {
             nextCoordinate = nextCoordinate.getNextCoordinate(direction);
         }
         return wasMoved;
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.COCONUT;
     }
 }

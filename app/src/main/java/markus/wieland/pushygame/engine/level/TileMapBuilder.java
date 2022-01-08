@@ -1,7 +1,5 @@
 package markus.wieland.pushygame.engine.level;
 
-import androidx.constraintlayout.helper.widget.Flow;
-
 import markus.wieland.pushygame.engine.entity.collectible.Coin;
 import markus.wieland.pushygame.engine.entity.collectible.Key;
 import markus.wieland.pushygame.engine.entity.collectible.Pearl;
@@ -21,7 +19,7 @@ import markus.wieland.pushygame.engine.entity.movable.Box;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.movable.Coconut;
 import markus.wieland.pushygame.engine.entity.movable.Count;
-import markus.wieland.pushygame.engine.entity.movable.CrabBaby;
+import markus.wieland.pushygame.engine.entity.collectible.CrabBaby;
 import markus.wieland.pushygame.engine.entity.movable.Leaf;
 import markus.wieland.pushygame.engine.entity.movable.Octopus;
 import markus.wieland.pushygame.engine.entity.movable.PushShell;
@@ -29,7 +27,7 @@ import markus.wieland.pushygame.engine.entity.statics.PirateHut;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.entity.movable.SeaStar;
 import markus.wieland.pushygame.engine.entity.movable.Shell;
-import markus.wieland.pushygame.engine.entity.movable.Shot;
+import markus.wieland.pushygame.engine.entity.collectible.Shot;
 import markus.wieland.pushygame.engine.entity.movable.Statue;
 import markus.wieland.pushygame.engine.entity.statics.Stone;
 import markus.wieland.pushygame.engine.entity.statics.Tree;
@@ -39,7 +37,7 @@ import markus.wieland.pushygame.engine.terrain.BarrelFinish;
 import markus.wieland.pushygame.engine.terrain.Boat;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
-import markus.wieland.pushygame.engine.terrain.CoconutTunnelFinish;
+import markus.wieland.pushygame.engine.terrain.pressure.CoconutTunnelFinish;
 import markus.wieland.pushygame.engine.terrain.FlowerFinish;
 import markus.wieland.pushygame.engine.terrain.Ice;
 import markus.wieland.pushygame.engine.terrain.InvisibleWater;

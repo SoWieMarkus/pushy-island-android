@@ -7,6 +7,7 @@ import markus.wieland.pushygame.engine.entity.collectible.Seed;
 import markus.wieland.pushygame.engine.entity.statics.String;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.terrain.Farm;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 
@@ -87,5 +88,10 @@ public class Pushy extends MovableEntity {
             ((Farm) terrain).setHasSeed(true);
             game.getTerrainManager().invalidate(getCoordinate());
         }
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.PUSHY;
     }
 }

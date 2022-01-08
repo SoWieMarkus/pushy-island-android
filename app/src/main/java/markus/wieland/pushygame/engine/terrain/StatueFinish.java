@@ -25,10 +25,6 @@ public class StatueFinish extends Terrain {
         }
     }
 
-    public TerrainType getTerrainType() {
-        return terrainType;
-    }
-
     public boolean equalsType(EntityType entityType) {
         return (terrainType == TerrainType.STATUE_FINISH_BLUE && entityType == EntityType.STATUE_BLUE) ||
                 (terrainType == TerrainType.STATUE_FINISH_RED && entityType == EntityType.STATUE_RED) ||
@@ -38,5 +34,10 @@ public class StatueFinish extends Terrain {
     @Override
     public int getElevation() {
         return 0;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return terrainType;
     }
 }

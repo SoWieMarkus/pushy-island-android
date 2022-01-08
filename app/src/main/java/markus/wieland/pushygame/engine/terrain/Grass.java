@@ -6,8 +6,11 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class Grass extends Terrain {
 
+    private final TerrainType terrainType;
+
     public Grass(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, R.drawable.grass);
+        this.terrainType = terrainType;
         switch (terrainType) {
             case GRASS_BOTTOM_RIGHT:
                 setDrawable(R.drawable.grass_bottom_right);
@@ -29,5 +32,10 @@ public class Grass extends Terrain {
     @Override
     public int getElevation() {
         return ELEVATION_GRASS;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return terrainType;
     }
 }

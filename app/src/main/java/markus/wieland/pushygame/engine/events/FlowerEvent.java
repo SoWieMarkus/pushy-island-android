@@ -27,9 +27,9 @@ public class FlowerEvent extends Event {
             if (terrain.getElevation() != Terrain.ELEVATION_GRASS
                     || entity != null
                     || (terrain instanceof FlowerFinish
-                    && ((FlowerFinish) terrain).getOpposite() == flower.getEntityType()))
+                    && ((FlowerFinish) terrain).getOpposite() == flower.getType()))
                 break;
-            game.getEntityManager().setObject(nextCoordinate, TileMapBuilder.build(flower.getEntityType(), nextCoordinate));
+            game.getEntityManager().setObject(nextCoordinate, TileMapBuilder.build(flower.getType(), nextCoordinate));
             nextCoordinate = nextCoordinate.getNextCoordinate(direction);
         }
     }

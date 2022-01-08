@@ -1,4 +1,4 @@
-package markus.wieland.pushygame.engine.terrain;
+package markus.wieland.pushygame.engine.terrain.pressure;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
@@ -6,7 +6,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.movable.Coconut;
 import markus.wieland.pushygame.engine.events.CoconutTunnelFinishEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
-import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class CoconutTunnelFinish extends PressurePlateTerrain {
 
@@ -28,6 +28,11 @@ public class CoconutTunnelFinish extends PressurePlateTerrain {
     @Override
     public boolean isCoconutTunnel() {
         return true;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.COCONUT_TUNNEL_FINISH;
     }
 
     @Override

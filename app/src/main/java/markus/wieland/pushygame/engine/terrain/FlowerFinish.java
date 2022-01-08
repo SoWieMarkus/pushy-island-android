@@ -19,6 +19,11 @@ public class FlowerFinish extends Terrain {
         return ELEVATION_GRASS;
     }
 
+    @Override
+    public TerrainType getType() {
+        return terrainType;
+    }
+
     public EntityType getOpposite(){
         return terrainType == TerrainType.FLOWER_RED_PRESSURE_PLATE ? EntityType.FLOWER_YELLOW : EntityType.FLOWER_RED;
     }

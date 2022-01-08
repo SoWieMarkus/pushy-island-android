@@ -31,6 +31,11 @@ public class ChangeableFlower extends Terrain {
         return ELEVATION_SAND;
     }
 
+    @Override
+    public TerrainType getType() {
+        return terrainType;
+    }
+
     public TerrainType getTerrainType() {
         return terrainType;
     }

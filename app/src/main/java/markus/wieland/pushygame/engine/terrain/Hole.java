@@ -2,6 +2,7 @@ package markus.wieland.pushygame.engine.terrain;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class Hole extends Terrain {
 
@@ -23,6 +24,11 @@ public class Hole extends Terrain {
     @Override
     public int getElevation() {
         return isFilled ? ELEVATION_SAND : 1000;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.HOLE;
     }
 
     @Override

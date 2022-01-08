@@ -4,9 +4,10 @@ import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.entity.CollectibleEntity;
 import markus.wieland.pushygame.engine.entity.RewardEntity;
 import markus.wieland.pushygame.engine.entity.interactable.rewards.CrabMamaReward;
-import markus.wieland.pushygame.engine.entity.movable.CrabBaby;
+import markus.wieland.pushygame.engine.entity.collectible.CrabBaby;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class CrabMama extends RewardEntity {
 
@@ -27,5 +28,10 @@ public class CrabMama extends RewardEntity {
     @Override
     protected CollectibleEntity createRewardItem() {
         return new CrabMamaReward();
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.CRAB_MOTHER;
     }
 }

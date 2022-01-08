@@ -2,6 +2,8 @@ package markus.wieland.pushygame.engine.helper;
 
 import androidx.annotation.DrawableRes;
 
+import markus.wieland.pushygame.engine.level.Tag;
+
 public abstract class Field {
 
     private Coordinate coordinate;
@@ -33,6 +35,8 @@ public abstract class Field {
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = new Coordinate(coordinate.getX(), coordinate.getY());
     }
+
+    public abstract Tag getType();
 
 
 }

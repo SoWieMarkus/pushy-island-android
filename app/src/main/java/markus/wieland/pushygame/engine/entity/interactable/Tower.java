@@ -8,6 +8,7 @@ import markus.wieland.pushygame.engine.entity.collectible.Pearl;
 import markus.wieland.pushygame.engine.events.TowerEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Tower extends RewardEntity {
 
@@ -35,5 +36,10 @@ public class Tower extends RewardEntity {
     @Override
     public boolean canInteractFromThisDirection(Direction direction) {
         return true;
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.TOWER;
     }
 }

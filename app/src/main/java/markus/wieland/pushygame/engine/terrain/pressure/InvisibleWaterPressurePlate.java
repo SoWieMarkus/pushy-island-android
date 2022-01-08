@@ -5,6 +5,7 @@ import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.events.ShowInvisibleWaterBlocksEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class InvisibleWaterPressurePlate extends PressurePlateTerrain {
 
@@ -19,5 +20,10 @@ public class InvisibleWaterPressurePlate extends PressurePlateTerrain {
         if (entity == lastEntity) return;
         lastEntity = entity;
         game.execute(new ShowInvisibleWaterBlocksEvent(entity != null));
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.WATER_INVISIBLE_PRESSURE_PLATE;
     }
 }

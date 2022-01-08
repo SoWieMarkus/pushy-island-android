@@ -6,6 +6,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.events.TeleportEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class Teleporter extends PressurePlateTerrain {
 
@@ -17,6 +18,11 @@ public class Teleporter extends PressurePlateTerrain {
     public Teleporter(Coordinate coordinate, int drawable) {
         super(coordinate, drawable);
 
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.TELEPORTER;
     }
 
     @Override

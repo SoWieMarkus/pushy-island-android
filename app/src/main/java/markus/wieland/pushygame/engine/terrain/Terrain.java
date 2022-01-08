@@ -2,6 +2,7 @@ package markus.wieland.pushygame.engine.terrain;
 
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Field;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public abstract class Terrain extends Field {
 
@@ -38,5 +39,7 @@ public abstract class Terrain extends Field {
     public boolean isCoconutTunnel() {
         return false;
     }
+
+    public abstract TerrainType getType();
 
 }

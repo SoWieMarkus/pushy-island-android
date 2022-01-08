@@ -27,7 +27,8 @@ public class Flower extends InteractableEntity {
         return true;
     }
 
-    public EntityType getEntityType() {
+    @Override
+    public EntityType getType() {
         return entityType;
     }
 }

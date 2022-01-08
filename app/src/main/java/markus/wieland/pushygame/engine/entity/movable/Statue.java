@@ -6,7 +6,7 @@ import markus.wieland.pushygame.engine.events.StatueEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class Statue extends MovableEntity{
+public class Statue extends MovableEntity {
 
     private final EntityType entityType;
 
@@ -27,14 +27,10 @@ public class Statue extends MovableEntity{
         }
     }
 
-    public EntityType getEntityType() {
-        return entityType;
-    }
-
     // Never return true here so Pushy can't be moved! Pushy will be moved in the StatueEvent
     @Override
     public boolean move(Coordinate nextCoordinate, Game game) {
-        if (isMovePossible(nextCoordinate, game)){
+        if (isMovePossible(nextCoordinate, game)) {
             executeMove(nextCoordinate, game);
         }
         return false;
@@ -43,5 +39,10 @@ public class Statue extends MovableEntity{
     @Override
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         game.execute(new StatueEvent(getCoordinate(), nextCoordinate));
+    }
+
+    @Override
+    public EntityType getType() {
+        return entityType;
     }
 }

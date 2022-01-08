@@ -6,8 +6,11 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class Sand extends Terrain {
 
+    private TerrainType terrainType;
+
     public Sand(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, R.drawable.sand);
+        this.terrainType = terrainType;
         switch (terrainType) {
             case SAND_BOTTOM_RIGHT:
                 setDrawable(R.drawable.sand_bottom_right);
@@ -30,5 +33,10 @@ public class Sand extends Terrain {
     @Override
     public int getElevation() {
         return ELEVATION_SAND;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return terrainType;
     }
 }

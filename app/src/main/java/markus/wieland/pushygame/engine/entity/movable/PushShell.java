@@ -54,4 +54,17 @@ public class PushShell extends MovableEntity {
         countUp();
         super.executeMove(nextCoordinate, game);
     }
+
+    @Override
+    public EntityType getType() {
+        switch (count) {
+            case HAPPY:
+                return EntityType.SHELL_3;
+            case MEDIUM:
+                return EntityType.SHELL_2;
+            default:
+                return EntityType.SHELL_1;
+
+        }
+    }
 }

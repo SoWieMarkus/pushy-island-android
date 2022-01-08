@@ -4,6 +4,7 @@ import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 
 public class Spikes extends Terrain {
@@ -31,6 +32,11 @@ public class Spikes extends Terrain {
     @Override
     public boolean destroysFlyingStone() {
         return isActive();
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.SPIKES;
     }
 
     public void setActive(boolean active, Entity entity) {

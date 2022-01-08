@@ -9,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PushyGame">
-        <activity android:name=".GameActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".CampaignActivity"
+        <activity android:name=".LevelBuilderActivity"></activity>
+        <activity
+            android:name=".GameActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".CampaignActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

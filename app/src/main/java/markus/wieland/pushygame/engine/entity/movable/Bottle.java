@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine.entity.movable;
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.terrain.Farm;
@@ -43,5 +44,10 @@ public class Bottle extends MovableEntity {
             setFilled();
             game.getEntityManager().invalidate(this);
         }
+    }
+
+    @Override
+    public EntityType getType() {
+        return EntityType.BOTTLE;
     }
 }

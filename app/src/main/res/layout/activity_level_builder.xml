@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#acc0f5"
+    tools:context=".LevelBuilderActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_level_builder_entities_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_level_builder_terrain_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <markus.wieland.pushygame.ui.PushyView
+        android:id="@+id/game_level_builder_terrain"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:stretchMode="columnWidth"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintDimensionRatio="20:12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </markus.wieland.pushygame.ui.PushyView>
+
+    <markus.wieland.pushygame.ui.PushyView
+        android:id="@+id/game_level_builder_entities"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:stretchMode="columnWidth"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintDimensionRatio="20:12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </markus.wieland.pushygame.ui.PushyView>
+
+
+    <ImageButton
+        android:id="@+id/activity_game_restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_restart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

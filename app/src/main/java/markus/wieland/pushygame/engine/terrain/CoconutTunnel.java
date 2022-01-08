@@ -2,6 +2,7 @@ package markus.wieland.pushygame.engine.terrain;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class CoconutTunnel extends Terrain{
 
@@ -17,6 +18,11 @@ public class CoconutTunnel extends Terrain{
     @Override
     public boolean isCoconutTunnel() {
         return true;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.COCONUT_TUNNEL;
     }
 
     @Override

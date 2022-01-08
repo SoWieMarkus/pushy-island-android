@@ -2,6 +2,7 @@ package markus.wieland.pushygame.engine.terrain;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class Water extends Terrain {
 
@@ -12,5 +13,10 @@ public class Water extends Terrain {
     @Override
     public int getElevation() {
         return ELEVATION_WATER;
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.WATER;
     }
 }

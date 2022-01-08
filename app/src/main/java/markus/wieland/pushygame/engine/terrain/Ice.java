@@ -1,7 +1,5 @@
 package markus.wieland.pushygame.engine.terrain;
 
-import android.service.quicksettings.Tile;
-
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
@@ -28,5 +26,10 @@ public class Ice extends PressurePlateTerrain {
         if (wasVisited) {
             game.getTerrainManager().setObject(getCoordinate(), TileMapBuilder.build(TerrainType.WATER, getCoordinate()));
         }
+    }
+
+    @Override
+    public TerrainType getType() {
+        return TerrainType.ICE;
     }
 }
