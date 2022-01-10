@@ -8,8 +8,8 @@ import markus.wieland.pushygame.engine.terrain.WaterHole;
 
 public class Octopus extends MovableEntity {
 
-    public Octopus(Coordinate coordinate) {
-        super(coordinate, R.drawable.octopus);
+    public Octopus(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     @Override
@@ -20,8 +20,5 @@ public class Octopus extends MovableEntity {
         }
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.OCTOPUS;
-    }
+
 }

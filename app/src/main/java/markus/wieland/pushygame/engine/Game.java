@@ -140,8 +140,8 @@ public class Game {
 
         TerrainType changeableFlowerTerrainType = null;
         for (ChangeableFlower changeableFlower : terrainManager.getOfType(ChangeableFlower.class)) {
-            if (changeableFlowerTerrainType == null) changeableFlowerTerrainType = changeableFlower.getTerrainType();
-            if (changeableFlowerTerrainType != changeableFlower.getTerrainType()) return false;
+            if (changeableFlowerTerrainType == null) changeableFlowerTerrainType = changeableFlower.getType();
+            if (changeableFlowerTerrainType != changeableFlower.getType()) return false;
         }
 
         return true;

@@ -26,7 +26,7 @@ public class CampaignActivity extends DefaultActivity implements OnItemClickList
     private LevelViewModel levelViewModel;
 
     public CampaignActivity() {
-        super(R.layout.activity_main);
+        super(R.layout.activity_campaign);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class PushShell extends MovableEntity {
     private int count = 0;
 
     public PushShell(Coordinate coordinate, EntityType entityType) {
-        super(coordinate, R.drawable.shell_1);
+        super(coordinate, entityType);
         switch (entityType) {
             case SHELL_3:
                 count = HAPPY;
@@ -64,7 +64,6 @@ public class PushShell extends MovableEntity {
                 return EntityType.SHELL_2;
             default:
                 return EntityType.SHELL_1;
-
         }
     }
 }

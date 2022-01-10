@@ -8,8 +8,8 @@ public class Farm extends Terrain {
 
     private boolean hasSeed;
 
-    public Farm(Coordinate coordinate) {
-        super(coordinate, R.drawable.sand_with_farm);
+    public Farm(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
         hasSeed = false;
     }
 
@@ -24,16 +24,6 @@ public class Farm extends Terrain {
 
     public void setHasSeed(boolean hasSeed) {
         this.hasSeed = hasSeed;
-    }
-
-    @Override
-    public int getElevation() {
-        return ELEVATION_SAND;
-    }
-
-    @Override
-    public TerrainType getType() {
-        return TerrainType.FARM;
     }
 
 }

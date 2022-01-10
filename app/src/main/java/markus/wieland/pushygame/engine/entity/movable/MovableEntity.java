@@ -7,14 +7,15 @@ import markus.wieland.pushygame.engine.entity.InteractableEntity;
 import markus.wieland.pushygame.engine.events.BoatEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.terrain.Boat;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.Water;
 
 public abstract class MovableEntity extends Entity {
 
-    public MovableEntity(Coordinate coordinate, int drawable) {
-        super(coordinate, drawable);
+    public MovableEntity(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     public boolean isPushableIntoWater(){

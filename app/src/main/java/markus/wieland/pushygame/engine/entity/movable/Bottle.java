@@ -14,8 +14,8 @@ public class Bottle extends MovableEntity {
 
     private boolean isFilled;
 
-    public Bottle(Coordinate coordinate) {
-        super(coordinate, R.drawable.bottle);
+    public Bottle(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
         isFilled = false;
     }
 
@@ -46,8 +46,4 @@ public class Bottle extends MovableEntity {
         }
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.BOTTLE;
-    }
 }

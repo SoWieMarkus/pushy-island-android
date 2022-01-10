@@ -6,17 +6,8 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class BarrelFinish extends Terrain {
 
-    public BarrelFinish(Coordinate coordinate) {
-        super(coordinate, R.drawable.barrel_finish);
+    public BarrelFinish(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
     }
 
-    @Override
-    public int getElevation() {
-        return ELEVATION_SAND;
-    }
-
-    @Override
-    public TerrainType getType() {
-        return TerrainType.BARREL_FINISH;
-    }
 }

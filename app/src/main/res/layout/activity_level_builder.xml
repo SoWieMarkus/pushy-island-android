@@ -55,7 +55,7 @@
 
 
     <ImageButton
-        android:id="@+id/activity_game_restart"
+        android:id="@+id/activity_level_builder_undo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -63,5 +63,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_restart" />
+
+    <Button
+        android:id="@+id/activity_level_builder_import"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Import"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_game_export" />
+
+    <Button
+        android:id="@+id/activity_level_builder_smooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Smooth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_level_builder_import" />
+
+    <Button
+        android:id="@+id/activity_level_builder_fill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fill"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_level_builder_smooth" />
+
+    <Button
+        android:id="@+id/actvity_level_builder_redo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/activity_game_export"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Export"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/actvity_level_builder_redo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

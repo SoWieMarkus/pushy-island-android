@@ -10,7 +10,7 @@ import markus.wieland.pushygame.engine.level.EntityType;
 public class String extends Entity {
 
     public String(Coordinate coordinate, Direction first, Direction second) {
-        super(coordinate, R.drawable.string_south_west);
+        super(coordinate, null);
         if (first == null) {
             switch (second) {
                 case NORTH:

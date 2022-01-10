@@ -3,11 +3,12 @@ package markus.wieland.pushygame.engine.entity;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public abstract class InteractableEntity extends Entity{
 
-    public InteractableEntity(Coordinate coordinate, int drawable) {
-        super(coordinate, drawable);
+    public InteractableEntity(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     public void interact(Direction direction, Game game) {

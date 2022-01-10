@@ -12,8 +12,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Tower extends RewardEntity {
 
-    public Tower(Coordinate coordinate) {
-        super(coordinate, R.drawable.tower, Pearl.class);
+    public Tower(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType, Pearl.class);
         setNeedItemsAmount(1);
     }
 
@@ -38,8 +38,4 @@ public class Tower extends RewardEntity {
         return true;
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.TOWER;
-    }
 }

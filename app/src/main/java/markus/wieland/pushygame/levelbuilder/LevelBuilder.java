@@ -8,19 +8,16 @@ import java.util.List;
 import markus.wieland.pushygame.engine.EntityManager;
 import markus.wieland.pushygame.engine.TerrainManager;
 import markus.wieland.pushygame.engine.entity.Entity;
-import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.EntityType;
-import markus.wieland.pushygame.engine.level.Tag;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
-import markus.wieland.pushygame.engine.terrain.Grass;
-import markus.wieland.pushygame.engine.terrain.Sand;
+import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.engine.terrain.Terrain;
-import markus.wieland.pushygame.engine.terrain.Water;
 import markus.wieland.pushygame.levelbuilder.tasks.FillTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SetTask;
+import markus.wieland.pushygame.levelbuilder.tasks.SmoothTask;
 import markus.wieland.pushygame.ui.PushyFieldView;
 
 public class LevelBuilder {
@@ -28,7 +25,7 @@ public class LevelBuilder {
     public static final int LEVEL_HEIGHT = 12;
     public static final int LEVEL_WIDTH = 20;
 
-    private Tag selectedField;
+    private Type selectedField;
 
     private final Matrix<PushyFieldView<Terrain>> pushyTerrainViews;
     private final Matrix<PushyFieldView<Entity>> pushyEntityViews;
@@ -36,20 +33,23 @@ public class LevelBuilder {
     private final EntityManager entityManager;
     private final TerrainManager terrainManager;
 
-    public LevelBuilder(Activity activity) {
+    private boolean isFillMode;
 
+    public LevelBuilder(Activity activity) {
+        isFillMode = false;
         pushyTerrainViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
         pushyEntityViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
 
         for (int x = 0; x < LEVEL_HEIGHT; x++) {
             for (int y = 0; y < LEVEL_WIDTH; y++) {
                 Coordinate coordinate = new Coordinate(x, y);
-                PushyFieldView<Terrain> pushyTerrainView = new PushyFieldView<>(activity, new Water(coordinate));
+                PushyFieldView<Terrain> pushyTerrainView = new PushyFieldView<>(activity, TileMapBuilder.build(TerrainType.WATER, coordinate));
                 pushyTerrainViews.set(x, y, pushyTerrainView);
                 PushyFieldView<Entity> pushyEntityView = new PushyFieldView<>(activity, (Entity) null);
                 pushyEntityViews.set(x, y, pushyEntityView);
                 pushyEntityView.invalidate();
                 pushyTerrainView.invalidate();
+                pushyEntityView.setOnClickListener(view -> set(coordinate));
             }
         }
         this.entityManager = new EntityManager(pushyEntityViews);
@@ -77,68 +77,142 @@ public class LevelBuilder {
         return terrainManager;
     }
 
-    public Tag getSelectedField() {
+    public Type getSelectedField() {
         return selectedField;
     }
 
-    public Tag getCurrentTypeOfField(Coordinate coordinate) {
+    public Type getCurrentTypeOfField(Coordinate coordinate) {
         return selectedField;
     }
 
-    public Tag getCurrentTypeOfField(Coordinate coordinate, Tag tag) {
-        if (tag instanceof TerrainType) {
+    public void undo() {
+        TaskManager.getInstance().undo();
+    }
+
+    public void redo() {
+        TaskManager.getInstance().redo();
+    }
+
+    public Type getCurrentTypeOfField(Coordinate coordinate, Type type) {
+        if (type instanceof TerrainType) {
             return terrainManager.getObject(coordinate).getType();
         }
         return entityManager.getObject(coordinate) == null ? null : entityManager.getObject(coordinate).getType();
     }
 
-    public void setTypeOfField(Coordinate coordinate, Tag tag) {
-        if (tag instanceof TerrainType) {
-            terrainManager.setObject(coordinate, TileMapBuilder.build((TerrainType) tag, coordinate));
+    public void setTypeOfField(Coordinate coordinate, Type type) {
+        if (type instanceof TerrainType) {
+            terrainManager.setObject(coordinate, TileMapBuilder.build((TerrainType) type, coordinate));
             return;
         }
-        entityManager.setObject(coordinate, TileMapBuilder.build((EntityType) tag, coordinate));
+        entityManager.setObject(coordinate, TileMapBuilder.build((EntityType) type, coordinate));
     }
 
-    public void setSelectedField(Tag selectedField) {
+    public void setSelectedField(Type selectedField) {
         this.selectedField = selectedField;
     }
+
 
     public void validate() {
 
     }
 
-    public void fill(Coordinate coordinate) {
-        TaskManager.getInstance().execute(new FillTask(this, coordinate, selectedField));
+
+    public void smooth() {
+        TaskManager.getInstance().execute(new SmoothTask(this));
+    }
+
+    public void fill() {
+        isFillMode = !isFillMode;
+
     }
 
     public void set(Coordinate coordinate) {
-        TaskManager.getInstance().execute(new SetTask(this, coordinate, selectedField));
+        TaskManager.getInstance().execute(isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField));
     }
 
 
-    public static List<Terrain> getTerrainWhichCanBePlaced() {
-        List<Terrain> terrains = new ArrayList<>();
-        terrains.add(new Water(null));
-        terrains.add(new Sand(null, TerrainType.SAND));
-        terrains.add(new Sand(null, TerrainType.SAND_BOTTOM_RIGHT));
-        terrains.add(new Sand(null, TerrainType.SAND_BOTTOM_LEFT));
-        terrains.add(new Sand(null, TerrainType.SAND_TOP_LEFT));
-        terrains.add(new Sand(null, TerrainType.SAND_TOP_RIGHT));
+    public String export() {
+        // If I want to change something which would make "old" level corrupted I want to increase the version number and
+        // make new Parser for the new version
+        int version = 1;
+        String binary = Type.addRedundantZeros(Integer.toBinaryString(version), 8);
+        StringBuilder binaryTerrain = new StringBuilder();
+        StringBuilder binaryEntity = new StringBuilder();
+        for (int x = 0; x < LEVEL_HEIGHT; x++) {
+            for (int y = 0; y < LEVEL_WIDTH; y++) {
+                Coordinate coordinate = new Coordinate(x, y);
+                binaryTerrain.append(terrainManager.getObject(coordinate).getType().getValue());
+                Entity entity = entityManager.getObject(coordinate);
+                binaryEntity.append(entity == null ? EntityType.NO_ENTITY.getValue() : entity.getType().getValue());
+            }
+        }
 
-        terrains.add(new Grass(null, TerrainType.GRASS));
-        terrains.add(new Grass(null, TerrainType.GRASS_BOTTOM_RIGHT));
-        terrains.add(new Grass(null, TerrainType.GRASS_BOTTOM_LEFT));
-        terrains.add(new Grass(null, TerrainType.GRASS_TOP_LEFT));
-        terrains.add(new Grass(null, TerrainType.GRASS_TOP_RIGHT));
-        return terrains;
+        binary += binaryTerrain.toString() + binaryEntity.toString();
+        return binaryToHex(binary);
     }
 
-    public static List<Entity> getEntitiesWhichCanBePlaced() {
-        List<Entity> entities = new ArrayList<>();
-        entities.add(new Pushy(null));
-        return entities;
+    public void importLevel(String hex) {
+        String binary = hexToBinary(hex);
+        String version = binary.substring(0, 8);
+        binary = binary.substring(8);
+
+        for (int x = 0; x < LEVEL_HEIGHT; x++) {
+            for (int y = 0; y < LEVEL_WIDTH; y++) {
+                String tagValue = binary.substring(0, 6);
+                binary = binary.substring(6);
+
+                TerrainType terrainType = (TerrainType) Type.getByValue(tagValue, true);
+                Coordinate coordinate = new Coordinate(x, y);
+                terrainManager.setObject(coordinate, TileMapBuilder.build(terrainType, coordinate));
+            }
+        }
+        for (int x = 0; x < LEVEL_HEIGHT; x++) {
+            for (int y = 0; y < LEVEL_WIDTH; y++) {
+                String tagValue = binary.substring(0, 6);
+                binary = binary.substring(6);
+                EntityType entityType = (EntityType) Type.getByValue(tagValue, false);
+                Coordinate coordinate = new Coordinate(x, y);
+                entityManager.setObject(coordinate, TileMapBuilder.build(entityType, coordinate));
+            }
+        }
+
+        int x = 0;
+    }
+
+
+    private String hexToBinary(String hex) {
+        List<String> bytes = getParts(hex, 1);
+        StringBuilder binaryString = new StringBuilder();
+        for (String byteValue : bytes) {
+            int i = Integer.parseInt(byteValue, 16);
+            String byteAsBinaryString = Type.addRedundantZeros(Integer.toBinaryString(i), 4);
+            binaryString.append(byteAsBinaryString);
+        }
+        return binaryString.toString();
+    }
+
+    private String binaryToHex(String binary) {
+        List<String> bytes = getParts(binary, 4);
+        StringBuilder hexString = new StringBuilder();
+
+        for (String byteValue : bytes) {
+            int decimal = Integer.parseInt(byteValue, 2);
+            String byteAsHexString = Integer.toString(decimal, 16);
+            hexString.append(byteAsHexString);
+        }
+        return hexString.toString();
+    }
+
+    private static List<String> getParts(String string, int partitionSize) {
+        List<String> parts = new ArrayList<>();
+        int len = string.length();
+        for (int i = 0; i < len; i += partitionSize) {
+            parts.add(string.substring(i, Math.min(len, i + partitionSize)));
+        }
+        return parts;
     }
 
 
 }
+

@@ -8,8 +8,8 @@ public class Hole extends Terrain {
 
     private boolean isFilled;
 
-    public Hole(Coordinate coordinate) {
-        super(coordinate, R.drawable.hole);
+    public Hole(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
         isFilled = false;
     }
 
@@ -17,7 +17,7 @@ public class Hole extends Terrain {
         return isFilled;
     }
 
-    public void setFilled(){
+    public void setFilled() {
         this.isFilled = true;
     }
 
@@ -27,12 +27,7 @@ public class Hole extends Terrain {
     }
 
     @Override
-    public TerrainType getType() {
-        return TerrainType.HOLE;
-    }
-
-    @Override
     public int getDrawable() {
-        return !isFilled ? R.drawable.hole : R.drawable.hole_filled;
+        return !isFilled ? super.getDrawable() : R.drawable.hole_filled;
     }
 }

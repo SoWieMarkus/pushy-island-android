@@ -17,8 +17,8 @@ public class Pushy extends MovableEntity {
 
     private Entity octopus;
 
-    public Pushy(Coordinate coordinate) {
-        super(coordinate, R.drawable.pushy);
+    public Pushy(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
         facing = Direction.NORTH;
         octopus = null;
     }
@@ -90,8 +90,4 @@ public class Pushy extends MovableEntity {
         }
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.PUSHY;
-    }
 }

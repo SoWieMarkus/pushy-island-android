@@ -12,8 +12,8 @@ public class StringPressurePlate extends PressurePlateTerrain{
 
     private boolean interacted;
 
-    public StringPressurePlate(Coordinate coordinate) {
-        super(coordinate, R.drawable.string_pressure_plate);
+    public StringPressurePlate(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
         interacted = false;
     }
 
@@ -31,8 +31,4 @@ public class StringPressurePlate extends PressurePlateTerrain{
         }
     }
 
-    @Override
-    public TerrainType getType() {
-        return TerrainType.STRING_PRESSURE_PLATE;
-    }
 }

@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.engine.entity.interactable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.InteractableEntity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
@@ -9,10 +8,9 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Finish extends InteractableEntity {
 
-    public Finish(Coordinate coordinate) {
-        super(coordinate, R.drawable.finish);
+    public Finish(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
-
 
     @Override
     protected void executeInteraction(Direction direction, Game game) {
@@ -24,8 +22,4 @@ public class Finish extends InteractableEntity {
         return direction == Direction.SOUTH;
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.FINISH;
-    }
 }

@@ -13,7 +13,7 @@ public class LeafDirectionChanger extends InteractableEntity {
     private Direction direction;
 
     public LeafDirectionChanger(Coordinate coordinate, EntityType entityType) {
-        super(coordinate, R.drawable.leaf_changer_east);
+        super(coordinate, entityType);
         switch (entityType) {
             case LEAF_CHANGER_EAST:
                 direction = Direction.EAST;

@@ -9,23 +9,23 @@ public abstract class Entity extends Field {
 
     private boolean teleported;
 
-    public Entity(Coordinate coordinate, int drawable) {
-        super(coordinate, drawable);
+    public Entity(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
-    public boolean isMovableEntity(){
+    public boolean isMovableEntity() {
         return this instanceof MovableEntity;
     }
 
-    public boolean isInteractEntity(){
+    public boolean isInteractEntity() {
         return this instanceof InteractableEntity;
     }
 
-    public boolean isCollectibleEntity(){
+    public boolean isCollectibleEntity() {
         return this instanceof CollectibleEntity;
     }
 
-    public boolean isExplodable(){
+    public boolean isExplodable() {
         return false;
     }
 
@@ -37,5 +37,7 @@ public abstract class Entity extends Field {
         this.teleported = teleported;
     }
 
-    public abstract EntityType getType();
+    public EntityType getType() {
+        return (EntityType) super.getType();
+    }
 }

@@ -10,11 +10,13 @@ public abstract class Terrain extends Field {
     public static final int ELEVATION_SAND = 0;
     public static final int ELEVATION_GRASS = 1;
 
-    public Terrain(Coordinate coordinate, int drawable) {
-        super(coordinate, drawable);
+    public Terrain(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
     }
 
-    public abstract int getElevation();
+    public int getElevation() {
+        return ELEVATION_SAND;
+    }
 
     @Override
     public boolean destroysFlyingStone() {
@@ -40,6 +42,8 @@ public abstract class Terrain extends Field {
         return false;
     }
 
-    public abstract TerrainType getType();
+    public TerrainType getType() {
+        return (TerrainType) super.getType();
+    }
 
 }

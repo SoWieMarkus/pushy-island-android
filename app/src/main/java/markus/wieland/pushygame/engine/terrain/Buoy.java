@@ -1,13 +1,12 @@
 package markus.wieland.pushygame.engine.terrain;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.TerrainType;
 
-public class Buoy extends Terrain{
+public class Buoy extends Terrain {
 
-    public Buoy(Coordinate coordinate) {
-        super(coordinate, R.drawable.buoy);
+    public Buoy(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
     }
 
     @Override
@@ -15,8 +14,4 @@ public class Buoy extends Terrain{
         return Integer.MAX_VALUE;
     }
 
-    @Override
-    public TerrainType getType() {
-        return TerrainType.BUOY;
-    }
 }

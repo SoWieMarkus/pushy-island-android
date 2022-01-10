@@ -8,8 +8,8 @@ public class InvisibleWater extends Terrain {
 
     private boolean isVisible;
 
-    public InvisibleWater(Coordinate coordinate) {
-        super(coordinate, R.drawable.water);
+    public InvisibleWater(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
     }
 
     public boolean isVisible() {
@@ -22,12 +22,7 @@ public class InvisibleWater extends Terrain {
 
     @Override
     public int getDrawable() {
-        return isVisible ? R.drawable.water_invisible :super.getDrawable();
-    }
-
-    @Override
-    public int getElevation() {
-        return ELEVATION_SAND;
+        return isVisible ? R.drawable.water_invisible : super.getDrawable();
     }
 
     @Override
@@ -35,8 +30,5 @@ public class InvisibleWater extends Terrain {
         return true;
     }
 
-    @Override
-    public TerrainType getType() {
-        return TerrainType.WATER_INVISIBLE;
-    }
+
 }

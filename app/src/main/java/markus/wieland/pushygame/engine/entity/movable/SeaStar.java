@@ -8,8 +8,8 @@ import markus.wieland.pushygame.engine.terrain.Terrain;
 
 public class SeaStar extends MovableEntity {
 
-    public SeaStar(Coordinate coordinate) {
-        super(coordinate, R.drawable.seastar);
+    public SeaStar(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     @Override
@@ -25,8 +25,4 @@ public class SeaStar extends MovableEntity {
         }
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.SEA_STAR;
-    }
 }

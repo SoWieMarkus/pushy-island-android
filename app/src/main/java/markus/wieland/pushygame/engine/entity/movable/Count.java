@@ -10,32 +10,25 @@ public class Count extends MovableEntity{
 
     private final int countValue;
     private boolean isUncovered;
-    private EntityType entityType;
 
     public Count(Coordinate coordinate, EntityType entityType) {
-        super(coordinate, R.drawable.count_hidden);
-        this.entityType = entityType;
+        super(coordinate, entityType);
         this.isUncovered = false;
         switch (entityType) {
             case COUNT_TWO:
                 countValue = 2;
-                setDrawable(R.drawable.count_two);
                 break;
             case COUNT_THREE:
                 countValue = 3;
-                setDrawable(R.drawable.count_three);
                 break;
             case COUNT_FOUR:
                 countValue = 4;
-                setDrawable(R.drawable.count_four);
                 break;
             case COUNT_FIVE:
                 countValue = 5;
-                setDrawable(R.drawable.count_five);
                 break;
             default:
                 countValue = 1;
-                setDrawable(R.drawable.count_one);
                 break;
         }
     }
@@ -66,8 +59,4 @@ public class Count extends MovableEntity{
         game.execute(new CountEvent(countValue));
     }
 
-    @Override
-    public EntityType getType() {
-        return entityType;
-    }
 }

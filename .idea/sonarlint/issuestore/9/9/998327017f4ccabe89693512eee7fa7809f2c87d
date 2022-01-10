@@ -1,0 +1,11 @@
+
+L
+java:S1481›")Remove this unused "test" local variable.(«ã¦¸ûÿÿÿÿ8ÊÄˆøã/
+S
+java:S1172W"1Remove this unused method parameter "coordinate".(‹ÞÛñúÿÿÿÿ8§§’Õã/
+P
+java:S1128".Remove this unused import 'android.view.View'.(Ø½­äþÿÿÿÿ8âÒ ×ã/
+£
+java:S1186v"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¶Ô¸êþÿÿÿÿ8ßÁžÔã/
+[
+java:S1854›"8Remove this useless assignment to local variable "test".(«ã¦¸ûÿÿÿÿ8ÉÇ‰øã/

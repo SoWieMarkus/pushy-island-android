@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.engine.entity.interactable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.CollectibleEntity;
 import markus.wieland.pushygame.engine.entity.RewardEntity;
@@ -12,8 +11,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Pirate extends RewardEntity {
 
-    public Pirate(Coordinate coordinate) {
-        super(coordinate, R.drawable.pirat, Coin.class);
+    public Pirate(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType, Coin.class);
     }
 
     @Override
@@ -32,9 +31,4 @@ public class Pirate extends RewardEntity {
         if (gotReward) game.getEntityManager().remove(this);
     }
 
-
-    @Override
-    public EntityType getType() {
-        return EntityType.PIRATE;
-    }
 }

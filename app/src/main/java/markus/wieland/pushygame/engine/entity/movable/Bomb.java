@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.engine.entity.movable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
@@ -9,8 +8,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Bomb extends MovableEntity {
 
-    public Bomb(Coordinate coordinate) {
-        super(coordinate, R.drawable.bomb);
+    public Bomb(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     public void explode(Game game) {
@@ -27,8 +26,4 @@ public class Bomb extends MovableEntity {
         if (entity != null && entity.isExplodable()) game.getEntityManager().remove(entity);
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.BOMB;
-    }
 }

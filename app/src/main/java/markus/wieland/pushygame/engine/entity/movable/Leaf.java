@@ -1,65 +1,43 @@
 package markus.wieland.pushygame.engine.entity.movable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class Leaf extends MovableEntity{
-
-    private Direction direction;
+public class Leaf extends MovableEntity {
 
     public Leaf(Coordinate coordinate, EntityType entityType) {
-        super(coordinate, R.drawable.leaf_down);
-        switch (entityType) {
-            case LEAF_DOWN:
-                direction = Direction.SOUTH;
-                break;
-            case LEAF_UP:
-                direction = Direction.NORTH;
-                break;
-            case LEAF_LEFT:
-                direction = Direction.WEST;
-                break;
-            default:
-                direction = Direction.EAST;
-                break;
-        }
-    }
-
-    @Override
-    public int getDrawable() {
-        switch (direction) {
-            case SOUTH:
-                return R.drawable.leaf_down;
-            case NORTH:
-                return R.drawable.leaf_up;
-            case WEST:
-                return R.drawable.leaf_left;
-            default:
-                return R.drawable.leaf_right;
-        }
+        super(coordinate, entityType);
     }
 
     public void setDirection(Direction direction) {
-        this.direction = direction;
+        switch (direction) {
+            case NORTH:
+                setType(EntityType.LEAF_UP);
+                break;
+            case SOUTH:
+                setType(EntityType.LEAF_DOWN);
+                break;
+            case EAST:
+                setType(EntityType.LEAF_RIGHT);
+                break;
+            default:
+                setType(EntityType.LEAF_LEFT);
+                break;
+        }
     }
 
     public Direction getDirection() {
-        return direction;
-    }
-
-    @Override
-    public EntityType getType() {
-        switch (direction) {
-            case SOUTH:
-                return EntityType.LEAF_DOWN;
-            case NORTH:
-                return EntityType.LEAF_UP;
-            case WEST:
-                return EntityType.LEAF_LEFT;
+        switch (getType()) {
+            case LEAF_DOWN:
+                return Direction.SOUTH;
+            case LEAF_UP:
+                return Direction.NORTH;
+            case LEAF_LEFT:
+                return Direction.WEST;
             default:
-                return EntityType.LEAF_RIGHT;
+                return Direction.EAST;
         }
     }
+
 }

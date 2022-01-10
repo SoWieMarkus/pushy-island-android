@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.engine.entity.interactable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.InteractableEntity;
 import markus.wieland.pushygame.engine.entity.collectible.Shot;
@@ -11,8 +10,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class SlingShot extends InteractableEntity {
 
-    public SlingShot(Coordinate coordinate) {
-        super(coordinate, R.drawable.slingshot);
+    public SlingShot(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     @Override
@@ -27,8 +26,4 @@ public class SlingShot extends InteractableEntity {
         return direction == Direction.SOUTH;
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.SLING_SHOT;
-    }
 }

@@ -1,16 +1,16 @@
 package markus.wieland.pushygame.levelbuilder.tasks;
 
 import markus.wieland.pushygame.engine.helper.Coordinate;
-import markus.wieland.pushygame.engine.level.Tag;
+import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
 public class SetTask extends Task{
 
     private final Coordinate coordinate;
-    private final Tag currentTypeOfTheField;
-    private final Tag typeWhichWillBeSet;
+    private final Type currentTypeOfTheField;
+    private final Type typeWhichWillBeSet;
 
-    public SetTask(LevelBuilder levelBuilder, Coordinate coordinate, Tag typeWhichWillBeSet) {
+    public SetTask(LevelBuilder levelBuilder, Coordinate coordinate, Type typeWhichWillBeSet) {
         super(levelBuilder);
         this.currentTypeOfTheField = getLevelBuilder().getCurrentTypeOfField(coordinate, typeWhichWillBeSet);
         this.coordinate = coordinate;

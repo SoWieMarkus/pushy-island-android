@@ -4,6 +4,7 @@ import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Inventory;
+import markus.wieland.pushygame.engine.level.EntityType;
 
 public abstract class RewardEntity extends InteractableEntity {
 
@@ -12,8 +13,8 @@ public abstract class RewardEntity extends InteractableEntity {
     protected boolean gotReward;
     protected final Class<? extends CollectibleEntity> returnType;
 
-    public RewardEntity(Coordinate coordinate, int drawable, Class<? extends CollectibleEntity> returnType) {
-        super(coordinate, drawable);
+    public RewardEntity(Coordinate coordinate, EntityType entityType, Class<? extends CollectibleEntity> returnType) {
+        super(coordinate, entityType);
         this.returnType = returnType;
     }
 

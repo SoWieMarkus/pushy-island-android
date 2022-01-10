@@ -1,8 +1,5 @@
 package markus.wieland.pushygame.levelbuilder.tasks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 

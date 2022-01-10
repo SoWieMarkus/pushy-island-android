@@ -11,32 +11,14 @@ public class Shell extends MovableEntity {
     private boolean isOpen;
     private boolean hasPearl;
 
-    public Shell(Coordinate coordinate) {
-        super(coordinate, R.drawable.shell);
-        isOpen = false;
+    public Shell(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
+        isOpen = entityType == EntityType.SHELL_OPEN_WITH_PEARL;
         hasPearl = true;
-    }
-
-    public Shell(Coordinate coordinate, boolean isOpen, boolean hasPearl) {
-        super(coordinate, R.drawable.shell);
-        this.isOpen = isOpen;
-        this.hasPearl = hasPearl;
-    }
-
-    public boolean isOpen() {
-        return isOpen;
     }
 
     public void setOpen(boolean open) {
         isOpen = open;
-    }
-
-    public boolean hasPearl() {
-        return hasPearl;
-    }
-
-    public void setHasPearl(boolean hasPearl) {
-        this.hasPearl = hasPearl;
     }
 
     @Override
@@ -54,7 +36,7 @@ public class Shell extends MovableEntity {
     public boolean move(Coordinate nextCoordinate, Game game) {
         if (super.move(nextCoordinate, game)) return true;
         if (isOpen && hasPearl) {
-            game.getInventory().add(new Pearl(getCoordinate()));
+            game.getInventory().add(new Pearl(getCoordinate(), EntityType.PEARL));
             hasPearl = false;
             game.getEntityManager().invalidate(this);
         }

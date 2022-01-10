@@ -1,18 +1,16 @@
 package markus.wieland.pushygame.engine.entity.movable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
-import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
 import markus.wieland.pushygame.engine.terrain.Hole;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 
 public class Coconut extends MovableEntity {
 
-    public Coconut(Coordinate coordinate) {
-        super(coordinate, R.drawable.coconut);
+    public Coconut(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType);
     }
 
     @Override
@@ -20,7 +18,8 @@ public class Coconut extends MovableEntity {
         boolean isGenerallyPossible = super.isMovePossible(nextCoordinate, game);
         if (game.getTerrainManager().getObject(nextCoordinate) == null) return false;
         if (game.getTerrainManager().getObject(this).isCoconutTunnel()
-                && !game.getTerrainManager().getObject(nextCoordinate).coconutCanEnterFromTunnel()) return false;
+                && !game.getTerrainManager().getObject(nextCoordinate).coconutCanEnterFromTunnel())
+            return false;
         return isGenerallyPossible
                 || game.getTerrainManager().getObject(nextCoordinate) instanceof Hole;
     }
@@ -29,7 +28,7 @@ public class Coconut extends MovableEntity {
     public boolean move(Coordinate nextCoordinate, Game game) {
         Direction direction = getCoordinate().getDirection(nextCoordinate);
         boolean wasMoved = false;
-        while(isMovePossible(nextCoordinate, game)) {
+        while (isMovePossible(nextCoordinate, game)) {
             wasMoved = true;
             executeMove(nextCoordinate, game);
             Terrain terrain = game.getTerrainManager().getObject(this);
@@ -44,8 +43,4 @@ public class Coconut extends MovableEntity {
         return wasMoved;
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.COCONUT;
-    }
 }

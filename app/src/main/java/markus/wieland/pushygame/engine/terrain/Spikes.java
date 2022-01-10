@@ -10,14 +10,14 @@ import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 public class Spikes extends Terrain {
     private boolean isActive;
 
-    public Spikes(Coordinate coordinate) {
-        super(coordinate, R.drawable.spikes);
+    public Spikes(Coordinate coordinate, TerrainType terrainType) {
+        super(coordinate, terrainType);
         isActive = true;
     }
 
     @Override
     public int getDrawable() {
-        return isActive ? R.drawable.spikes : R.drawable.spikes_deactivated;
+        return isActive ? super.getDrawable() : R.drawable.spikes_deactivated;
     }
 
     @Override
@@ -32,11 +32,6 @@ public class Spikes extends Terrain {
     @Override
     public boolean destroysFlyingStone() {
         return isActive();
-    }
-
-    @Override
-    public TerrainType getType() {
-        return TerrainType.SPIKES;
     }
 
     public void setActive(boolean active, Entity entity) {

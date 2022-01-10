@@ -11,8 +11,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Chest extends RewardEntity {
 
-    public Chest(Coordinate coordinate) {
-        super(coordinate, R.drawable.chest, Key.class);
+    public Chest(Coordinate coordinate, EntityType entityType) {
+        super(coordinate, entityType, Key.class);
         setNeedItemsAmount(1);
     }
 
@@ -23,7 +23,7 @@ public class Chest extends RewardEntity {
 
     @Override
     protected CollectibleEntity createRewardItem() {
-        return new Coin(getCoordinate());
+        return new Coin(getCoordinate(), EntityType.COIN);
     }
 
     @Override
@@ -31,8 +31,4 @@ public class Chest extends RewardEntity {
         return direction == Direction.SOUTH;
     }
 
-    @Override
-    public EntityType getType() {
-        return EntityType.CHEST;
-    }
 }

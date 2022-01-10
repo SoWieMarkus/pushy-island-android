@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.engine.entity.interactable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.InteractableEntity;
 import markus.wieland.pushygame.engine.events.FlowerEvent;
@@ -10,11 +9,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class Flower extends InteractableEntity {
 
-    private final EntityType entityType;
-
     public Flower(Coordinate coordinate, EntityType entityType) {
-        super(coordinate, entityType == EntityType.FLOWER_RED ? R.drawable.flower_red : R.drawable.flower);
-        this.entityType = entityType;
+        super(coordinate, entityType);
     }
 
     @Override
@@ -27,8 +23,4 @@ public class Flower extends InteractableEntity {
         return true;
     }
 
-    @Override
-    public EntityType getType() {
-        return entityType;
-    }
 }
