@@ -146,6 +146,7 @@ public class TileMapBuilder {
     }
 
     public static Entity build(EntityType entityType, Coordinate coordinate) {
+        if (entityType == null) return null;
         switch (entityType) {
             case STONE:
                 return new Stone(coordinate, entityType);

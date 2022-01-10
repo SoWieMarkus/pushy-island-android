@@ -7,12 +7,12 @@ import com.google.gson.annotations.SerializedName;
 import markus.wieland.pushygame.R;
 
 public enum EntityType implements Type {
+    @SerializedName("no_entity") NO_ENTITY(5, R.drawable.no_entity),
     @SerializedName("tree") TREE(0, R.drawable.tree),
     @SerializedName("box") BOX(1, R.drawable.box),
     @SerializedName("pushy") PUSHY(2, R.drawable.pushy),
     @SerializedName("finish") FINISH(3, R.drawable.finish),
     @SerializedName("stone") STONE(4, R.drawable.stone),
-    @SerializedName("no_entity") NO_ENTITY(5, R.drawable.no_entity),
     @SerializedName("seastar") SEA_STAR(6, R.drawable.seastar),
     @SerializedName("seed") SEED(7, R.drawable.seed),
     @SerializedName("bottle") BOTTLE(8, R.drawable.bottle),

@@ -16,6 +16,7 @@ import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.levelbuilder.tasks.FillTask;
+import markus.wieland.pushygame.levelbuilder.tasks.ResetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SmoothTask;
 import markus.wieland.pushygame.ui.PushyFieldView;
@@ -81,10 +82,6 @@ public class LevelBuilder {
         return selectedField;
     }
 
-    public Type getCurrentTypeOfField(Coordinate coordinate) {
-        return selectedField;
-    }
-
     public void undo() {
         TaskManager.getInstance().undo();
     }
@@ -98,6 +95,10 @@ public class LevelBuilder {
             return terrainManager.getObject(coordinate).getType();
         }
         return entityManager.getObject(coordinate) == null ? null : entityManager.getObject(coordinate).getType();
+    }
+
+    public void reset() {
+        TaskManager.getInstance().execute(new ResetTask(this));
     }
 
     public void setTypeOfField(Coordinate coordinate, Type type) {
@@ -131,6 +132,18 @@ public class LevelBuilder {
         TaskManager.getInstance().execute(isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField));
     }
 
+
+    /**
+     * Get the level as a hex string
+     * 1. byte ... version number
+     * then 12*20x 6 bit == terrainType.getValue();
+     * then 12*20x 6 bit == entityType.getValue();
+     * <p>
+     * = 2 * 6 bit * 12 * 20 + 1 byte = 361 byte
+     * + following will be the level name
+     *
+     * @return
+     */
 
     public String export() {
         // If I want to change something which would make "old" level corrupted I want to increase the version number and
@@ -181,7 +194,7 @@ public class LevelBuilder {
     }
 
 
-    private String hexToBinary(String hex) {
+    public static String hexToBinary(String hex) {
         List<String> bytes = getParts(hex, 1);
         StringBuilder binaryString = new StringBuilder();
         for (String byteValue : bytes) {
@@ -192,7 +205,7 @@ public class LevelBuilder {
         return binaryString.toString();
     }
 
-    private String binaryToHex(String binary) {
+    public static String binaryToHex(String binary) {
         List<String> bytes = getParts(binary, 4);
         StringBuilder hexString = new StringBuilder();
 
@@ -204,7 +217,7 @@ public class LevelBuilder {
         return hexString.toString();
     }
 
-    private static List<String> getParts(String string, int partitionSize) {
+    public static List<String> getParts(String string, int partitionSize) {
         List<String> parts = new ArrayList<>();
         int len = string.length();
         for (int i = 0; i < len; i += partitionSize) {

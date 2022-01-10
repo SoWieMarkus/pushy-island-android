@@ -6,6 +6,7 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.terrain.Terrain;
+import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
 public class Level {
 
@@ -17,12 +18,12 @@ public class Level {
     private final Matrix<Entity> entities;
 
     public Level(RawLevel rawLevel) {
-        this.height = rawLevel.getHeight();
+        this.height = LevelBuilder.LEVEL_HEIGHT;
         this.name = rawLevel.getName();
         this.number = rawLevel.getNumber();
-        this.width = rawLevel.getWidth();
-        this.terrain = new Matrix<>(rawLevel.getHeight(), rawLevel.getWidth());
-        this.entities = new Matrix<>(rawLevel.getHeight(), rawLevel.getWidth());
+        this.width = LevelBuilder.LEVEL_WIDTH;
+        this.terrain = new Matrix<>(height, width);
+        this.entities = new Matrix<>(height, width);
         init(rawLevel.getTerrain(), rawLevel.getEntities());
     }
 

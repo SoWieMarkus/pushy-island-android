@@ -14,13 +14,11 @@ import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.Water;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
-public class SmoothTask extends Task {
+public class SmoothTask extends MultipleTask {
 
-    private List<Task> executedTasks;
 
     public SmoothTask(LevelBuilder levelBuilder) {
         super(levelBuilder);
-        executedTasks = new ArrayList<>();
     }
 
     private TerrainType checkSand(Coordinate coordinate) {
@@ -31,10 +29,10 @@ public class SmoothTask extends Task {
 
         TerrainType terrainType = null;
         if (!isSandOrGrass(top) && !isSandOrGrass(left) && isSandOrGrass(right) && isSandOrGrass(down)) {
-            terrainType =  TerrainType.SAND_TOP_LEFT;
+            terrainType = TerrainType.SAND_TOP_LEFT;
         }
         if (!isSandOrGrass(top) && !isSandOrGrass(right) && isSandOrGrass(left) && isSandOrGrass(down)) {
-            terrainType =  TerrainType.SAND_TOP_RIGHT;
+            terrainType = TerrainType.SAND_TOP_RIGHT;
         }
         if (!isSandOrGrass(down) && !isSandOrGrass(left) && isSandOrGrass(right) && isSandOrGrass(top)) {
             terrainType = TerrainType.SAND_BOTTOM_LEFT;
@@ -96,19 +94,9 @@ public class SmoothTask extends Task {
                     terrainType = checkSand(coordinate);
                     if (terrainType == null) terrainType = TerrainType.SAND;
                 }
-                if (terrainType != null) {
-                    SetTask setTask = new SetTask(getLevelBuilder(), coordinate, terrainType);
-                    setTask.execute();
-                    executedTasks.add(setTask);
-                }
-            }
-        }
-    }
 
-    @Override
-    public void undo() {
-        for (Task task : executedTasks) {
-            task.undo();
+                executeSubTask(new SetTask(getLevelBuilder(), coordinate, terrainType));
+            }
         }
     }
 }
