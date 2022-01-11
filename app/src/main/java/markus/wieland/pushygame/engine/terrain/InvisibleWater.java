@@ -6,23 +6,20 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class InvisibleWater extends Terrain {
 
-    private boolean isVisible;
+    private boolean isNotVisible;
 
     public InvisibleWater(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);
-    }
-
-    public boolean isVisible() {
-        return isVisible;
+        isNotVisible = false;
     }
 
     public void setVisible(boolean visible) {
-        isVisible = visible;
+        isNotVisible = visible;
     }
 
     @Override
     public int getDrawable() {
-        return isVisible ? R.drawable.water_invisible : super.getDrawable();
+        return isNotVisible ? R.drawable.water : super.getDrawable();
     }
 
     @Override

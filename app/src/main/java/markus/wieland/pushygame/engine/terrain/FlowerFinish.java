@@ -4,7 +4,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.level.TerrainType;
 
-public class FlowerFinish extends Terrain {
+public class FlowerFinish extends Grass {
 
     public FlowerFinish(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);

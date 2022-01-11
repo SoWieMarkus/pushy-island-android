@@ -5,7 +5,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#acc0f5"
-    tools:context=".LevelBuilderActivity">
+    tools:context=".ui.customlevel.levelbuilder.LevelBuilderActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/activity_game_export"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_save" />
+
+            <ImageButton
+                android:id="@+id/activity_level_builder_fill"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_fill" />
+
+            <ImageButton
+                android:id="@+id/activity_level_builder_undo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_undo" />
+
+            <ImageButton
+                android:id="@+id/actvity_level_builder_redo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_redo" />
+
+            <ImageButton
+                android:id="@+id/activity_level_builder_smooth"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_smooth" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -27,7 +72,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <markus.wieland.pushygame.ui.PushyView
+    <markus.wieland.pushygame.ui.game.PushyView
         android:id="@+id/game_level_builder_terrain"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -35,12 +80,12 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintDimensionRatio="20:12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent">
 
-    </markus.wieland.pushygame.ui.PushyView>
+    </markus.wieland.pushygame.ui.game.PushyView>
 
-    <markus.wieland.pushygame.ui.PushyView
+    <markus.wieland.pushygame.ui.game.PushyView
         android:id="@+id/game_level_builder_entities"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -48,60 +93,10 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintDimensionRatio="20:12"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
         app:layout_constraintTop_toTopOf="parent">
 
-    </markus.wieland.pushygame.ui.PushyView>
+    </markus.wieland.pushygame.ui.game.PushyView>
 
-
-    <ImageButton
-        android:id="@+id/activity_level_builder_undo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_restart" />
-
-    <Button
-        android:id="@+id/activity_level_builder_import"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Import"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_game_export" />
-
-    <Button
-        android:id="@+id/activity_level_builder_smooth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Smooth"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_level_builder_import" />
-
-    <Button
-        android:id="@+id/activity_level_builder_fill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fill"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_level_builder_smooth" />
-
-    <Button
-        android:id="@+id/actvity_level_builder_redo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/activity_game_export"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Export"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actvity_level_builder_redo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

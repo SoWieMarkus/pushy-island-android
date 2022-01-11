@@ -8,7 +8,7 @@ import markus.wieland.pushygame.engine.terrain.pressure.ItemTeleporter;
 import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
-import markus.wieland.pushygame.ui.PushyFieldView;
+import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public class TerrainManager extends Manager<Terrain, PushyFieldView<Terrain>> {
 

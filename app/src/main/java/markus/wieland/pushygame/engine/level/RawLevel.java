@@ -46,7 +46,7 @@ public class RawLevel {
                 entities.get(x).add(entityType);
             }
         }
-        //TODO name
+        this.name = LevelBuilder.binaryStringToString(binary);
     }
 
     public String getName() {

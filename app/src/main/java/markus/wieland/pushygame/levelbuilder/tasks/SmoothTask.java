@@ -1,13 +1,8 @@
 package markus.wieland.pushygame.levelbuilder.tasks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
-import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.engine.level.TerrainType;
-import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.terrain.Grass;
 import markus.wieland.pushygame.engine.terrain.Sand;
 import markus.wieland.pushygame.engine.terrain.Terrain;
@@ -84,7 +79,7 @@ public class SmoothTask extends MultipleTask {
             for (int y = 0; y < LevelBuilder.LEVEL_WIDTH; y++) {
                 Coordinate coordinate = new Coordinate(x, y);
                 Terrain terrain = getLevelBuilder().getTerrainManager().getObject(coordinate);
-                if (!(terrain instanceof Grass || terrain instanceof Sand)) continue;
+                if (!(terrain.getClass().equals(Grass.class) || terrain.getClass().equals(Sand.class))) continue;
                 TerrainType terrainType = null;
                 if (terrain instanceof Grass) {
                     terrainType = checkGrass(coordinate);

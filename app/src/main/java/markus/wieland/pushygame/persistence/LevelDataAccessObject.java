@@ -15,5 +15,11 @@ public interface LevelDataAccessObject extends BaseDataAccessObject<LevelDisplay
     @Query("SELECT * FROM level")
     LiveData<List<LevelDisplayItem>> getAllLevel();
 
+    @Query("SELECT * FROM level WHERE isCampaign = :isCampaign")
+    LiveData<List<LevelDisplayItem>> getAllLevel(boolean isCampaign);
+
+    @Query("SELECT * FROM level WHERE number = :id")
+    LiveData<LevelDisplayItem> getLevel(long id);
+
 
 }

@@ -7,6 +7,8 @@ import markus.wieland.pushygame.levelbuilder.tasks.Task;
 
 public class TaskManager {
 
+    private static final int THRESHOLD = 100;
+
     private final List<Task> tasksToUndo;
     private final List<Task> tasksToRedo;
 
@@ -23,6 +25,9 @@ public class TaskManager {
 
     public void execute(Task task) {
         task.execute();
+        if (tasksToUndo.size() > THRESHOLD) {
+            tasksToUndo.remove(0);
+        }
         tasksToUndo.add(task);
     }
 
@@ -40,5 +45,9 @@ public class TaskManager {
         task.execute();
         tasksToRedo.remove(task);
         tasksToUndo.add(task);
+    }
+
+    public boolean hasChanges(){
+        return !tasksToUndo.isEmpty();
     }
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import markus.wieland.pushygame.engine.entity.CollectibleEntity;
 import markus.wieland.pushygame.engine.events.InventoryEventListener;
-import markus.wieland.pushygame.ui.InventoryItem;
+import markus.wieland.pushygame.ui.game.InventoryItem;
 
 public class Inventory {
 

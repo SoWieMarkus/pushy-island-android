@@ -9,14 +9,11 @@ public abstract class Field {
 
     private Coordinate coordinate;
 
-    @DrawableRes
-    private int drawable;
-
     private Type type;
 
     public Field(Coordinate coordinate, Type type) {
         this.coordinate = coordinate;
-        this.drawable = type == null ? R.drawable.no_entity : type.getDrawable();
+
         this.type = type;
     }
 
@@ -25,11 +22,7 @@ public abstract class Field {
     }
 
     public int getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
+        return type == null ? R.drawable.no_entity : type.getDrawable();
     }
 
     public boolean destroysFlyingStone() {

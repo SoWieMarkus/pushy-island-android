@@ -4,7 +4,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.level.TerrainType;
 
-public class StatueFinish extends Terrain {
+public class StatueFinish extends Sand {
 
     public StatueFinish(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);

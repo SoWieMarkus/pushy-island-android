@@ -1,31 +1,48 @@
 package markus.wieland.pushygame.engine.level;
 
-import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 import markus.wieland.databases.DatabaseEntity;
 import markus.wieland.defaultappelements.uielements.adapter.QueryableEntity;
 
 @androidx.room.Entity(tableName = "level")
-public class LevelDisplayItem implements QueryableEntity<String>, DatabaseEntity {
+public class LevelDisplayItem implements QueryableEntity<Long>, DatabaseEntity {
 
     private String name;
     private String file;
 
-    @PrimaryKey
-    @NonNull
-    private String number;
+    @PrimaryKey(autoGenerate = true)
+    private long number;
     private boolean solved;
+
+    private boolean isCampaign;
 
     public LevelDisplayItem(String file) {
         String[] parts = file.split("_");
         this.name = parts[1].replace(".json", "");
-        this.number = parts[0];
+        this.number = Long.parseLong(parts[0]);
         this.file = file;
         this.solved = false;
+        this.isCampaign = true;
     }
 
-    public LevelDisplayItem() {}
+    public LevelDisplayItem(RawLevel rawLevel, String code) {
+        this.name = rawLevel.getName();
+        this.file = code;
+        this.solved = false;
+        this.isCampaign = false;
+    }
+
+    public LevelDisplayItem() {
+    }
+
+    public boolean isCampaign() {
+        return isCampaign;
+    }
+
+    public void setCampaign(boolean campaign) {
+        isCampaign = campaign;
+    }
 
     public boolean isSolved() {
         return solved;
@@ -43,16 +60,24 @@ public class LevelDisplayItem implements QueryableEntity<String>, DatabaseEntity
         this.name = name;
     }
 
-    public String getNumber() {
+    public long getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(long number) {
         this.number = number;
     }
 
+    public String getNumberAsString() {
+        StringBuilder number = new StringBuilder(String.valueOf(getNumber()));
+        while (number.length() < 3) {
+            number.insert(0, "0");
+        }
+        return number.toString();
+    }
+
     @Override
-    public String getId() {
+    public Long getId() {
         return getNumber();
     }
 
@@ -71,6 +96,6 @@ public class LevelDisplayItem implements QueryableEntity<String>, DatabaseEntity
 
     @Override
     public long getUniqueId() {
-        return Integer.getInteger(number);
+        return getNumber();
     }
 }

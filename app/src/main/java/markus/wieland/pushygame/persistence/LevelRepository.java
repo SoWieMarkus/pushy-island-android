@@ -25,4 +25,12 @@ public class LevelRepository extends BaseRepository<LevelDisplayItem, LevelDataA
     public LiveData<List<LevelDisplayItem>> getAllLevel() {
         return getDataAccessObject().getAllLevel();
     }
+
+    public LiveData<List<LevelDisplayItem>> getAllLevel(boolean isCampaign) {
+        return getDataAccessObject().getAllLevel(isCampaign);
+    }
+
+    public LiveData<LevelDisplayItem> getLevel(long id) {
+        return getDataAccessObject().getLevel(id);
+    }
 }

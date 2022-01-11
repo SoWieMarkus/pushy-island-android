@@ -14,7 +14,7 @@ public class ShowInvisibleWaterBlocksEvent extends Event {
     @Override
     public void execute() {
         for (InvisibleWater invisibleWater : game.getTerrainManager().getOfType(InvisibleWater.class)) {
-            invisibleWater.setVisible(visible);
+            invisibleWater.setVisible(!visible);
             game.getTerrainManager().invalidate(invisibleWater);
         }
     }

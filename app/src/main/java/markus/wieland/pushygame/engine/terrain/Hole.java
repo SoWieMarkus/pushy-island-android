@@ -4,7 +4,7 @@ import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.TerrainType;
 
-public class Hole extends Terrain {
+public class Hole extends Sand {
 
     private boolean isFilled;
 

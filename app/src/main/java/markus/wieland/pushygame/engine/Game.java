@@ -25,12 +25,13 @@ import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.terrain.BarrelFinish;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.FlowerFinish;
+import markus.wieland.pushygame.engine.terrain.InvisibleWater;
 import markus.wieland.pushygame.engine.terrain.StatueFinish;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.Water;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
-import markus.wieland.pushygame.ui.PushyFieldView;
+import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public class Game {
 
@@ -54,6 +55,10 @@ public class Game {
             if (terrainManager.getObject(seaStar) instanceof Water) {
                 entityManager.remove(seaStar);
             }
+        }
+        for (InvisibleWater invisibleWater : terrainManager.getOfType(InvisibleWater.class)) {
+            invisibleWater.setVisible(true);
+            terrainManager.invalidate(invisibleWater);
         }
     }
 

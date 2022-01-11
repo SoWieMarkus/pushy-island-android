@@ -7,7 +7,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 
-public class Spikes extends Terrain {
+public class Spikes extends Sand {
     private boolean isActive;
 
     public Spikes(Coordinate coordinate, TerrainType terrainType) {

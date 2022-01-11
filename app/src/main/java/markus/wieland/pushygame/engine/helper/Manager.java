@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import markus.wieland.pushygame.engine.exceptions.FieldViewShouldNotBeNullException;
-import markus.wieland.pushygame.ui.PushyFieldView;
+import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
 

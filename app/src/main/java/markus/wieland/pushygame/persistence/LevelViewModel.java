@@ -24,4 +24,12 @@ public class LevelViewModel extends BaseViewModel<LevelDisplayItem, LevelDataAcc
     public LiveData<List<LevelDisplayItem>> getAllLevel() {
         return getRepository().getAllLevel();
     }
+
+    public LiveData<List<LevelDisplayItem>> getAllLevel(boolean isCampaign) {
+        return getRepository().getAllLevel(isCampaign);
+    }
+
+    public LiveData<LevelDisplayItem> getLevel(long id) {
+        return getRepository().getLevel(id);
+    }
 }

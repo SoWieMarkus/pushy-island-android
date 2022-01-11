@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#acc0f5"
-    tools:context=".GameActivity">
+    tools:context=".ui.game.GameActivity">
 
-    <markus.wieland.pushygame.ui.PushyView
+    <markus.wieland.pushygame.ui.game.PushyView
         android:id="@+id/game_activity_terrain"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,9 +18,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </markus.wieland.pushygame.ui.PushyView>
+    </markus.wieland.pushygame.ui.game.PushyView>
 
-    <markus.wieland.pushygame.ui.PushyView
+    <markus.wieland.pushygame.ui.game.PushyView
         android:id="@+id/game_activity_entities"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </markus.wieland.pushygame.ui.PushyView>
+    </markus.wieland.pushygame.ui.game.PushyView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

@@ -12,7 +12,7 @@ import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Inventory;
 import markus.wieland.pushygame.engine.helper.Manager;
 import markus.wieland.pushygame.engine.helper.Matrix;
-import markus.wieland.pushygame.ui.PushyFieldView;
+import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
 

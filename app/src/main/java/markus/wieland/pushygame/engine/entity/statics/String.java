@@ -9,6 +9,8 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class String extends Entity {
 
+    private int drawable;
+
     public String(Coordinate coordinate, Direction first, Direction second) {
         super(coordinate, null);
         if (first == null) {
@@ -92,6 +94,15 @@ public class String extends Entity {
                 }
                 break;
         }
+    }
+
+    @Override
+    public int getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(int drawable) {
+        this.drawable = drawable;
     }
 
     // Can not be placed by user

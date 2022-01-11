@@ -1,3 +1,3 @@
 
->
-java:S1116"Remove this empty statement.(Åñ­õşÿÿÿÿ8³ƒ§ƒã/
+x
+java:S2637"\"number" is marked "androidx.annotation.NonNull" but is not initialized in this constructor.(’êãE8´Ç£Ãä/

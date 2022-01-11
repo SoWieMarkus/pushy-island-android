@@ -6,21 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/activity_main_campaign"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/activity_main_level_builder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/activity_main_campaign"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/activity_main_campaign"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kampagne" />
+
+        <Button
+            android:id="@+id/activity_main_level_builder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eigene Level" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

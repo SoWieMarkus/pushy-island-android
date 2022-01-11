@@ -1,6 +1,11 @@
 package markus.wieland.pushygame.levelbuilder;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +16,8 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.EntityType;
+import markus.wieland.pushygame.engine.level.Level;
+import markus.wieland.pushygame.engine.level.RawLevel;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.level.Type;
@@ -19,7 +26,8 @@ import markus.wieland.pushygame.levelbuilder.tasks.FillTask;
 import markus.wieland.pushygame.levelbuilder.tasks.ResetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SmoothTask;
-import markus.wieland.pushygame.ui.PushyFieldView;
+import markus.wieland.pushygame.ui.game.PushyFieldView;
+import markus.wieland.pushygame.ui.game.PushyView;
 
 public class LevelBuilder {
 
@@ -118,6 +126,9 @@ public class LevelBuilder {
 
     }
 
+    public boolean isFillMode() {
+        return isFillMode;
+    }
 
     public void smooth() {
         TaskManager.getInstance().execute(new SmoothTask(this));
@@ -162,35 +173,20 @@ public class LevelBuilder {
         }
 
         binary += binaryTerrain.toString() + binaryEntity.toString();
+        binary += stringToBinary("Levelname");
         return binaryToHex(binary);
     }
 
     public void importLevel(String hex) {
-        String binary = hexToBinary(hex);
-        String version = binary.substring(0, 8);
-        binary = binary.substring(8);
-
+        Level level = new Level(new RawLevel(hex));
         for (int x = 0; x < LEVEL_HEIGHT; x++) {
             for (int y = 0; y < LEVEL_WIDTH; y++) {
-                String tagValue = binary.substring(0, 6);
-                binary = binary.substring(6);
-
-                TerrainType terrainType = (TerrainType) Type.getByValue(tagValue, true);
                 Coordinate coordinate = new Coordinate(x, y);
-                terrainManager.setObject(coordinate, TileMapBuilder.build(terrainType, coordinate));
-            }
-        }
-        for (int x = 0; x < LEVEL_HEIGHT; x++) {
-            for (int y = 0; y < LEVEL_WIDTH; y++) {
-                String tagValue = binary.substring(0, 6);
-                binary = binary.substring(6);
-                EntityType entityType = (EntityType) Type.getByValue(tagValue, false);
-                Coordinate coordinate = new Coordinate(x, y);
-                entityManager.setObject(coordinate, TileMapBuilder.build(entityType, coordinate));
+                entityManager.setObject(coordinate, level.getEntities().get(coordinate));
+                terrainManager.setObject(coordinate, level.getTerrain().get(coordinate));
             }
         }
 
-        int x = 0;
     }
 
 
@@ -225,6 +221,67 @@ public class LevelBuilder {
         }
         return parts;
     }
+
+    public static String binaryStringToString(String binary) {
+
+        List<String> bytes = getParts(binary, 8);
+        StringBuilder hexString = new StringBuilder();
+
+        for (String byteValue : bytes) {
+            int decimal = Integer.parseInt(byteValue, 2);
+            char character = (char) decimal;
+            hexString.append(character);
+        }
+        return hexString.toString();
+    }
+
+    public static String stringToBinary(String name) {
+        char[] chars = name.toCharArray();
+        StringBuilder binary = new StringBuilder();
+        for (char character : chars) {
+            binary.append("0");
+            binary.append(Integer.toBinaryString(character));
+        }
+        return binary.toString();
+    }
+
+    public boolean hasChanges() {
+        return TaskManager.getInstance().hasChanges();
+    }
+
+    /*public static Bitmap getBitmapFromMultipleViews(Matrix<PushyFieldView<Terrain>> views, int width) {
+        int totalHeight = 0;
+        Matrix<Bitmap> bitmaps = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
+
+        for (PushyFieldView<Terrain> view : views) {
+            bitmaps.set(view.get().getCoordinate(), getFromView(view, width));
+            totalHeight += view.getMeasuredHeight();
+        }
+
+        Bitmap totalBitmap = Bitmap.createBitmap(width, totalHeight, Bitmap.Config.ARGB_8888);
+        Canvas totalCanvas = new Canvas(totalBitmap);
+
+        Paint paint = new Paint();
+        int currentHeight = 0;
+
+        for (int i = 0; i < bitmaps.size(); i++) {
+            Bitmap bitmap = bitmaps.get(i);
+            totalCanvas.drawBitmap(bitmap, 0, currentHeight, paint);
+            currentHeight += bitmap.getHeight();
+        }
+
+        return totalBitmap;
+    }
+
+    public static Bitmap getFromView(View view, int width) {
+        view.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }*/
 
 
 }
