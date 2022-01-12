@@ -1,8 +1,5 @@
 package markus.wieland.pushygame.levelbuilder.tasks;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.Type;

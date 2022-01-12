@@ -37,6 +37,7 @@ public abstract class Entity extends Field {
         this.teleported = teleported;
     }
 
+    @Override
     public EntityType getType() {
         return (EntityType) super.getType();
     }

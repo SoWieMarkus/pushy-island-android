@@ -1,11 +1,14 @@
 package markus.wieland.pushygame.engine.entity.movable;
 
 import markus.wieland.pushygame.engine.Game;
+import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.events.StatueEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
+import markus.wieland.pushygame.engine.terrain.StatueFinish;
+import markus.wieland.pushygame.engine.terrain.Terrain;
 
-public class Statue extends MovableEntity {
+public class Statue extends MovableEntity implements GameFinishEntity {
 
     public Statue(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
@@ -25,4 +28,9 @@ public class Statue extends MovableEntity {
         game.execute(new StatueEvent(getCoordinate(), nextCoordinate));
     }
 
+    @Override
+    public boolean check(Game game) {
+        Terrain terrain = game.getTerrainManager().getObject(this);
+        return terrain instanceof StatueFinish && ((StatueFinish) terrain).equalsType(getType());
+    }
 }

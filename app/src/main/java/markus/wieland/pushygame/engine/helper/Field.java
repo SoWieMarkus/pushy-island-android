@@ -1,7 +1,5 @@
 package markus.wieland.pushygame.engine.helper;
 
-import androidx.annotation.DrawableRes;
-
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.level.Type;
 

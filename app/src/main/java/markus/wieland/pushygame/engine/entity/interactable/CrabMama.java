@@ -1,7 +1,9 @@
 package markus.wieland.pushygame.engine.entity.interactable;
 
 import markus.wieland.pushygame.R;
+import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.CollectibleEntity;
+import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.entity.RewardEntity;
 import markus.wieland.pushygame.engine.entity.collectible.CrabBaby;
 import markus.wieland.pushygame.engine.entity.interactable.rewards.CrabMamaReward;
@@ -9,7 +11,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class CrabMama extends RewardEntity {
+public class CrabMama extends RewardEntity implements GameFinishEntity {
 
     public CrabMama(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType, CrabBaby.class);
@@ -33,5 +35,10 @@ public class CrabMama extends RewardEntity {
     @Override
     public EntityType getType() {
         return EntityType.CRAB_MOTHER;
+    }
+
+    @Override
+    public boolean check(Game game) {
+        return game.getInventory().getAmount(CrabMamaReward.class) > 0;
     }
 }

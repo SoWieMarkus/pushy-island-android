@@ -2,11 +2,12 @@ package markus.wieland.pushygame.engine.entity.movable;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
+import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.events.CountEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class Count extends MovableEntity{
+public class Count extends MovableEntity implements GameFinishEntity {
 
     private final int countValue;
     private boolean isUncovered;
@@ -59,4 +60,8 @@ public class Count extends MovableEntity{
         game.execute(new CountEvent(countValue));
     }
 
+    @Override
+    public boolean check(Game game) {
+        return isUncovered;
+    }
 }

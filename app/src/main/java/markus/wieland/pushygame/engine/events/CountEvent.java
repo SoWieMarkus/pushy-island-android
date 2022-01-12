@@ -3,7 +3,6 @@ package markus.wieland.pushygame.engine.events;
 import android.app.Activity;
 import android.content.Context;
 
-import markus.wieland.pushygame.engine.entity.CollectibleEntity;
 import markus.wieland.pushygame.engine.entity.movable.Count;
 
 import static java.lang.Thread.sleep;

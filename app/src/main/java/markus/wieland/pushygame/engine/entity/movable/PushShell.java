@@ -2,10 +2,11 @@ package markus.wieland.pushygame.engine.entity.movable;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
+import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class PushShell extends MovableEntity {
+public class PushShell extends MovableEntity implements GameFinishEntity {
 
     public static final int HAPPY = 2;
     public static final int MEDIUM = 1;
@@ -65,5 +66,10 @@ public class PushShell extends MovableEntity {
             default:
                 return EntityType.SHELL_1;
         }
+    }
+
+    @Override
+    public boolean check(Game game) {
+        return count == HAPPY;
     }
 }

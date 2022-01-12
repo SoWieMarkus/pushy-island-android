@@ -1,12 +1,12 @@
 package markus.wieland.pushygame.engine.entity.movable;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
+import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 
-public class SeaStar extends MovableEntity {
+public class SeaStar extends MovableEntity implements GameFinishEntity {
 
     public SeaStar(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
@@ -25,4 +25,8 @@ public class SeaStar extends MovableEntity {
         }
     }
 
+    @Override
+    public boolean check(Game game) {
+        return false;
+    }
 }

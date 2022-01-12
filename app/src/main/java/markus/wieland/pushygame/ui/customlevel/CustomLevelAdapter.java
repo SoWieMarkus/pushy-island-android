@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import markus.wieland.defaultappelements.uielements.adapter.DefaultAdapter;
 import markus.wieland.defaultappelements.uielements.adapter.DefaultViewHolder;
 import markus.wieland.defaultappelements.uielements.adapter.QueryableAdapter;
-import markus.wieland.defaultappelements.uielements.adapter.iteractlistener.OnItemInteractListener;
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 
@@ -29,7 +27,7 @@ public class CustomLevelAdapter extends QueryableAdapter<Long, LevelDisplayItem,
 
     @Override
     public CustomLevelInteractionListener getOnItemInteractListener() {
-        return (CustomLevelInteractionListener)super.getOnItemInteractListener();
+        return (CustomLevelInteractionListener) super.getOnItemInteractListener();
     }
 
     public class CustomLevelViewHolder extends DefaultViewHolder<LevelDisplayItem> {
