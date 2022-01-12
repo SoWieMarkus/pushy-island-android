@@ -96,10 +96,13 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         String levelCode = levelBuilder.export();
         if (levelId != NO_LEVEL_ID) {
             levelDisplayItem.setFile(levelCode);
+            levelDisplayItem.setThumbnail(LevelBuilder.createThumbnail(this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager()));
             levelViewModel.update(levelDisplayItem);
+            finish();
             return;
         }
-        levelViewModel.insert(new LevelDisplayItem(new RawLevel(levelCode), levelCode));
+        levelViewModel.insert(new LevelDisplayItem(new RawLevel(levelCode), levelCode, LevelBuilder.createThumbnail(this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager())));
+        finish();
     }
 
     @Override

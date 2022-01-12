@@ -1,9 +1,12 @@
 package markus.wieland.pushygame.ui.customlevel;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +40,7 @@ public class CustomLevelAdapter extends QueryableAdapter<Long, LevelDisplayItem,
         private ImageButton delete;
         private TextView name;
         private ImageButton share;
+        private ImageView thumbnail;
 
         public CustomLevelViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -49,6 +53,7 @@ public class CustomLevelAdapter extends QueryableAdapter<Long, LevelDisplayItem,
             edit = findViewById(R.id.item_level_custom_edit);
             name = findViewById(R.id.item_level_custom_name);
             delete = findViewById(R.id.item_level_custom_delete);
+            thumbnail = findViewById(R.id.item_level_custom_thumbnail);
         }
 
         @Override
@@ -59,6 +64,9 @@ public class CustomLevelAdapter extends QueryableAdapter<Long, LevelDisplayItem,
             share.setOnClickListener(view -> getOnItemInteractListener().onShare(levelDisplayItem));
             share.setVisibility(levelDisplayItem.isSolved() ? View.VISIBLE : View.GONE);
             delete.setOnClickListener(view -> getOnItemInteractListener().onDelete(levelDisplayItem));
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(levelDisplayItem.getThumbnail(), 0, levelDisplayItem.getThumbnail().length);
+            thumbnail.setImageBitmap(bitmap);
             //TODO text der zeigt das noch validiert werden muss
         }
     }

@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 
-@Database(entities = LevelDisplayItem.class, version = 3)
+@Database(entities = LevelDisplayItem.class, version = 4)
 public abstract class LevelDatabase extends RoomDatabase {
 
     public abstract LevelDataAccessObject getLevelDataAccessObject();

@@ -60,7 +60,8 @@ public class AddLevelActivity extends DefaultActivity implements View.OnClickLis
         String code = codeInput.getText().toString().trim();
         RawLevel rawLevel = validate(code);
         if (rawLevel != null) {
-            LevelDisplayItem levelDisplayItem = new LevelDisplayItem(rawLevel, code);
+            //TODO thumbnail
+            LevelDisplayItem levelDisplayItem = new LevelDisplayItem(rawLevel, code, null);
             levelViewModel.insert(levelDisplayItem);
         }
     }

@@ -1,11 +1,17 @@
 package markus.wieland.pushygame.levelbuilder;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.EntityManager;
 import markus.wieland.pushygame.engine.TerrainManager;
 import markus.wieland.pushygame.engine.entity.Entity;
@@ -188,6 +194,7 @@ public class LevelBuilder {
         // If I want to change something which would make "old" level corrupted I want to increase the version number and
         // make new Parser for the new version
 
+        createThumbnail(activity, terrainManager, entityManager);
 
         int version = 1;
         String binary = Type.addRedundantZeros(Integer.toBinaryString(version), 8);
@@ -278,6 +285,34 @@ public class LevelBuilder {
     public boolean hasChanges() {
         return TaskManager.getInstance().hasChanges();
     }
+
+    private static final int TILE_SIZE = 8;
+
+    public static Bitmap createThumbnail(Activity activity, TerrainManager terrainManager, EntityManager entityManager) {
+        Bitmap thumbnailBitmap = Bitmap.createBitmap(TILE_SIZE * LEVEL_WIDTH, TILE_SIZE * LEVEL_HEIGHT, Bitmap.Config.ARGB_8888);
+        Canvas thumbnail = new Canvas(thumbnailBitmap);
+
+        for (int x = 0; x < LEVEL_HEIGHT; x++) {
+            for (int y = 0; y < LEVEL_WIDTH; y++) {
+                int height = x * TILE_SIZE;
+                int width = y * TILE_SIZE;
+
+                Coordinate coordinate = new Coordinate(x,y);
+
+                Drawable d = activity.getResources().getDrawable(terrainManager.getObject(coordinate).getDrawable(), null);
+                d.setBounds(width, height, width+ TILE_SIZE, height + TILE_SIZE);
+                d.draw(thumbnail);
+
+                Drawable d2 = activity.getResources().getDrawable(entityManager.getObject(coordinate) == null ? R.drawable.no_entity : entityManager.getObject(coordinate).getDrawable(), null);
+                d2.setBounds(width, height, width+ TILE_SIZE, height + TILE_SIZE);
+                d2.draw(thumbnail);
+
+
+            }
+        }
+        return thumbnailBitmap;
+    }
+
 
     /*public static Bitmap getBitmapFromMultipleViews(Matrix<PushyFieldView<Terrain>> views, int width) {
         int totalHeight = 0;

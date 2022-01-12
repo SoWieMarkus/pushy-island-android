@@ -17,45 +17,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/item_level_custom_name"
+            <ImageView
+                android:id="@+id/item_level_custom_thumbnail"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/press_start_2p"
-                android:text="TextView" />
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/background_image" />
 
-            <ImageButton
-                android:id="@+id/item_level_custom_edit"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_edit" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/item_level_custom_thumbnail"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/item_level_custom_play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_play" />
 
-            <ImageButton
-                android:id="@+id/item_level_custom_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_share" />
+                <TextView
+                    android:id="@+id/item_level_custom_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/press_start_2p"
+                    android:text="TextView" />
 
-            <ImageButton
-                android:id="@+id/item_level_custom_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_delete" />
-        </LinearLayout>
+                <ImageButton
+                    android:id="@+id/item_level_custom_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_edit" />
+
+                <ImageButton
+                    android:id="@+id/item_level_custom_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_play" />
+
+                <ImageButton
+                    android:id="@+id/item_level_custom_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_share" />
+
+                <ImageButton
+                    android:id="@+id/item_level_custom_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_delete" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

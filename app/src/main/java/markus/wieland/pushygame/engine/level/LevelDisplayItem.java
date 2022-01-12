@@ -1,6 +1,10 @@
 package markus.wieland.pushygame.engine.level;
 
+import android.graphics.Bitmap;
+
 import androidx.room.PrimaryKey;
+
+import java.io.ByteArrayOutputStream;
 
 import markus.wieland.databases.DatabaseEntity;
 import markus.wieland.defaultappelements.uielements.adapter.QueryableEntity;
@@ -17,6 +21,8 @@ public class LevelDisplayItem implements QueryableEntity<Long>, DatabaseEntity {
 
     private boolean isCampaign;
 
+    private byte[] thumbnail;
+
     public LevelDisplayItem(String file) {
         String[] parts = file.split("_");
         this.name = parts[1].replace(".json", "");
@@ -24,14 +30,35 @@ public class LevelDisplayItem implements QueryableEntity<Long>, DatabaseEntity {
         this.file = file;
         this.solved = false;
         this.isCampaign = true;
+        this.thumbnail = new byte[0];
     }
 
-    public LevelDisplayItem(RawLevel rawLevel, String code) {
+    public LevelDisplayItem(RawLevel rawLevel, String code, Bitmap bitmap) {
         this.name = rawLevel.getName();
         this.file = code;
         this.solved = false;
         this.isCampaign = false;
+
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+        this.thumbnail = blob.toByteArray();
     }
+
+    public byte[] getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(byte[] thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public void setThumbnail(Bitmap bitmap) {
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0 /* Ignored for PNGs */, blob);
+        this.thumbnail = blob.toByteArray();
+    }
+
+
 
     public LevelDisplayItem() {
     }
