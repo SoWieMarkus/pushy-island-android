@@ -10,8 +10,8 @@ public enum EntityType implements Type {
     @SerializedName("no_entity") NO_ENTITY(5, R.drawable.no_entity),
     @SerializedName("tree") TREE(0, R.drawable.tree),
     @SerializedName("box") BOX(1, R.drawable.box),
-    @SerializedName("pushy") PUSHY(2, R.drawable.pushy),
-    @SerializedName("finish") FINISH(3, R.drawable.finish),
+    @SerializedName("pushy") PUSHY(2, R.drawable.pushy, 1),
+    @SerializedName("finish") FINISH(3, R.drawable.finish, 1),
     @SerializedName("stone") STONE(4, R.drawable.stone),
     @SerializedName("seastar") SEA_STAR(6, R.drawable.seastar),
     @SerializedName("seed") SEED(7, R.drawable.seed),
@@ -21,7 +21,7 @@ public enum EntityType implements Type {
     @SerializedName("statue_blue") STATUE_BLUE(10, R.drawable.statue_blue),
     @SerializedName("bomb") BOMB(12, R.drawable.bomb),
     @SerializedName("crab_baby") CRAB(13, R.drawable.crab_baby),
-    @SerializedName("crab_mother") CRAB_MOTHER(14, R.drawable.crab_mother),
+    @SerializedName("crab_mother") CRAB_MOTHER(14, R.drawable.crab_mother, 1),
     @SerializedName("slingshot") SLING_SHOT(15, R.drawable.slingshot),
     @SerializedName("shot") SHOT(16, R.drawable.shot),
     @SerializedName("coconut") COCONUT(17, R.drawable.coconut),
@@ -29,8 +29,8 @@ public enum EntityType implements Type {
     @SerializedName("leaf_up") LEAF_UP(19, R.drawable.leaf_up),
     @SerializedName("leaf_left") LEAF_LEFT(20, R.drawable.leaf_left),
     @SerializedName("leaf_right") LEAF_RIGHT(21, R.drawable.leaf_right),
-    @SerializedName("pirat") PIRATE(22, R.drawable.pirat),
-    @SerializedName("pirat_hut") PIRATE_HUT(23, R.drawable.pirat_hut),
+    @SerializedName("pirat") PIRATE(22, R.drawable.pirat, 1),
+    @SerializedName("pirat_hut") PIRATE_HUT(23, R.drawable.pirat_hut, 1),
     @SerializedName("chest") CHEST(24, R.drawable.chest),
     @SerializedName("coin") COIN(25, R.drawable.coin),
     @SerializedName("key") KEY(26, R.drawable.key),
@@ -38,11 +38,11 @@ public enum EntityType implements Type {
     @SerializedName("pearl") PEARL(28, R.drawable.pearl),
     @SerializedName("shell") SHELL(29, R.drawable.shell),
     @SerializedName("shell_open_with_pearl") SHELL_OPEN_WITH_PEARL(30, R.drawable.shell_open_with_pearl),
-    @SerializedName("count_one") COUNT_ONE(31, R.drawable.count_one),
-    @SerializedName("count_two") COUNT_TWO(32, R.drawable.count_two),
-    @SerializedName("count_three") COUNT_THREE(33, R.drawable.count_three),
-    @SerializedName("count_four") COUNT_FOUR(34, R.drawable.count_four),
-    @SerializedName("count_five") COUNT_FIVE(35, R.drawable.count_five),
+    @SerializedName("count_one") COUNT_ONE(31, R.drawable.count_one, 1),
+    @SerializedName("count_two") COUNT_TWO(32, R.drawable.count_two, 1),
+    @SerializedName("count_three") COUNT_THREE(33, R.drawable.count_three, 1),
+    @SerializedName("count_four") COUNT_FOUR(34, R.drawable.count_four, 1),
+    @SerializedName("count_five") COUNT_FIVE(35, R.drawable.count_five, 1),
     @SerializedName("flower") FLOWER_YELLOW(36, R.drawable.flower),
     @SerializedName("flower_red") FLOWER_RED(37, R.drawable.flower_red),
     @SerializedName("shell_1") SHELL_1(38, R.drawable.shell_1),
@@ -60,11 +60,20 @@ public enum EntityType implements Type {
     @DrawableRes
     private final int drawable;
 
+    private final int allowedInstances;
+
     static final int AMOUNT_BITS = 6;
+
+    EntityType(int value, @DrawableRes int drawable, int amountAllowedEntities) {
+        this.value = value;
+        this.drawable = drawable;
+        this.allowedInstances = amountAllowedEntities;
+    }
 
     EntityType(int value, @DrawableRes int drawable) {
         this.value = value;
         this.drawable = drawable;
+        this.allowedInstances = Type.UNLIMITED;
     }
 
     @Override
@@ -76,5 +85,10 @@ public enum EntityType implements Type {
     @Override
     public int getDrawable() {
         return drawable;
+    }
+
+    @Override
+    public int getAmountOfAllowedInstances() {
+        return allowedInstances;
     }
 }

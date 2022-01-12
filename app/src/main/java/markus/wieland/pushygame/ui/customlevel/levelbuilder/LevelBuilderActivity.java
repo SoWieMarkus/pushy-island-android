@@ -91,6 +91,9 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
             finish();
             return;
         }
+        if (!levelBuilder.validate()) {
+            return;
+        }
         String levelCode = levelBuilder.export();
         if (levelId != NO_LEVEL_ID) {
             levelDisplayItem.setFile(levelCode);

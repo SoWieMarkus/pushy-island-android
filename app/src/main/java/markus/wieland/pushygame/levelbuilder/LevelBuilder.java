@@ -1,11 +1,7 @@
 package markus.wieland.pushygame.levelbuilder;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.view.MotionEvent;
-import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +9,10 @@ import java.util.List;
 import markus.wieland.pushygame.engine.EntityManager;
 import markus.wieland.pushygame.engine.TerrainManager;
 import markus.wieland.pushygame.engine.entity.Entity;
+import markus.wieland.pushygame.engine.entity.interactable.Finish;
+import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.helper.Coordinate;
+import markus.wieland.pushygame.engine.helper.Manager;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.level.Level;
@@ -23,11 +22,13 @@ import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.levelbuilder.tasks.FillTask;
+import markus.wieland.pushygame.levelbuilder.tasks.PlaceCombinationTask;
+import markus.wieland.pushygame.levelbuilder.tasks.ReplaceTask;
 import markus.wieland.pushygame.levelbuilder.tasks.ResetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SmoothTask;
+import markus.wieland.pushygame.levelbuilder.tasks.Task;
 import markus.wieland.pushygame.ui.game.PushyFieldView;
-import markus.wieland.pushygame.ui.game.PushyView;
 
 public class LevelBuilder {
 
@@ -44,10 +45,14 @@ public class LevelBuilder {
 
     private boolean isFillMode;
 
+    private final Activity activity;
+
     public LevelBuilder(Activity activity) {
         isFillMode = false;
         pushyTerrainViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
         pushyEntityViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
+
+        this.activity = activity;
 
         for (int x = 0; x < LEVEL_HEIGHT; x++) {
             for (int y = 0; y < LEVEL_WIDTH; y++) {
@@ -122,7 +127,15 @@ public class LevelBuilder {
     }
 
 
-    public void validate() {
+    public boolean validate() {
+        if (entityManager.getOfType(Finish.class).isEmpty()) {
+            Toast.makeText(activity, "Please place a finish!", Toast.LENGTH_SHORT).show();
+
+        }
+        if (entityManager.getOfType(Pushy.class).isEmpty()) {
+            Toast.makeText(activity, "Please place a pushy!", Toast.LENGTH_SHORT).show();
+        }
+        return true;
 
     }
 
@@ -136,11 +149,27 @@ public class LevelBuilder {
 
     public void fill() {
         isFillMode = !isFillMode;
+    }
 
+    public boolean selectedFieldIsOneOf(Type... type) {
+        for (Type part : type) {
+            if (selectedField == part) return true;
+        }
+        return false;
     }
 
     public void set(Coordinate coordinate) {
-        TaskManager.getInstance().execute(isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField));
+        Task task;
+
+        if (selectedFieldIsOneOf(EntityType.PIRATE_HUT, EntityType.PIRATE)) {
+            task = new PlaceCombinationTask(this, coordinate, selectedField);
+        } else if (selectedField.getAmountOfAllowedInstances() != Type.UNLIMITED) {
+            task = new ReplaceTask(this, selectedField, coordinate);
+        } else {
+            task = isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField);
+        }
+
+        TaskManager.getInstance().execute(task);
     }
 
 
@@ -159,6 +188,8 @@ public class LevelBuilder {
     public String export() {
         // If I want to change something which would make "old" level corrupted I want to increase the version number and
         // make new Parser for the new version
+
+
         int version = 1;
         String binary = Type.addRedundantZeros(Integer.toBinaryString(version), 8);
         StringBuilder binaryTerrain = new StringBuilder();

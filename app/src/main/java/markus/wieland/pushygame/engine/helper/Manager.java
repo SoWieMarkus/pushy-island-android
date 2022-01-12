@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import markus.wieland.pushygame.engine.exceptions.FieldViewShouldNotBeNullException;
+import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
@@ -74,6 +75,15 @@ public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
         List<G> filteredList = new ArrayList<>();
         for (PushyFieldView<F> pushyFieldView : pushyFieldViews) {
             if (type.isInstance(pushyFieldView.get())) filteredList.add((G) pushyFieldView.get());
+        }
+        return filteredList;
+    }
+
+    public List<F> getOfType(Type type) {
+        List<F> filteredList = new ArrayList<>();
+        for (PushyFieldView<F> pushyFieldView : pushyFieldViews) {
+            if (pushyFieldView.get() == null) continue;
+            if (type == pushyFieldView.get().getType()) filteredList.add(pushyFieldView.get());
         }
         return filteredList;
     }

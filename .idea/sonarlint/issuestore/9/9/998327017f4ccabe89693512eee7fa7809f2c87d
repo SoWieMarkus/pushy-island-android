@@ -1,9 +1,8 @@
 
 £
-java:S1186u"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¶Ô¸êþÿÿÿÿ8´‡Ã«ä/
-Y
-java:S1854ª";Remove this useless assignment to local variable "version".(£ƒôÂ8´‡Ã«ä/
-J
-java:S1481ª",Remove this unused "version" local variable.(£ƒôÂ8´‡Ã«ä/
-I
-java:S1481Á"&Remove this unused "x" local variable.(ž¾„ëüÿÿÿÿ8´‡Ã«ä/
+java:S1186}"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¶Ô¸êþÿÿÿÿ8´‡Ã«ä/
+d
+java:S1128"GRemove this unused import 'markus.wieland.pushygame.ui.game.PushyView'.(Ž°ïß8ÔüåÉä/
+X	java:S125ü"<This block of commented-out lines of code should be removed.(Ó€a8ø„îÉä/
+W
+java:S1128"5Remove this unused import 'android.view.MotionEvent'.(˜šËÞúÿÿÿÿ8Ÿ¶¯Êä/

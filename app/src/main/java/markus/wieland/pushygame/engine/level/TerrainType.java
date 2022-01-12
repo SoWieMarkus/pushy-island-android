@@ -38,7 +38,7 @@ public enum TerrainType implements Type {
     @SerializedName("spikes") SPIKES(21, R.drawable.spikes),
 
     @SerializedName("boat") BOAT(22, R.drawable.boat),
-    @SerializedName("teleporter") TELEPORTER(23, R.drawable.teleporter),
+    @SerializedName("teleporter") TELEPORTER(23, R.drawable.teleporter, 2),
     @SerializedName("buoy") BUOY(24, R.drawable.buoy),
 
     @SerializedName("water_invisible_pressure_plate") WATER_INVISIBLE_PRESSURE_PLATE(25, R.drawable.water_invisible_pressure_plate),
@@ -47,7 +47,7 @@ public enum TerrainType implements Type {
     @SerializedName("coconut_tunnel") COCONUT_TUNNEL(27, R.drawable.coconut_tunnel),
     @SerializedName("coconut_tunnel_finish") COCONUT_TUNNEL_FINISH(28, R.drawable.coconut_tunnel_finish),
 
-    @SerializedName("item_teleporter") ITEM_TELEPORTER(29, R.drawable.item_teleporter),
+    @SerializedName("item_teleporter") ITEM_TELEPORTER(29, R.drawable.item_teleporter, 2),
     @SerializedName("ice") ICE(30, R.drawable.ice),
 
     @SerializedName("flower_red_pressure_plate") FLOWER_RED_PRESSURE_PLATE(31, R.drawable.flower_red_pressure_plate),
@@ -66,10 +66,20 @@ public enum TerrainType implements Type {
 
     static final int AMOUNT_BITS = 6;
 
+    private final int allowedInstances;
+
+    TerrainType(int value, int drawable, int allowedInstances) {
+        this.value = value;
+        this.drawable = drawable;
+        this.allowedInstances = allowedInstances;
+    }
+
     TerrainType(int value, @DrawableRes int drawable) {
         this.value = value;
         this.drawable = drawable;
+        this.allowedInstances = Type.UNLIMITED;
     }
+
 
     @Override
     public String getValue() {
@@ -79,5 +89,10 @@ public enum TerrainType implements Type {
     @Override
     public int getDrawable() {
         return drawable;
+    }
+
+    @Override
+    public int getAmountOfAllowedInstances() {
+        return allowedInstances;
     }
 }

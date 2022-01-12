@@ -60,6 +60,10 @@ public class Game {
             invisibleWater.setVisible(true);
             terrainManager.invalidate(invisibleWater);
         }
+        for (Count count : entityManager.getOfType(Count.class)) {
+            count.setUncovered(false);
+            entityManager.invalidate(count);
+        }
     }
 
     public void setInventoryEventListener(InventoryEventListener inventoryEventListener) {

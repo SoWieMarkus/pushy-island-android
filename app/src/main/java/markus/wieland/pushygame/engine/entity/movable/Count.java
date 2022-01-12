@@ -13,7 +13,7 @@ public class Count extends MovableEntity{
 
     public Count(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
-        this.isUncovered = false;
+        this.isUncovered = true;
         switch (entityType) {
             case COUNT_TWO:
                 countValue = 2;

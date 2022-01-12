@@ -54,7 +54,7 @@ public class PushyLevelAdapter extends QueryableAdapter<Long, LevelDisplayItem, 
             number.setText(levelDisplayItem.getNumberAsString());
             name.setText(levelDisplayItem.getName());
             itemView.setOnClickListener(view -> getOnItemInteractListener().onClick(levelDisplayItem));
-            cardView.setBackgroundColor(levelDisplayItem.isSolved() ? Color.BLUE : Color.GRAY);
+            cardView.setCardBackgroundColor(levelDisplayItem.isSolved() ? Color.rgb(50,205,50) : Color.GRAY);
         }
     }
 }

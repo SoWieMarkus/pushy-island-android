@@ -1,7 +1,7 @@
 
 S
-java:S1874)"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8Ğ¶­ä/
+java:S18746"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8Ğ¶­ä/
 S
-java:S1874)"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8Ğ¶­ä/
-v
-java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(§Ó”­ıÿÿÿÿ8¼±œÄä/
+java:S18746"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8Ğ¶­ä/
+x
+java:S1905M"VRemove this unnecessary cast to "org.sonar.java.resolve.Symbols$UnknownType@6bd5b497".(ïÒ½€şÿÿÿÿ8›ôùÊä/

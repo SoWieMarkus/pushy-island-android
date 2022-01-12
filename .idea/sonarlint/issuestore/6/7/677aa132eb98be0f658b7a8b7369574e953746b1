@@ -1,13 +1,7 @@
 
-£
-java:S1186)"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(§ÂË¤ûÿÿÿÿ8ÙóØÃä/
-
-java:S1186."€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Òƒ“Û8ÙóØÃä/
-K
-java:S1068"")Remove this unused "share" private field.(´ü®¨üÿÿÿÿ8©ºãÃä/
-J
-java:S1068!"(Remove this unused "name" private field.(©Ïßûÿÿÿÿ8·©âÃä/
-J
-java:S1068 "(Remove this unused "edit" private field.(ä´üÿÿÿÿ8õìâÃä/
-J
-java:S1068"(Remove this unused "play" private field.(×€„‹ıÿÿÿÿ8àšİÃä/
+O
+java:S1135@"2Complete the task associated to this TODO comment.(¸Õ½¸8‰¸Èä/
+}
+java:S1128"`Remove this unused import 'markus.wieland.defaultappelements.uielements.adapter.DefaultAdapter'.(‹8İÌ¿Êä/
+š
+java:S1128"xRemove this unused import 'markus.wieland.defaultappelements.uielements.adapter.iteractlistener.OnItemInteractListener'.(Šùªşÿÿÿÿ8í§ßÇä/

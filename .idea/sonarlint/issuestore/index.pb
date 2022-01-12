@@ -249,3 +249,15 @@ Rapp/src/main/java/markus/wieland/pushygame/ui/customlevel/CustomLevelActivity.j
 `app/src/main/java/markus/wieland/pushygame/ui/customlevel/levelbuilder/LevelBuilderActivity.java,c\6\c6a48382d2da9c637aafb5bc317b2ed76f24f56d
 t
 Dapp/src/main/java/markus/wieland/pushygame/ui/game/GameActivity.java,0\1\01b33f7b8c8ba0f72fd026ec5b77b009d979db05
+y
+Iapp/src/main/java/markus/wieland/pushygame/persistence/LevelDatabase.java,4\8\484f4efc982a65dbd386cc85de9e92a99f2fc9bb
+Å
+Qapp/src/main/java/markus/wieland/pushygame/persistence/LevelDataAccessObject.java,7\f\7f5fd3cd4cf0d93dec4b881ce34848e21544e570
+{
+Kapp/src/main/java/markus/wieland/pushygame/persistence/LevelRepository.java,5\9\596d7e88dc6ef238f2dfbe830eebd79841c6a2c5
+z
+Japp/src/main/java/markus/wieland/pushygame/persistence/LevelViewModel.java,5\f\5fd294ea944e59a375ebcbba99f3e44c80059298
+
+Oapp/src/main/java/markus/wieland/pushygame/ui/customlevel/AddLevelActivity.java,4\6\46bcc5c1cdc74147a1622531ca3b8c6f57a801b7
+ç
+]app/src/main/java/markus/wieland/pushygame/ui/customlevel/CustomLevelInteractionListener.java,4\8\48fd9b497f50553c023b9a19a5e08e6afdc73b8f

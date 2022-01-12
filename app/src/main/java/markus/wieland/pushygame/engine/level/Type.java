@@ -4,10 +4,14 @@ import androidx.annotation.DrawableRes;
 
 public interface Type {
 
+    public static final int UNLIMITED = Integer.MAX_VALUE;
+
     String getValue();
 
     @DrawableRes
     int getDrawable();
+
+    int getAmountOfAllowedInstances();
 
     static Type getByValue(String value, boolean isTerrain) {
         Type[] types = isTerrain ? TerrainType.class.getEnumConstants() : EntityType.class.getEnumConstants();
