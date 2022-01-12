@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine.helper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import markus.wieland.pushygame.engine.entity.CollectibleEntity;
@@ -30,7 +31,7 @@ public class Inventory {
             inventoryItems.put(collectibleEntity.getClass(), new ArrayList<>());
         }
         Objects.requireNonNull(inventoryItems.get(collectibleEntity.getClass())).add(collectibleEntity);
-        if(inventoryEventListener != null) inventoryEventListener.onInventoryChanged();
+        if (inventoryEventListener != null) inventoryEventListener.onInventoryChanged();
     }
 
     public boolean get(CollectibleEntity entity, int amount) {
@@ -40,7 +41,7 @@ public class Inventory {
     public boolean get(Class<? extends CollectibleEntity> type, int amount) {
         if (!has(type, amount)) return false;
         if (amount > 0) Objects.requireNonNull(inventoryItems.get(type)).subList(0, amount).clear();
-        if(inventoryEventListener != null) inventoryEventListener.onInventoryChanged();
+        if (inventoryEventListener != null) inventoryEventListener.onInventoryChanged();
         return true;
     }
 
@@ -49,26 +50,19 @@ public class Inventory {
         return inventoryItems.get(type).size() >= amount;
     }
 
-    public boolean has(CollectibleEntity entity, int amount) {
-        return has(entity.getClass(), amount);
-    }
-
-    public int getAmount(Class type) {
+    public int getAmount(Class<? extends CollectibleEntity> type) {
         if (inventoryItems.get(type) == null) return 0;
         return inventoryItems.get(type).size();
     }
 
-    public boolean has(CollectibleEntity entity) {
-        return has(entity, 1);
-    }
-
     public List<InventoryItem> getInventoryItems() {
         List<InventoryItem> inventoryItemsList = new ArrayList<>();
-        for (Class<? extends CollectibleEntity> key : inventoryItems.keySet()) {
-            List<CollectibleEntity> collectibleEntities = inventoryItems.get(key);
-            if (collectibleEntities.isEmpty()) continue;
-            inventoryItemsList.add(new InventoryItem(collectibleEntities.get(0).getDrawable(), collectibleEntities.size()));
+
+        for (Map.Entry<Class<? extends CollectibleEntity>, List<CollectibleEntity>> entry: inventoryItems.entrySet()) {
+            if (entry.getValue().isEmpty())continue;
+            inventoryItemsList.add(new InventoryItem(entry.getValue().get(0).getDrawable(), entry.getValue().size()));
         }
+        
         return inventoryItemsList;
     }
 }

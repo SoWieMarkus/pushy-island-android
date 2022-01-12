@@ -7,7 +7,6 @@ import android.view.WindowManager;
 import markus.wieland.defaultappelements.uielements.activities.DefaultActivity;
 import markus.wieland.pushygame.ui.campaign.CampaignActivity;
 import markus.wieland.pushygame.ui.customlevel.CustomLevelActivity;
-import markus.wieland.pushygame.ui.customlevel.levelbuilder.LevelBuilderActivity;
 
 public class MainActivity extends DefaultActivity {
 

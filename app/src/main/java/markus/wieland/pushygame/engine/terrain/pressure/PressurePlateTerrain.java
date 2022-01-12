@@ -5,7 +5,6 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.terrain.Sand;
-import markus.wieland.pushygame.engine.terrain.Terrain;
 
 public abstract class PressurePlateTerrain extends Sand {
 

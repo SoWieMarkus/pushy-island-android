@@ -42,6 +42,7 @@ public abstract class Terrain extends Field {
         return false;
     }
 
+    @Override
     public TerrainType getType() {
         return (TerrainType) super.getType();
     }

@@ -3,10 +3,9 @@ package markus.wieland.pushygame.levelbuilder.tasks;
 import java.util.ArrayList;
 import java.util.List;
 
-import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
-public abstract class MultipleTask extends Task{
+public abstract class MultipleTask extends Task {
 
     private final List<Task> executed;
 
@@ -22,7 +21,7 @@ public abstract class MultipleTask extends Task{
 
 
     @Override
-    public <F extends Field> void undo() {
+    public void undo() {
         for (Task task : executed) {
             task.undo();
         }

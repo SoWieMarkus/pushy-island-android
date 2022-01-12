@@ -19,6 +19,5 @@ public class SpikeEvent extends Event {
             spikes.setActive(active, entity);
             game.getTerrainManager().invalidate(spikes);
         }
-        return;
     }
 }

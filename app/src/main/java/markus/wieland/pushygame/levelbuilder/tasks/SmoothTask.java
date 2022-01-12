@@ -78,20 +78,24 @@ public class SmoothTask extends MultipleTask {
         for (int x = 0; x < LevelBuilder.LEVEL_HEIGHT; x++) {
             for (int y = 0; y < LevelBuilder.LEVEL_WIDTH; y++) {
                 Coordinate coordinate = new Coordinate(x, y);
-                Terrain terrain = getLevelBuilder().getTerrainManager().getObject(coordinate);
-                if (!(terrain.getClass().equals(Grass.class) || terrain.getClass().equals(Sand.class))) continue;
-                TerrainType terrainType = null;
-                if (terrain instanceof Grass) {
-                    terrainType = checkGrass(coordinate);
-                    if (terrainType == null) terrainType = TerrainType.GRASS;
-                }
-                if (terrain instanceof Sand) {
-                    terrainType = checkSand(coordinate);
-                    if (terrainType == null) terrainType = TerrainType.SAND;
-                }
-
-                executeSubTask(new SetTask(getLevelBuilder(), coordinate, terrainType));
+                checkForSmooth(coordinate);
             }
         }
+    }
+
+    private void checkForSmooth(Coordinate coordinate) {
+        Terrain terrain = getLevelBuilder().getTerrainManager().getObject(coordinate);
+        if (!(terrain.getClass().equals(Grass.class) || terrain.getClass().equals(Sand.class))) return;
+        TerrainType terrainType = null;
+        if (terrain instanceof Grass) {
+            terrainType = checkGrass(coordinate);
+            if (terrainType == null) terrainType = TerrainType.GRASS;
+        }
+        if (terrain instanceof Sand) {
+            terrainType = checkSand(coordinate);
+            if (terrainType == null) terrainType = TerrainType.SAND;
+        }
+
+        executeSubTask(new SetTask(getLevelBuilder(), coordinate, terrainType));
     }
 }

@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import markus.wieland.pushygame.engine.helper.Coordinate;
-
 public class Matrix<E> implements Iterable<E> {
 
     private final List<List<E>> matrixObject;

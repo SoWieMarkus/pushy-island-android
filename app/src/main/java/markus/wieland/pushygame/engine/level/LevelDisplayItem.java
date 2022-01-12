@@ -69,11 +69,11 @@ public class LevelDisplayItem implements QueryableEntity<Long>, DatabaseEntity {
     }
 
     public String getNumberAsString() {
-        StringBuilder number = new StringBuilder(String.valueOf(getNumber()));
-        while (number.length() < 3) {
-            number.insert(0, "0");
+        StringBuilder numberAsString = new StringBuilder(String.valueOf(getNumber()));
+        while (numberAsString.length() < 3) {
+            numberAsString.insert(0, "0");
         }
-        return number.toString();
+        return numberAsString.toString();
     }
 
     @Override

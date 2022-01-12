@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import markus.wieland.databases.BaseDataAccessObject;
 import markus.wieland.databases.BaseRepository;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 

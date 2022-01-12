@@ -3,7 +3,6 @@ package markus.wieland.pushygame.engine.level;
 import java.util.ArrayList;
 import java.util.List;
 
-import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
 public class RawLevel {

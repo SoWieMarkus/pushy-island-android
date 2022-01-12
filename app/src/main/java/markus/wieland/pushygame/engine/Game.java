@@ -98,7 +98,7 @@ public class Game {
         for (Entity entity : entityManager.getAll()) {
             entity.setTeleported(terrainManager.getObject(entity) instanceof Teleporter);
         }
-        
+
     }
 
     public void execute(Event event) {

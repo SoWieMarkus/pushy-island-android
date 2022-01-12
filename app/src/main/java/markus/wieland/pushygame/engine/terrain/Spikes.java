@@ -1,11 +1,9 @@
 package markus.wieland.pushygame.engine.terrain;
 
 import markus.wieland.pushygame.R;
-import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.TerrainType;
-import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 
 public class Spikes extends Sand {
     private boolean isActive;

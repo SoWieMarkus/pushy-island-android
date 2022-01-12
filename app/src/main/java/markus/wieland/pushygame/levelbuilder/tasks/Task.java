@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.levelbuilder.tasks;
 
-import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
 public abstract class Task {
@@ -11,9 +10,9 @@ public abstract class Task {
         this.levelBuilder = levelBuilder;
     }
 
-    public abstract <F extends Field> void execute();
+    public abstract void execute();
 
-    public abstract <F extends Field> void undo();
+    public abstract void undo();
 
     public LevelBuilder getLevelBuilder() {
         return levelBuilder;

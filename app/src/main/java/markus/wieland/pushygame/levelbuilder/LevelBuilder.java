@@ -12,7 +12,6 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.interactable.Finish;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.helper.Coordinate;
-import markus.wieland.pushygame.engine.helper.Manager;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.level.Level;

@@ -74,8 +74,7 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         findViewById(R.id.activity_game_export).setOnClickListener(this::export);
         findViewById(R.id.activity_level_builder_fill).setOnClickListener(view -> {
             levelBuilder.fill();
-            ((ImageButton) findViewById(R.id.activity_level_builder_fill))
-                    .setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
+            ((ImageButton)findViewById(R.id.activity_level_builder_fill)).setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
         });
         findViewById(R.id.activity_level_builder_smooth).setOnClickListener(view -> levelBuilder.smooth());
 
