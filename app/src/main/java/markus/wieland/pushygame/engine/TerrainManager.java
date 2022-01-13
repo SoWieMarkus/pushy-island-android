@@ -4,10 +4,9 @@ import java.util.List;
 
 import markus.wieland.pushygame.engine.helper.Manager;
 import markus.wieland.pushygame.engine.helper.Matrix;
-import markus.wieland.pushygame.engine.terrain.pressure.ItemTeleporter;
-import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
+import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
 import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public class TerrainManager extends Manager<Terrain, PushyFieldView<Terrain>> {
@@ -31,9 +30,7 @@ public class TerrainManager extends Manager<Terrain, PushyFieldView<Terrain>> {
     public Terrain getOtherTeleporter(Teleporter teleporter) {
         for (Teleporter teleporterOfList : getOfType(Teleporter.class)) {
             if (teleporterOfList.equals(teleporter)) continue;
-            if (teleporter instanceof ItemTeleporter && teleporterOfList instanceof ItemTeleporter)
-                return teleporterOfList;
-            return teleporterOfList;
+            if (teleporter.getClass().equals(teleporterOfList.getClass())) return teleporterOfList;
         }
         return null;
     }
