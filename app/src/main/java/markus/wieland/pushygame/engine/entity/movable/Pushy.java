@@ -5,6 +5,7 @@ import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.collectible.Seed;
 import markus.wieland.pushygame.engine.entity.statics.String;
+import markus.wieland.pushygame.engine.events.StringEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
@@ -76,12 +77,13 @@ public class Pushy extends MovableEntity {
         if (octopus instanceof Octopus) {
             ((Octopus) octopus).move(nextCoordinate.getNextCoordinate(getFacing().getOppositeDirection()), game);
         }
-        if (game.getEntityManager().isStringActive()) {
+        if (StringEvent.isStringActive()) {
             Coordinate previousCoordinate = nextCoordinate.getNextCoordinate(getFacing().getOppositeDirection());
             if (game.getEntityManager().getObject(previousCoordinate) == null) {
-                game.getEntityManager().setObject(previousCoordinate, new String(previousCoordinate, game.getEntityManager().getStringDirection(), getFacing()));
-                game.getEntityManager().setStringDirection(getFacing());
+                game.getEntityManager().setObject(previousCoordinate, new String(previousCoordinate, StringEvent.getStringDirection(), getFacing()));
+                StringEvent.setStringDirection(getFacing());
             }
+
         }
         Terrain terrain = game.getTerrainManager().getObject(this);
         if (terrain instanceof Farm && game.getInventory().get(Seed.class, 1)) {

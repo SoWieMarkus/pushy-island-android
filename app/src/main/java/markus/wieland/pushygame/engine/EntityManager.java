@@ -20,9 +20,6 @@ public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
     private CrabMama crabMama;
     private Pirate pirate;
 
-    private boolean isStringActive;
-    private Direction stringDirection;
-
     public EntityManager(Matrix<PushyFieldView<Entity>> pushyFieldViews) {
         super(pushyFieldViews);
         Inventory inventory = new Inventory();
@@ -41,26 +38,9 @@ public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
         if (crabMama != null) crabMama.setNeedItemsAmount(inventory.getAmount(CrabBaby.class));
         if (pirate != null)
             pirate.setNeedItemsAmount(inventory.getAmount(Coin.class) + inventory.getAmount(Key.class));
-        stringDirection = null;
-        isStringActive = false;
+
     }
 
-
-    public Direction getStringDirection() {
-        return stringDirection;
-    }
-
-    public void setStringDirection(Direction stringDirection) {
-        this.stringDirection = stringDirection;
-    }
-
-    public boolean isStringActive() {
-        return isStringActive;
-    }
-
-    public void setStringActive(boolean stringActive) {
-        isStringActive = stringActive;
-    }
 
     public void setPushy(Pushy pushy) {
         this.pushy = pushy;

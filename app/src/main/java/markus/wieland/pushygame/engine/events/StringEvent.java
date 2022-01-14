@@ -2,13 +2,33 @@ package markus.wieland.pushygame.engine.events;
 
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.statics.String;
+import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 
 public class StringEvent extends Event{
 
+    private static Direction stringDirection;
+    private static boolean isStringActive;
+
+    public static Direction getStringDirection() {
+        return stringDirection;
+    }
+
+    public static void setStringDirection(Direction stringDirection) {
+        StringEvent.stringDirection = stringDirection;
+    }
+
+    public static boolean isStringActive() {
+        return isStringActive;
+    }
+
+    public static void setIsStringActive(boolean isStringActive) {
+        StringEvent.isStringActive = isStringActive;
+    }
+
     @Override
     public void execute() {
-        if (game.getEntityManager().isStringActive()) {
+        if (isStringActive()) {
             for (ChangeableFlower changeableFlower : game.getTerrainManager().getOfType(ChangeableFlower.class)) {
                 Entity entity = game.getEntityManager().getObject(changeableFlower);
                 if (entity instanceof String) {
@@ -21,11 +41,11 @@ public class StringEvent extends Event{
                 game.getEntityManager().remove(string);
             }
 
-            game.getEntityManager().setStringActive(false);
+            setIsStringActive(false);
             return;
         }
-        game.getEntityManager().setStringDirection(null);
-        game.getEntityManager().setStringActive(true);
+        setStringDirection(null);
+        setIsStringActive(true);
     }
 
 }

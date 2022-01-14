@@ -12,6 +12,7 @@ import markus.wieland.pushygame.engine.events.GameEventListener;
 import markus.wieland.pushygame.engine.events.InventoryEventListener;
 import markus.wieland.pushygame.engine.events.ShowInvisibleWaterBlocksEvent;
 import markus.wieland.pushygame.engine.events.SpikeEvent;
+import markus.wieland.pushygame.engine.events.StringEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Inventory;
@@ -60,6 +61,10 @@ public class Game {
             count.setUncovered(false);
             entityManager.invalidate(count);
         }
+
+        StringEvent.setIsStringActive(false);
+        SpikeEvent.setExecutedThisRound(false);
+        ShowInvisibleWaterBlocksEvent.setExecutedThisRound(false);
     }
 
     public void setInventoryEventListener(InventoryEventListener inventoryEventListener) {
@@ -105,7 +110,6 @@ public class Game {
 
         SpikeEvent.setExecutedThisRound(false);
         ShowInvisibleWaterBlocksEvent.setExecutedThisRound(false);
-
     }
 
     public void execute(Event event) {
