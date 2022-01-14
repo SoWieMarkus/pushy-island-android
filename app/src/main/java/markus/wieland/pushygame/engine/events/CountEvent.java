@@ -9,6 +9,11 @@ import static java.lang.Thread.sleep;
 
 public class CountEvent extends Event {
 
+    private static int currentCount = 1;
+
+    public static void setCurrentCount(int currentCount) {
+        CountEvent.currentCount = currentCount;
+    }
 
     private final int count;
 
@@ -19,8 +24,8 @@ public class CountEvent extends Event {
 
     @Override
     public void execute() {
-        if (count != game.getEntityManager().getCurrentCount()) {
-            game.getEntityManager().setCurrentCount(1);
+        if (count != currentCount) {
+            setCurrentCount(1);
             for (Count countOfList : game.getEntityManager().getOfType(Count.class)) {
                 Thread thread = new Thread(() -> {
                     try {
@@ -36,6 +41,6 @@ public class CountEvent extends Event {
             }
             return;
         }
-        game.getEntityManager().setCurrentCount(game.getEntityManager().getCurrentCount() + 1);
+        setCurrentCount(currentCount + 1);
     }
 }

@@ -6,22 +6,28 @@ import markus.wieland.pushygame.engine.terrain.Hole;
 
 public class CoconutTunnelFinishEvent extends Event {
 
+    private static boolean executed = false;
+
+    public static void setExecuted(boolean executed) {
+        CoconutTunnelFinishEvent.executed = executed;
+    }
+
     public CoconutTunnelFinishEvent() {
         super();
     }
 
     @Override
     public void execute() {
-        if (game.getEntityManager().isCoconutTunnelFinishEvent())return;
+        if (executed) return;
 
         for (CoconutTunnelFinish coconutTunnelFinish : game.getTerrainManager().getSubListOfPressurePlates(CoconutTunnelFinish.class)) {
-            if (!(game.getEntityManager().getObject(coconutTunnelFinish) instanceof Coconut)) return;
+            if (!(game.getEntityManager().getObject(coconutTunnelFinish) instanceof Coconut))
+                return;
         }
         for (Hole hole : game.getTerrainManager().getOfType(Hole.class)) {
             hole.setFilled();
             game.getTerrainManager().invalidate(hole);
         }
-        game.getEntityManager().setCoconutTunnelFinishEvent(true);
-
+        setExecuted(true);
     }
 }

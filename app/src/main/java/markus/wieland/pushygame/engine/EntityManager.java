@@ -17,21 +17,15 @@ import markus.wieland.pushygame.ui.game.PushyFieldView;
 public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
 
     private Pushy pushy;
-    private final Inventory inventory;
     private CrabMama crabMama;
     private Pirate pirate;
-
-    private int currentCount;
-
-    //Check if the coconut tunnel finish event was executed successfully (for performance)
-    private boolean coconutTunnelFinishEventDone;
 
     private boolean isStringActive;
     private Direction stringDirection;
 
     public EntityManager(Matrix<PushyFieldView<Entity>> pushyFieldViews) {
         super(pushyFieldViews);
-        this.inventory = new Inventory();
+        Inventory inventory = new Inventory();
         for (PushyFieldView<Entity> pushyFieldView : pushyFieldViews) {
             Entity entity = pushyFieldView.get();
             if (entity instanceof Pushy) pushy = (Pushy) entity;
@@ -45,12 +39,10 @@ public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
         }
 
         if (crabMama != null) crabMama.setNeedItemsAmount(inventory.getAmount(CrabBaby.class));
-        if (pirate != null) pirate.setNeedItemsAmount(inventory.getAmount(Coin.class) + inventory.getAmount(Key.class));
-        currentCount = 1;
-        coconutTunnelFinishEventDone = false;
+        if (pirate != null)
+            pirate.setNeedItemsAmount(inventory.getAmount(Coin.class) + inventory.getAmount(Key.class));
         stringDirection = null;
         isStringActive = false;
-
     }
 
 
@@ -70,28 +62,8 @@ public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
         isStringActive = stringActive;
     }
 
-    public Pirate getPirate() {
-        return pirate;
-    }
-
-    public boolean isCoconutTunnelFinishEvent() {
-        return coconutTunnelFinishEventDone;
-    }
-
-    public void setCoconutTunnelFinishEvent(boolean coconutTunnelFinishEvent) {
-        this.coconutTunnelFinishEventDone = coconutTunnelFinishEvent;
-    }
-
     public void setPushy(Pushy pushy) {
         this.pushy = pushy;
-    }
-
-    public int getCurrentCount() {
-        return currentCount;
-    }
-
-    public void setCurrentCount(int currentCount) {
-        this.currentCount = currentCount;
     }
 
     public Pushy getPushy() {
