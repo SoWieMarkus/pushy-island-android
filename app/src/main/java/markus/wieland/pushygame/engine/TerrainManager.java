@@ -1,5 +1,6 @@
 package markus.wieland.pushygame.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import markus.wieland.pushygame.engine.helper.Manager;
@@ -34,6 +35,15 @@ public class TerrainManager extends Manager<Terrain, PushyFieldView<Terrain>> {
         }
         return null;
     }
+
+    public <G extends Terrain> List<G> getSubListOfPressurePlates(Class<G> type) {
+        List<G> filteredList = new ArrayList<>();
+        for (PressurePlateTerrain pressurePlateTerrain : pressurePlateTerrains) {
+            if (type.isInstance(pressurePlateTerrain)) filteredList.add((G) pressurePlateTerrain);
+        }
+        return filteredList;
+    }
+
 
 }
 

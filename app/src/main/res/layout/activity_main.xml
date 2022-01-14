@@ -7,6 +7,17 @@
     android:background="@drawable/background_image"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/press_start_2p"
+        android:text="Pushy"
+        app:layout_constraintBottom_toTopOf="@+id/activity_main_campaign"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/activity_main_campaign"
         android:layout_width="150dp"

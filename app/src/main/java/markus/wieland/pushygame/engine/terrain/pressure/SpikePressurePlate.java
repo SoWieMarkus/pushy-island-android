@@ -14,7 +14,7 @@ public class SpikePressurePlate extends PressurePlateTerrain {
 
     @Override
     public void interact(Entity entity, Game game) {
-        game.execute(new SpikeEvent(entity == null));
+        game.execute(new SpikeEvent());
     }
 
 }

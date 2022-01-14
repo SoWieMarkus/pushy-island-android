@@ -14,7 +14,7 @@ public class CoconutTunnelFinishEvent extends Event {
     public void execute() {
         if (game.getEntityManager().isCoconutTunnelFinishEvent())return;
 
-        for (CoconutTunnelFinish coconutTunnelFinish : game.getTerrainManager().getOfType(CoconutTunnelFinish.class)) {
+        for (CoconutTunnelFinish coconutTunnelFinish : game.getTerrainManager().getSubListOfPressurePlates(CoconutTunnelFinish.class)) {
             if (!(game.getEntityManager().getObject(coconutTunnelFinish) instanceof Coconut)) return;
         }
         for (Hole hole : game.getTerrainManager().getOfType(Hole.class)) {

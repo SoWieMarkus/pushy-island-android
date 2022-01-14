@@ -88,6 +88,7 @@ public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
         return filteredList;
     }
 
+
     public List<F> getAll() {
         List<F> list = new ArrayList<>();
         for (PushyFieldView<F> pushyFieldView : pushyFieldViews) {

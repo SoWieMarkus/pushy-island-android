@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.EntityManager;
 import markus.wieland.pushygame.engine.TerrainManager;
 import markus.wieland.pushygame.engine.entity.Entity;
@@ -84,8 +81,8 @@ public class LevelBuilder {
         return pushyEntityViews;
     }
 
-    public boolean isInsideOfBoard(Coordinate coordinate) {
-        return coordinate.getX() >= 0 && coordinate.getX() < LEVEL_HEIGHT && coordinate.getY() >= 0 && coordinate.getY() < LEVEL_WIDTH;
+    public boolean isNotInsideOfBoard(Coordinate coordinate) {
+        return coordinate.getX() < 0 || coordinate.getX() >= LEVEL_HEIGHT || coordinate.getY() < 0 || coordinate.getY() >= LEVEL_WIDTH;
     }
 
     public EntityManager getEntityManager() {
@@ -223,7 +220,6 @@ public class LevelBuilder {
                 terrainManager.setObject(coordinate, level.getTerrain().get(coordinate));
             }
         }
-
     }
 
 
@@ -297,57 +293,21 @@ public class LevelBuilder {
                 int height = x * TILE_SIZE;
                 int width = y * TILE_SIZE;
 
-                Coordinate coordinate = new Coordinate(x,y);
+                Coordinate coordinate = new Coordinate(x, y);
 
                 Drawable d = activity.getResources().getDrawable(terrainManager.getObject(coordinate).getDrawable(), null);
-                d.setBounds(width, height, width+ TILE_SIZE, height + TILE_SIZE);
+                d.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
                 d.draw(thumbnail);
 
-                Drawable d2 = activity.getResources().getDrawable(entityManager.getObject(coordinate) == null ? R.drawable.no_entity : entityManager.getObject(coordinate).getDrawable(), null);
-                d2.setBounds(width, height, width+ TILE_SIZE, height + TILE_SIZE);
+                Entity entity = entityManager.getObject(coordinate);
+                if (entity == null) continue;
+
+                Drawable d2 = activity.getResources().getDrawable(entity.getDrawable(), null);
+                d2.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
                 d2.draw(thumbnail);
-
-
             }
         }
         return thumbnailBitmap;
     }
-
-
-    /*public static Bitmap getBitmapFromMultipleViews(Matrix<PushyFieldView<Terrain>> views, int width) {
-        int totalHeight = 0;
-        Matrix<Bitmap> bitmaps = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
-
-        for (PushyFieldView<Terrain> view : views) {
-            bitmaps.set(view.get().getCoordinate(), getFromView(view, width));
-            totalHeight += view.getMeasuredHeight();
-        }
-
-        Bitmap totalBitmap = Bitmap.createBitmap(width, totalHeight, Bitmap.Config.ARGB_8888);
-        Canvas totalCanvas = new Canvas(totalBitmap);
-
-        Paint paint = new Paint();
-        int currentHeight = 0;
-
-        for (int i = 0; i < bitmaps.size(); i++) {
-            Bitmap bitmap = bitmaps.get(i);
-            totalCanvas.drawBitmap(bitmap, 0, currentHeight, paint);
-            currentHeight += bitmap.getHeight();
-        }
-
-        return totalBitmap;
-    }
-
-    public static Bitmap getFromView(View view, int width) {
-        view.measure(View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        view.draw(canvas);
-        return bitmap;
-    }*/
-
-
 }
 

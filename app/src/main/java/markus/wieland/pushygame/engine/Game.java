@@ -10,6 +10,8 @@ import markus.wieland.pushygame.engine.entity.movable.SeaStar;
 import markus.wieland.pushygame.engine.events.Event;
 import markus.wieland.pushygame.engine.events.GameEventListener;
 import markus.wieland.pushygame.engine.events.InventoryEventListener;
+import markus.wieland.pushygame.engine.events.ShowInvisibleWaterBlocksEvent;
+import markus.wieland.pushygame.engine.events.SpikeEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Inventory;
@@ -21,7 +23,9 @@ import markus.wieland.pushygame.engine.terrain.FlowerFinish;
 import markus.wieland.pushygame.engine.terrain.InvisibleWater;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.Water;
+import markus.wieland.pushygame.engine.terrain.pressure.InvisibleWaterPressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
+import markus.wieland.pushygame.engine.terrain.pressure.SpikePressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
 import markus.wieland.pushygame.ui.game.PushyFieldView;
 
@@ -98,6 +102,9 @@ public class Game {
         for (Entity entity : entityManager.getAll()) {
             entity.setTeleported(terrainManager.getObject(entity) instanceof Teleporter);
         }
+
+        SpikeEvent.setExecutedThisRound(false);
+        ShowInvisibleWaterBlocksEvent.setExecutedThisRound(false);
 
     }
 

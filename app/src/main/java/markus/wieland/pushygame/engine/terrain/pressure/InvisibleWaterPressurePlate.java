@@ -16,9 +16,7 @@ public class InvisibleWaterPressurePlate extends PressurePlateTerrain {
 
     @Override
     public void interact(Entity entity, Game game) {
-        if (entity == lastEntity) return;
-        lastEntity = entity;
-        game.execute(new ShowInvisibleWaterBlocksEvent(entity != null));
+        game.execute(new ShowInvisibleWaterBlocksEvent());
     }
 
 }

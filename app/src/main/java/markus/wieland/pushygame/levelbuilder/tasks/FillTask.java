@@ -25,7 +25,7 @@ public class FillTask extends MultipleTask {
     }
 
     private void check(Coordinate coordinate) {
-        if (!getLevelBuilder().isInsideOfBoard(coordinate)) return;
+        if (getLevelBuilder().isNotInsideOfBoard(coordinate)) return;
 
         Type type = getLevelBuilder().getCurrentTypeOfField(coordinate, typeWhichWillBeSet);
         if (type == this.typeWhichWillBeReplaced) {

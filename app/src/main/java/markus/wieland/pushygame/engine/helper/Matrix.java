@@ -13,18 +13,17 @@ public class Matrix<E> implements Iterable<E> {
     private final int sizeX;
     private final int sizeY;
 
-    public Matrix(int sizeX, int sizeY) {
+    public Matrix(int height, int width) {
         this.matrixObject = new ArrayList<>();
 
-        for (int i = 0; i < sizeX; i++) {
+        for (int i = 0; i < height; i++) {
             matrixObject.add(new ArrayList<>());
-            for (int j = 0; j < sizeY; j++) {
+            for (int j = 0; j < width; j++) {
                 matrixObject.get(i).add(null);
             }
         }
-
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
+        this.sizeX = height;
+        this.sizeY = width;
     }
 
     public void set(int x, int y, E e) {

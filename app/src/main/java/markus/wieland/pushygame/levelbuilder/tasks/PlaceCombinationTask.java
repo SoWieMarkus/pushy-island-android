@@ -24,7 +24,7 @@ public class PlaceCombinationTask extends MultipleTask {
             coordinatePirate = coordinate;
 
             // if the hut would be outside of the board, the placement should automatically move one field direction north
-            if (!getLevelBuilder().isInsideOfBoard(coordinateHut)) {
+            if (getLevelBuilder().isNotInsideOfBoard(coordinateHut)) {
                 coordinateHut = coordinate;
                 coordinatePirate = coordinate.getNextCoordinate(Direction.NORTH);
             }
@@ -35,7 +35,7 @@ public class PlaceCombinationTask extends MultipleTask {
             coordinateHut = coordinate;
             // if the pirate would be outside of the board, the placement should automatically move one field direction south
 
-            if (!getLevelBuilder().isInsideOfBoard(coordinatePirate)) {
+            if (getLevelBuilder().isNotInsideOfBoard(coordinatePirate)) {
                 coordinatePirate = coordinate;
                 coordinateHut = coordinate.getNextCoordinate(Direction.SOUTH);
             }
