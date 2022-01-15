@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine.level;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.collectible.Coin;
 import markus.wieland.pushygame.engine.entity.collectible.CrabBaby;
+import markus.wieland.pushygame.engine.entity.collectible.Energy;
 import markus.wieland.pushygame.engine.entity.collectible.Key;
 import markus.wieland.pushygame.engine.entity.collectible.Pearl;
 import markus.wieland.pushygame.engine.entity.collectible.Seed;
@@ -15,6 +16,13 @@ import markus.wieland.pushygame.engine.entity.interactable.LeafDirectionChanger;
 import markus.wieland.pushygame.engine.entity.interactable.Pirate;
 import markus.wieland.pushygame.engine.entity.interactable.SlingShot;
 import markus.wieland.pushygame.engine.entity.interactable.Tower;
+import markus.wieland.pushygame.engine.entity.logic.AndGate;
+import markus.wieland.pushygame.engine.entity.logic.Lamp;
+import markus.wieland.pushygame.engine.entity.logic.Lever;
+import markus.wieland.pushygame.engine.entity.logic.NotGate;
+import markus.wieland.pushygame.engine.entity.logic.OrGate;
+import markus.wieland.pushygame.engine.entity.logic.PowerBlock;
+import markus.wieland.pushygame.engine.entity.logic.XORGate;
 import markus.wieland.pushygame.engine.entity.movable.Barrel;
 import markus.wieland.pushygame.engine.entity.movable.Bomb;
 import markus.wieland.pushygame.engine.entity.movable.Bottle;
@@ -37,6 +45,7 @@ import markus.wieland.pushygame.engine.terrain.BarrelFinish;
 import markus.wieland.pushygame.engine.terrain.Boat;
 import markus.wieland.pushygame.engine.terrain.BoxWater;
 import markus.wieland.pushygame.engine.terrain.Buoy;
+import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
 import markus.wieland.pushygame.engine.terrain.Farm;
@@ -140,6 +149,9 @@ public class TileMapBuilder {
 
             case BARREL_FINISH:
                 return new BarrelFinish(coordinate, terrainType);
+
+            case CABLE:
+                return new Cable(coordinate, terrainType);
             default:
                 throw new UnknownTileException(terrainType);
         }
@@ -233,6 +245,24 @@ public class TileMapBuilder {
             case LEAF_CHANGER_WEST:
             case LEAF_CHANGER_NORTH:
                 return new LeafDirectionChanger(coordinate, entityType);
+
+
+            case ENERGY:
+                return new Energy(coordinate, entityType);
+            case LOGIC_GATE_NOT:
+                return new NotGate(coordinate, entityType);
+            case POWER_BLOCK:
+                return new PowerBlock(coordinate, entityType);
+            case LAMP:
+                return new Lamp(coordinate, entityType);
+            case LEVER:
+                return new Lever(coordinate, entityType);
+            case LOGIC_GATE_OR:
+                return new OrGate(coordinate, entityType);
+            case LOGIC_GATE_XOR:
+                return new XORGate(coordinate, entityType);
+            case LOGIC_GATE_AND:
+                return new AndGate(coordinate, entityType);
             default:
                 throw new UnknownTileException(entityType);
         }

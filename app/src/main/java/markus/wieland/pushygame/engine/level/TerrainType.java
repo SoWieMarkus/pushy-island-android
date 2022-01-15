@@ -57,7 +57,9 @@ public enum TerrainType implements Type {
     @SerializedName("changable_flower_red") CHANGEABLE_FLOWER_RED(34, R.drawable.changable_flower_red),
     @SerializedName("changable_flower_green") CHANGEABLE_FLOWER_GREEN(35, R.drawable.changable_flower_green),
 
-    @SerializedName("barrel_finish") BARREL_FINISH(36, R.drawable.barrel_finish);
+    @SerializedName("barrel_finish") BARREL_FINISH(36, R.drawable.barrel_finish),
+
+    @SerializedName("barrel_finish") CABLE(37, R.drawable.cable);
 
     private final int value;
 

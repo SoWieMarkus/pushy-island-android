@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/press_start_2p"
         android:text="Pushy"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/activity_main_campaign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.entity.interactable.Flower;
+import markus.wieland.pushygame.engine.entity.logic.NotGate;
 import markus.wieland.pushygame.engine.entity.movable.Box;
 import markus.wieland.pushygame.engine.entity.movable.Count;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
@@ -41,6 +42,10 @@ public class Game {
         this.entityManager = new EntityManager(entityViews);
         this.terrainManager = new TerrainManager(terrainViews);
         this.inventory = new Inventory();
+
+        for (NotGate notGate : entityManager.getOfType(NotGate.class)) {
+            notGate.update(this);
+        }
 
         for (Box box : entityManager.getOfType(Box.class)) {
             if (terrainManager.getObject(box) instanceof Water) {

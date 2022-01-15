@@ -53,7 +53,15 @@ public enum EntityType implements Type {
     @SerializedName("leaf_changer_east") LEAF_CHANGER_EAST(43, R.drawable.leaf_changer_east),
     @SerializedName("leaf_changer_west") LEAF_CHANGER_WEST(44, R.drawable.leaf_changer_west),
     @SerializedName("leaf_changer_north") LEAF_CHANGER_NORTH(45, R.drawable.leaf_changer_north),
-    @SerializedName("leaf_changer_south") LEAF_CHANGER_SOUTH(46, R.drawable.leaf_changer_south);
+    @SerializedName("leaf_changer_south") LEAF_CHANGER_SOUTH(46, R.drawable.leaf_changer_south),
+    @SerializedName("logic_gate_and") LOGIC_GATE_AND(47, R.drawable.logic_gate_and),
+    @SerializedName("logic_gate_or") LOGIC_GATE_OR(48, R.drawable.logic_gate_or),
+    @SerializedName("logic_gate_xor") LOGIC_GATE_XOR(49, R.drawable.logic_gate_xor),
+    @SerializedName("logic_gate_lamp") LAMP(50, R.drawable.lamp),
+    @SerializedName("lever") LEVER(51, R.drawable.lever),
+    @SerializedName("power_block") POWER_BLOCK(52, R.drawable.power_block),
+    @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not),
+    @SerializedName("energy") ENERGY(54, R.drawable.energy);
 
     private final int value;
 
