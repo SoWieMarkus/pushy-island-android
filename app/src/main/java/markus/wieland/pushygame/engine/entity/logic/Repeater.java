@@ -1,10 +1,9 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
-import android.app.Activity;
-
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.movable.MovableEntity;
 import markus.wieland.pushygame.engine.events.LogicEvent;
+import markus.wieland.pushygame.engine.events.UpdateCableEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
@@ -13,14 +12,17 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
 
     public Repeater(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
+        currentOutput = false;
     }
+
+    private boolean currentOutput;
 
     @Override
     public boolean isInputActive(Game game, Direction direction) {
         return LogicInput.isInputActive(game, direction, getCoordinate());
     }
 
-    public Direction getDirectionFromType(){
+    public Direction getDirectionFromType() {
         switch (getType()) {
             case REPEATER_EAST:
                 return Direction.EAST;
@@ -33,7 +35,7 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
         }
     }
 
-    public EntityType getEntityTypeFromDirection(Direction direction){
+    public EntityType getEntityTypeFromDirection(Direction direction) {
         switch (direction) {
             case NORTH:
                 return EntityType.REPEATER_NORTH;
@@ -53,13 +55,15 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
 
     @Override
     public boolean isInput(Direction direction) {
-        return getDirectionFromType() == direction;
+        return getDirectionFromType().getOppositeDirection() == direction.getOppositeDirection();
     }
 
     @Override
     public boolean isOutputActive(Game game) {
         for (Direction direction : Direction.class.getEnumConstants()) {
-            if (isInput(direction) && isInputActive(game, direction))
+            boolean isInput = isInput(direction.getOppositeDirection());
+            boolean isInputActive = isInputActive(game, direction);
+            if (isInput(direction.getOppositeDirection()) && isInputActive(game, direction))
                 return true;
         }
         return false;
@@ -80,27 +84,20 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
         Direction direction = getCoordinate().getDirection(nextCoordinate);
         super.executeMove(nextCoordinate, game);
         setType(getEntityTypeFromDirection(direction));
-
+        game.execute(new UpdateCableEvent());
         update(game);
     }
 
     @Override
     public void update(Game game) {
+        boolean isOutputActive = isOutputActive(game);
+        if (isOutputActive == currentOutput) return;
+        currentOutput = isOutputActive;
 
         game.getEntityManager().invalidate(this);
-        Thread thread = new Thread(() -> {
-            try {
-                Thread.sleep(300);
-                ((Activity) game.getEntityManager().getView(getCoordinate()).getContext()).runOnUiThread(() -> {
-                    for (Direction direction1 : Direction.class.getEnumConstants()) {
-                        if (isOutput(direction1) && isOutputActive(game))
-                            game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
-                    }
-                });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
+        for (Direction direction1 : Direction.class.getEnumConstants()) {
+            if (isOutput(direction1.getOppositeDirection()))
+                game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
+        }
     }
 }
