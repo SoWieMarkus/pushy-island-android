@@ -1,5 +1,7 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
+import android.app.Activity;
+
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.movable.MovableEntity;
 import markus.wieland.pushygame.engine.events.LogicEvent;
@@ -45,21 +47,27 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
     }
 
     @Override
-    public boolean isOutput(Direction direction) {
+    public int[] getDrawableList() {
+        return LogicGate.getIOOverlay(this, getDrawable());
+    }
+
+    @Override
+    public boolean isInput(Direction direction) {
         return getDirectionFromType() == direction;
     }
 
     @Override
     public boolean isOutputActive(Game game) {
         for (Direction direction : Direction.class.getEnumConstants()) {
-            if (isInput(direction) && isInputActive(game, direction)) return true;
+            if (isInput(direction) && isInputActive(game, direction))
+                return true;
         }
         return false;
     }
 
     @Override
-    public boolean isInput(Direction direction) {
-        return getDirectionFromType().getOppositeDirection() == direction;
+    public boolean isOutput(Direction direction) {
+        return getDirectionFromType() == direction.getOppositeDirection();
     }
 
     @Override
@@ -72,15 +80,27 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
         Direction direction = getCoordinate().getDirection(nextCoordinate);
         super.executeMove(nextCoordinate, game);
         setType(getEntityTypeFromDirection(direction));
+
         update(game);
     }
 
     @Override
     public void update(Game game) {
+
         game.getEntityManager().invalidate(this);
-        for (Direction direction : Direction.class.getEnumConstants()) {
-            if (isOutput(direction))
-                game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction), direction));
-        }
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(300);
+                ((Activity) game.getEntityManager().getView(getCoordinate()).getContext()).runOnUiThread(() -> {
+                    for (Direction direction1 : Direction.class.getEnumConstants()) {
+                        if (isOutput(direction1) && isOutputActive(game))
+                            game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
+                    }
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 }

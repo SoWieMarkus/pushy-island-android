@@ -13,6 +13,11 @@ public class Octopus extends MovableEntity implements GameFinishEntity {
     }
 
     @Override
+    public boolean isMovableEntity() {
+        return false;
+    }
+
+    @Override
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         super.executeMove(nextCoordinate, game);
         if (game.getTerrainManager().getObject(this) instanceof WaterHole) {

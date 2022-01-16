@@ -7,67 +7,67 @@ import com.google.gson.annotations.SerializedName;
 import markus.wieland.pushygame.R;
 
 public enum EntityType implements Type {
-    @SerializedName("no_entity") NO_ENTITY(5, R.drawable.no_entity),
-    @SerializedName("tree") TREE(0, R.drawable.tree),
-    @SerializedName("box") BOX(1, R.drawable.box),
-    @SerializedName("pushy") PUSHY(2, R.drawable.pushy, 1),
-    @SerializedName("finish") FINISH(3, R.drawable.finish, 1),
-    @SerializedName("stone") STONE(4, R.drawable.stone),
-    @SerializedName("seastar") SEA_STAR(6, R.drawable.seastar),
-    @SerializedName("seed") SEED(7, R.drawable.seed),
-    @SerializedName("bottle") BOTTLE(8, R.drawable.bottle),
-    @SerializedName("statue_red") STATUE_RED(9, R.drawable.statue_red),
-    @SerializedName("statue_green") STATUE_GREEN(11, R.drawable.statue_green),
-    @SerializedName("statue_blue") STATUE_BLUE(10, R.drawable.statue_blue),
-    @SerializedName("bomb") BOMB(12, R.drawable.bomb),
-    @SerializedName("crab_baby") CRAB(13, R.drawable.crab_baby),
-    @SerializedName("crab_mother") CRAB_MOTHER(14, R.drawable.crab_mother, 1),
-    @SerializedName("slingshot") SLING_SHOT(15, R.drawable.slingshot),
-    @SerializedName("shot") SHOT(16, R.drawable.shot),
-    @SerializedName("coconut") COCONUT(17, R.drawable.coconut),
-    @SerializedName("leaf_down") LEAF_DOWN(18, R.drawable.leaf_down),
-    @SerializedName("leaf_up") LEAF_UP(19, R.drawable.leaf_up),
-    @SerializedName("leaf_left") LEAF_LEFT(20, R.drawable.leaf_left),
-    @SerializedName("leaf_right") LEAF_RIGHT(21, R.drawable.leaf_right),
-    @SerializedName("pirat") PIRATE(22, R.drawable.pirat, 1),
-    @SerializedName("pirat_hut") PIRATE_HUT(23, R.drawable.pirat_hut, 1),
-    @SerializedName("chest") CHEST(24, R.drawable.chest),
-    @SerializedName("coin") COIN(25, R.drawable.coin),
-    @SerializedName("key") KEY(26, R.drawable.key),
-    @SerializedName("tower") TOWER(27, R.drawable.tower),
-    @SerializedName("pearl") PEARL(28, R.drawable.pearl),
-    @SerializedName("shell") SHELL(29, R.drawable.shell),
-    @SerializedName("shell_open_with_pearl") SHELL_OPEN_WITH_PEARL(30, R.drawable.shell_open_with_pearl),
-    @SerializedName("count_one") COUNT_ONE(31, R.drawable.count_one, 1),
-    @SerializedName("count_two") COUNT_TWO(32, R.drawable.count_two, 1),
-    @SerializedName("count_three") COUNT_THREE(33, R.drawable.count_three, 1),
-    @SerializedName("count_four") COUNT_FOUR(34, R.drawable.count_four, 1),
-    @SerializedName("count_five") COUNT_FIVE(35, R.drawable.count_five, 1),
-    @SerializedName("flower") FLOWER_YELLOW(36, R.drawable.flower),
-    @SerializedName("flower_red") FLOWER_RED(37, R.drawable.flower_red),
-    @SerializedName("shell_1") SHELL_1(38, R.drawable.shell_1),
-    @SerializedName("shell_2") SHELL_2(39, R.drawable.shell_2),
-    @SerializedName("shell_3") SHELL_3(40, R.drawable.shell_3),
-    @SerializedName("octopus") OCTOPUS(41, R.drawable.octopus),
-    @SerializedName("barrel") BARREL(42, R.drawable.barrel),
-    @SerializedName("leaf_changer_east") LEAF_CHANGER_EAST(43, R.drawable.leaf_changer_east),
-    @SerializedName("leaf_changer_west") LEAF_CHANGER_WEST(44, R.drawable.leaf_changer_west),
-    @SerializedName("leaf_changer_north") LEAF_CHANGER_NORTH(45, R.drawable.leaf_changer_north),
-    @SerializedName("leaf_changer_south") LEAF_CHANGER_SOUTH(46, R.drawable.leaf_changer_south),
-    @SerializedName("logic_gate_and") LOGIC_GATE_AND(47, R.drawable.logic_gate_and,true),
-    @SerializedName("logic_gate_or") LOGIC_GATE_OR(48, R.drawable.logic_gate_or,true),
-    @SerializedName("logic_gate_xor") LOGIC_GATE_XOR(49, R.drawable.logic_gate_xor, true),
-    @SerializedName("logic_gate_lamp") LAMP(50, R.drawable.lamp, true),
-    @SerializedName("lever") LEVER(51, R.drawable.lever, true),
-    @SerializedName("power_block") POWER_BLOCK(52, R.drawable.power_block, true),
-    @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not, true),
-    @SerializedName("energy") ENERGY(54, R.drawable.energy),
-    @SerializedName("button") BUTTON(55, R.drawable.button, true),
-    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three, true),
-    @SerializedName("count_down") REPEATER_NORTH(57, R.drawable.repeater_north_active, true),
-    @SerializedName("count_down") REPEATER_SOUTH(58, R.drawable.repeater_south_active, true),
-    @SerializedName("count_down") REPEATER_WEST(59, R.drawable.repeater_west_active, true),
-    @SerializedName("count_down") REPEATER_EAST(60, R.drawable.repeater_east_active, true);
+    @SerializedName("no_entity") NO_ENTITY(5, R.drawable.no_entity, 1),
+    @SerializedName("tree") TREE(0, R.drawable.tree, 1),
+    @SerializedName("box") BOX(1, R.drawable.box, 2),
+    @SerializedName("pushy") PUSHY(2, R.drawable.pushy, 1, 1),
+    @SerializedName("finish") FINISH(3, R.drawable.finish, 1, 1),
+    @SerializedName("stone") STONE(4, R.drawable.stone, 1),
+    @SerializedName("seastar") SEA_STAR(6, R.drawable.seastar, 7),
+    @SerializedName("seed") SEED(7, R.drawable.seed, 9),
+    @SerializedName("bottle") BOTTLE(8, R.drawable.bottle, 9),
+    @SerializedName("statue_red") STATUE_RED(9, R.drawable.statue_red, 13),
+    @SerializedName("statue_green") STATUE_GREEN(11, R.drawable.statue_green, 14),
+    @SerializedName("statue_blue") STATUE_BLUE(10, R.drawable.statue_blue, 15),
+    @SerializedName("bomb") BOMB(12, R.drawable.bomb, 18),
+    @SerializedName("crab_baby") CRAB(13, R.drawable.crab_baby, 22),
+    @SerializedName("crab_mother") CRAB_MOTHER(14, R.drawable.crab_mother, 1, 22),
+    @SerializedName("slingshot") SLING_SHOT(15, R.drawable.slingshot, 27),
+    @SerializedName("shot") SHOT(16, R.drawable.shot, 27),
+    @SerializedName("coconut") COCONUT(17, R.drawable.coconut, 27),
+    @SerializedName("leaf_down") LEAF_DOWN(18, R.drawable.leaf_down, 32),
+    @SerializedName("leaf_up") LEAF_UP(19, R.drawable.leaf_up, 32),
+    @SerializedName("leaf_left") LEAF_LEFT(20, R.drawable.leaf_left, 32),
+    @SerializedName("leaf_right") LEAF_RIGHT(21, R.drawable.leaf_right, 32),
+    @SerializedName("pirat") PIRATE(22, R.drawable.pirat, 1, 44),
+    @SerializedName("pirat_hut") PIRATE_HUT(23, R.drawable.pirat_hut, 1, 44),
+    @SerializedName("chest") CHEST(24, R.drawable.chest, 50),
+    @SerializedName("coin") COIN(25, R.drawable.coin, 44),
+    @SerializedName("key") KEY(26, R.drawable.key, 50),
+    @SerializedName("tower") TOWER(27, R.drawable.tower, 54),
+    @SerializedName("pearl") PEARL(28, R.drawable.pearl, 54),
+    @SerializedName("shell") SHELL(29, R.drawable.shell, 57),
+    @SerializedName("shell_open_with_pearl") SHELL_OPEN_WITH_PEARL(30, R.drawable.shell_open_with_pearl, 57),
+    @SerializedName("count_one") COUNT_ONE(31, R.drawable.count_one, 1, 71),
+    @SerializedName("count_two") COUNT_TWO(32, R.drawable.count_two, 1, 71),
+    @SerializedName("count_three") COUNT_THREE(33, R.drawable.count_three, 1, 71),
+    @SerializedName("count_four") COUNT_FOUR(34, R.drawable.count_four, 1, 71),
+    @SerializedName("count_five") COUNT_FIVE(35, R.drawable.count_five, 1, 71),
+    @SerializedName("flower") FLOWER_YELLOW(36, R.drawable.flower, 105),
+    @SerializedName("flower_red") FLOWER_RED(37, R.drawable.flower_red, 110),
+    @SerializedName("shell_1") SHELL_1(38, R.drawable.shell_1, 119),
+    @SerializedName("shell_2") SHELL_2(39, R.drawable.shell_2, 119),
+    @SerializedName("shell_3") SHELL_3(40, R.drawable.shell_3, 119),
+    @SerializedName("octopus") OCTOPUS(41, R.drawable.octopus, 141),
+    @SerializedName("barrel") BARREL(42, R.drawable.barrel, 148),
+    @SerializedName("leaf_changer_east") LEAF_CHANGER_EAST(43, R.drawable.leaf_changer_east, 155),
+    @SerializedName("leaf_changer_west") LEAF_CHANGER_WEST(44, R.drawable.leaf_changer_west, 155),
+    @SerializedName("leaf_changer_north") LEAF_CHANGER_NORTH(45, R.drawable.leaf_changer_north, 155),
+    @SerializedName("leaf_changer_south") LEAF_CHANGER_SOUTH(46, R.drawable.leaf_changer_south, 155),
+    @SerializedName("logic_gate_and") LOGIC_GATE_AND(47, R.drawable.logic_gate_and,true, 176),
+    @SerializedName("logic_gate_or") LOGIC_GATE_OR(48, R.drawable.logic_gate_or,true, 176),
+    @SerializedName("logic_gate_xor") LOGIC_GATE_XOR(49, R.drawable.logic_gate_xor, true, 176),
+    @SerializedName("logic_gate_lamp") LAMP(50, R.drawable.lamp, true, 176),
+    @SerializedName("lever") LEVER(51, R.drawable.lever, true, 176),
+    @SerializedName("power_block") POWER_BLOCK(52, R.drawable.power_block, true, 176),
+    @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not, true, 176),
+    @SerializedName("energy") ENERGY(54, R.drawable.energy, 176),
+    @SerializedName("button") BUTTON(55, R.drawable.button, true, 176),
+    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three, true, 176),
+    @SerializedName("repeater_north") REPEATER_NORTH(57, R.drawable.repeater_north_active, true, 176),
+    @SerializedName("repeater_south") REPEATER_SOUTH(58, R.drawable.repeater_south_active, true, 176),
+    @SerializedName("repeater_west") REPEATER_WEST(59, R.drawable.repeater_west_active, true, 176),
+    @SerializedName("repeater_east") REPEATER_EAST(60, R.drawable.repeater_east_active, true, 176);
 
     private final int value;
 
@@ -80,25 +80,30 @@ public enum EntityType implements Type {
 
     private final boolean isLogicPart;
 
-    EntityType(int value, int drawable, int allowedInstances) {
+    private final int firstAppearance;
+
+    EntityType(int value, int drawable, int allowedInstances, int firstAppearance) {
         this.value = value;
         this.drawable = drawable;
         this.allowedInstances = allowedInstances;
         this.isLogicPart = false;
+        this.firstAppearance = firstAppearance;
     }
 
-    EntityType(int value, @DrawableRes int drawable, boolean isLogicPart) {
+    EntityType(int value, @DrawableRes int drawable, boolean isLogicPart, int firstAppearance) {
         this.value = value;
         this.drawable = drawable;
         this.allowedInstances = Type.UNLIMITED;
         this.isLogicPart = isLogicPart;
+        this.firstAppearance = firstAppearance;
     }
 
-    EntityType(int value, @DrawableRes int drawable) {
+    EntityType(int value, @DrawableRes int drawable, int firstAppearance) {
         this.value = value;
         this.drawable = drawable;
         this.allowedInstances = Type.UNLIMITED;
         this.isLogicPart = false;
+        this.firstAppearance = firstAppearance;
     }
 
     @Override
@@ -110,6 +115,11 @@ public enum EntityType implements Type {
     @Override
     public boolean isLogicPart() {
         return isLogicPart;
+    }
+
+    @Override
+    public int firstAppearance() {
+        return firstAppearance;
     }
 
     @Override

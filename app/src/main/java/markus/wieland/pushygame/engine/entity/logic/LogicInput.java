@@ -1,5 +1,6 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
+import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
@@ -35,5 +36,19 @@ public interface LogicInput {
 
         if (!(terrain instanceof Cable)) return false;
         return ((Cable) terrain).isActive();
+    }
+
+    static int drawableByDirection(Direction direction){
+        direction = direction.getOppositeDirection();
+        switch (direction) {
+            case NORTH:
+                return R.drawable.input_north;
+            case WEST:
+                return R.drawable.input_west;
+            case EAST:
+                return R.drawable.input_east;
+            default:
+                return R.drawable.input_south;
+        }
     }
 }

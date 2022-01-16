@@ -41,12 +41,16 @@ public class Cable extends Sand {
             if (shouldHaveCable(terrainManager, entityManager, direction))
                 directionsOfCable.add(direction);
         }
+        if (directionsOfCable.isEmpty()) {
+            this.directionsOfCable.addAll(Arrays.asList(Direction.class.getEnumConstants()));
+        }
         terrainManager.invalidate(this);
     }
 
     @Override
     public int[] getDrawableList() {
         List<Integer> drawablesAsList = new ArrayList<>();
+
         for (Direction direction : directionsOfCable) {
             drawablesAsList.add(getDrawableFromDirection(direction));
         }

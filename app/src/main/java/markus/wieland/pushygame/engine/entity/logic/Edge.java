@@ -45,6 +45,7 @@ public class Edge {
     public void update(Game game) {
         active = false;
 
+
         for (LogicOutput logicOutput : outputs) {
             active = active || logicOutput.isOutputActive(game);
         }

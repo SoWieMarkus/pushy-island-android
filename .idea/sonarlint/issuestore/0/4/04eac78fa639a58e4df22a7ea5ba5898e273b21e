@@ -1,9 +1,0 @@
-
-S
-java:S1874"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8Ê­ä/
-£
-java:S1186#"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ä÷†Áşÿÿÿÿ8Ê­ä/
-£
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(§ÂË¤ûÿÿÿÿ8Ê­ä/
-S
-java:S1874"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8Ê­ä/

@@ -10,6 +10,8 @@ public interface Type {
 
     boolean isLogicPart();
 
+    int firstAppearance();
+
     @DrawableRes
     int getDrawable();
 

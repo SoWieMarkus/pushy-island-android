@@ -3,11 +3,16 @@ package markus.wieland.pushygame.engine.entity.logic;
 import android.app.Activity;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.events.LogicEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.Terrain;
@@ -29,6 +34,28 @@ public abstract class LogicGate extends Entity implements LogicOutput, LogicInpu
             ports.configure(direction, configurePortType(direction));
         }
         this.ports.updateLists();
+    }
+
+    @Override
+    public int[] getDrawableList() {
+        return getIOOverlay(this, getDrawable());
+    }
+
+    public static int[] getIOOverlay(Field field, int baseDrawable) {
+        List<Integer> drawables = new ArrayList<>();
+        drawables.add(baseDrawable);
+        for (Direction direction : Direction.class.getEnumConstants()) {
+            if (field instanceof LogicInput && ((LogicInput) field).isInput(direction))
+                drawables.add(LogicInput.drawableByDirection(direction));
+            if (field instanceof LogicOutput && ((LogicOutput) field).isOutput(direction))
+                drawables.add(LogicOutput.drawableByDirection(direction));
+        }
+
+        int[] drawablesArray = new int[drawables.size()];
+        for (int i = 0; i < drawables.size(); i++) {
+            drawablesArray[i] = drawables.get(i);
+        }
+        return drawablesArray;
     }
 
     public Ports getPorts() {

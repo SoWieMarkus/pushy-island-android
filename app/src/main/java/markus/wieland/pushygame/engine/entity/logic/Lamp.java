@@ -20,6 +20,11 @@ public class Lamp extends LogicGate implements GameFinishEntity, LogicInput {
     }
 
     @Override
+    public int[] getDrawableList() {
+        return new int[]{getDrawable()};
+    }
+
+    @Override
     public PortType configurePortSouth() {
         return PortType.INPUT;
     }
