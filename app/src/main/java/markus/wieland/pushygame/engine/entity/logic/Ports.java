@@ -1,7 +1,7 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,12 +9,12 @@ import markus.wieland.pushygame.engine.helper.Direction;
 
 public class Ports {
 
-    private final HashMap<Direction, PortType> portsDirection;
+    private final EnumMap<Direction, PortType> portsDirection;
     private final List<Direction> inputs;
     private final List<Direction> outputs;
 
     public Ports() {
-        this.portsDirection = new HashMap<>();
+        this.portsDirection = new EnumMap<>(Direction.class);
         this.inputs = new ArrayList<>();
         this.outputs = new ArrayList<>();
         this.portsDirection.put(Direction.NORTH, PortType.VOID);
@@ -27,7 +27,7 @@ public class Ports {
         this.portsDirection.put(direction, portType);
     }
 
-    public void updateLists(){
+    public void updateLists() {
         this.outputs.clear();
         this.inputs.clear();
 

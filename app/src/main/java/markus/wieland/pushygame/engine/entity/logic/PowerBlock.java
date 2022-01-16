@@ -18,11 +18,6 @@ public class PowerBlock extends MovableEntity implements LogicOutput {
     }
 
     @Override
-    public void addOutgoingEdge(Edge edge) {
-
-    }
-
-    @Override
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         Coordinate coordinateBefore = new Coordinate(getCoordinate().getX(), getCoordinate().getY());
         super.executeMove(nextCoordinate, game);

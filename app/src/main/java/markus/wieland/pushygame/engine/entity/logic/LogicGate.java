@@ -16,24 +16,9 @@ import markus.wieland.pushygame.engine.terrain.Terrain;
 
 public abstract class LogicGate extends Entity implements LogicOutput {
 
-    private final List<Edge> outgoingEdges;
-
     private final Ports ports;
 
     private boolean currentOutput;
-
-    public void setCurrentOutput(boolean currentOutput) {
-        this.currentOutput = currentOutput;
-    }
-
-    public boolean isCurrentOutput() {
-        return currentOutput;
-    }
-
-    @Override
-    public void addOutgoingEdge(Edge outgoingEdge) {
-        this.outgoingEdges.add(outgoingEdge);
-    }
 
     public PortType getPortType(Direction direction) {
         return ports.getPortType(direction);
@@ -42,7 +27,6 @@ public abstract class LogicGate extends Entity implements LogicOutput {
     public LogicGate(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
         this.ports = new Ports();
-        this.outgoingEdges = new ArrayList<>();
         for (Direction direction : Direction.class.getEnumConstants()) {
             ports.configure(direction, configurePortType(direction));
         }

@@ -27,9 +27,7 @@ import markus.wieland.pushygame.engine.terrain.FlowerFinish;
 import markus.wieland.pushygame.engine.terrain.InvisibleWater;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.engine.terrain.Water;
-import markus.wieland.pushygame.engine.terrain.pressure.InvisibleWaterPressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
-import markus.wieland.pushygame.engine.terrain.pressure.SpikePressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.Teleporter;
 import markus.wieland.pushygame.ui.game.PushyFieldView;
 

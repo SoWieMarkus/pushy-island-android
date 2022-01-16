@@ -67,10 +67,6 @@ public class Button extends InteractableEntity implements LogicOutput {
         return active;
     }
 
-    @Override
-    public void addOutgoingEdge(Edge edge) {
-
-    }
 
     @Override
     public PortType getPortType(Direction direction) {

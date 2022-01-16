@@ -16,16 +16,8 @@ public class Lever extends InteractableEntity implements LogicOutput {
 
     private boolean active;
 
-    private final List<Edge> outgoingEdges;
-
     public Lever(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
-        this.outgoingEdges = new ArrayList<>();
-    }
-
-    @Override
-    public void addOutgoingEdge(Edge edge) {
-        this.outgoingEdges.add(edge);
     }
 
     @Override
