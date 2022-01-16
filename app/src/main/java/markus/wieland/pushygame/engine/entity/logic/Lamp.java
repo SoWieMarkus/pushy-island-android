@@ -50,12 +50,12 @@ public class Lamp extends LogicGate implements GameFinishEntity {
 
     @Override
     public boolean isOutputActive(Game game) {
-        boolean active = false;
+        boolean willBeActive = false;
         for (Direction direction : getPorts().getInputs()) {
-            active = isInputActive(game, direction) || active;
+            willBeActive = isInputActive(game, direction) || willBeActive;
         }
 
-        setActive(active);
+        setActive(willBeActive);
         return isActive();
     }
 

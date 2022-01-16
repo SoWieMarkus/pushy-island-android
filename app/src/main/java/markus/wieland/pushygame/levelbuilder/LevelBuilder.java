@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import markus.wieland.pushygame.engine.EntityManager;
@@ -22,11 +23,13 @@ import markus.wieland.pushygame.engine.level.RawLevel;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.level.Type;
+import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.levelbuilder.tasks.FillTask;
 import markus.wieland.pushygame.levelbuilder.tasks.PlaceCombinationTask;
 import markus.wieland.pushygame.levelbuilder.tasks.ReplaceTask;
 import markus.wieland.pushygame.levelbuilder.tasks.ResetTask;
+import markus.wieland.pushygame.levelbuilder.tasks.SetLogicTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SetTask;
 import markus.wieland.pushygame.levelbuilder.tasks.SmoothTask;
 import markus.wieland.pushygame.levelbuilder.tasks.Task;
@@ -169,6 +172,8 @@ public class LevelBuilder {
             task = new PlaceCombinationTask(this, coordinate, selectedField);
         } else if (selectedField.getAmountOfAllowedInstances() != Type.UNLIMITED) {
             task = new ReplaceTask(this, selectedField, coordinate);
+        } else if (selectedFieldIsOneOf(EntityType.COUNT_DOWN, EntityType.LEVER, EntityType.BUTTON, EntityType.LAMP, TerrainType.CABLE)) {
+            task = new SetLogicTask(this, coordinate, selectedField);
         } else {
             task = isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField);
         }
@@ -221,6 +226,10 @@ public class LevelBuilder {
                 entityManager.setObject(coordinate, level.getEntities().get(coordinate));
                 terrainManager.setObject(coordinate, level.getTerrain().get(coordinate));
             }
+        }
+
+        for (Cable cable : terrainManager.getOfType(Cable.class)) {
+            cable.updateDrawables(this);
         }
     }
 
@@ -297,16 +306,24 @@ public class LevelBuilder {
 
                 Coordinate coordinate = new Coordinate(x, y);
 
-                Drawable d = activity.getResources().getDrawable(terrainManager.getObject(coordinate).getDrawable(), null);
-                d.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
-                d.draw(thumbnail);
+                for (int drawable : terrainManager.getObject(coordinate).getDrawableList()) {
+                    Drawable d = activity.getResources().getDrawable(drawable, null);
+                    d.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
+                    d.draw(thumbnail);
+                }
+
+
 
                 Entity entity = entityManager.getObject(coordinate);
                 if (entity == null) continue;
 
-                Drawable d2 = activity.getResources().getDrawable(entity.getDrawable(), null);
-                d2.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
-                d2.draw(thumbnail);
+                for (int drawable : entity.getDrawableList()) {
+                    Drawable d2 = activity.getResources().getDrawable(drawable, null);
+                    d2.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
+                    d2.draw(thumbnail);
+                }
+
+
             }
         }
         return thumbnailBitmap;

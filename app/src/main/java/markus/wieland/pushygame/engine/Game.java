@@ -12,16 +12,19 @@ import markus.wieland.pushygame.engine.entity.movable.SeaStar;
 import markus.wieland.pushygame.engine.events.CountEvent;
 import markus.wieland.pushygame.engine.events.Event;
 import markus.wieland.pushygame.engine.events.GameEventListener;
+import markus.wieland.pushygame.engine.events.InitializeEvent;
 import markus.wieland.pushygame.engine.events.InventoryEventListener;
 import markus.wieland.pushygame.engine.events.ShowInvisibleWaterBlocksEvent;
 import markus.wieland.pushygame.engine.events.SpikeEvent;
 import markus.wieland.pushygame.engine.events.StringEvent;
+import markus.wieland.pushygame.engine.events.UpdateCableEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Inventory;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
+import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.FlowerFinish;
 import markus.wieland.pushygame.engine.terrain.InvisibleWater;
@@ -43,38 +46,7 @@ public class Game {
         this.terrainManager = new TerrainManager(terrainViews);
         this.inventory = new Inventory();
 
-        for (NotGate notGate : entityManager.getOfType(NotGate.class)) {
-            notGate.update(this);
-        }
-
-        for (Box box : entityManager.getOfType(Box.class)) {
-            if (terrainManager.getObject(box) instanceof Water) {
-                entityManager.remove(box);
-                terrainManager.setObject(box.getCoordinate(), TileMapBuilder.build(TerrainType.BOX_WATER, box.getCoordinate()));
-            }
-        }
-        for (SeaStar seaStar : entityManager.getOfType(SeaStar.class)) {
-            if (terrainManager.getObject(seaStar) instanceof Water) {
-                entityManager.remove(seaStar);
-            }
-        }
-        for (InvisibleWater invisibleWater : terrainManager.getOfType(InvisibleWater.class)) {
-            invisibleWater.setVisible(true);
-            terrainManager.invalidate(invisibleWater);
-        }
-        for (Count count : entityManager.getOfType(Count.class)) {
-            count.setUncovered(false);
-            entityManager.invalidate(count);
-        }
-
-        for (PowerBlock powerBlock : entityManager.getOfType(PowerBlock.class)) {
-            powerBlock.executePowerEvent(this, powerBlock.getCoordinate(), null);
-        }
-
-        StringEvent.setIsStringActive(false);
-        SpikeEvent.setExecutedThisRound(false);
-        ShowInvisibleWaterBlocksEvent.setExecutedThisRound(false);
-        CountEvent.setCurrentCount(1);
+        execute(new InitializeEvent());
     }
 
     public void setInventoryEventListener(InventoryEventListener inventoryEventListener) {

@@ -8,8 +8,6 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 
 public class InvisibleWaterPressurePlate extends PressurePlateTerrain {
 
-    private Entity lastEntity;
-
     public InvisibleWaterPressurePlate(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);
     }

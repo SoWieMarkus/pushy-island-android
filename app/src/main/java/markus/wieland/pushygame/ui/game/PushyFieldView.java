@@ -51,7 +51,15 @@ public class PushyFieldView<T extends Field> extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        draw(field == null ? R.drawable.no_entity : field.getDrawable(), canvas);
+        if (field == null) {
+            draw(R.drawable.no_entity, canvas);
+            return;
+        }
+
+        for (int drawableRes : field.getDrawableList()) {
+            draw(drawableRes, canvas);
+        }
+
     }
 
     private void draw(@DrawableRes int drawableRes, Canvas canvas) {

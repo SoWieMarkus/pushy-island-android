@@ -23,6 +23,10 @@ public abstract class Field {
         return type == null ? R.drawable.no_entity : type.getDrawable();
     }
 
+    public int[] getDrawableList() {
+        return new int[]{getDrawable()};
+    }
+
     public boolean destroysFlyingStone() {
         return false;
     }

@@ -9,11 +9,16 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public class String extends Entity {
 
-    private int drawable;
+    private final int[] drawables;
 
     public String(Coordinate coordinate, Direction first, Direction second) {
         super(coordinate, null);
-        if (first == null) {
+
+        drawables = new int[]{getDrawableFromDirection(first), getDrawableFromDirection(second.getOppositeDirection())};
+
+
+
+        /*if (first == null) {
             switch (second) {
                 case NORTH:
                     setDrawable(R.drawable.string_half_north);
@@ -93,16 +98,26 @@ public class String extends Entity {
                         throw new StringDirectionException(first,second);
                 }
                 break;
+        }*/
+    }
+
+    public int getDrawableFromDirection(Direction direction) {
+        if (direction == null) return R.drawable.no_entity;
+        switch (direction) {
+            case EAST:
+                return R.drawable.string_half_west;
+            case WEST:
+                return R.drawable.string_half_east;
+            case NORTH:
+                return R.drawable.string_half_south;
+            default:
+                return R.drawable.string_half_north;
         }
     }
 
     @Override
-    public int getDrawable() {
-        return drawable;
-    }
-
-    public void setDrawable(int drawable) {
-        this.drawable = drawable;
+    public int[] getDrawableList() {
+        return drawables;
     }
 
     // Can not be placed by user
