@@ -39,7 +39,6 @@ public enum TerrainType implements Type {
 
     @SerializedName("boat") BOAT(22, R.drawable.boat, 44),
     @SerializedName("teleporter") TELEPORTER(23, R.drawable.teleporter, 2, 40),
-    @SerializedName("buoy") BUOY(24, R.drawable.buoy, 44),
 
     @SerializedName("water_invisible_pressure_plate") WATER_INVISIBLE_PRESSURE_PLATE(25, R.drawable.water_invisible_pressure_plate, 86),
     @SerializedName("water_invisible") WATER_INVISIBLE(26, R.drawable.water_invisible, 86),

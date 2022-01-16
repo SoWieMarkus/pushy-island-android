@@ -1,5 +1,7 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
+import java.util.Objects;
+
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.movable.MovableEntity;
 import markus.wieland.pushygame.engine.events.LogicEvent;
@@ -60,9 +62,7 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
 
     @Override
     public boolean isOutputActive(Game game) {
-        for (Direction direction : Direction.class.getEnumConstants()) {
-            boolean isInput = isInput(direction.getOppositeDirection());
-            boolean isInputActive = isInputActive(game, direction);
+        for (Direction direction : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             if (isInput(direction.getOppositeDirection()) && isInputActive(game, direction))
                 return true;
         }
@@ -93,9 +93,8 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
         boolean isOutputActive = isOutputActive(game);
         if (isOutputActive == currentOutput) return;
         currentOutput = isOutputActive;
-
         game.getEntityManager().invalidate(this);
-        for (Direction direction1 : Direction.class.getEnumConstants()) {
+        for (Direction direction1 : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             if (isOutput(direction1.getOppositeDirection()))
                 game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
         }

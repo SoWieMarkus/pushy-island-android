@@ -47,7 +47,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.terrain.BarrelFinish;
 import markus.wieland.pushygame.engine.terrain.Boat;
 import markus.wieland.pushygame.engine.terrain.BoxWater;
-import markus.wieland.pushygame.engine.terrain.Buoy;
+import markus.wieland.pushygame.engine.entity.statics.Buoy;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
@@ -120,8 +120,7 @@ public class TileMapBuilder {
                 return new Spikes(coordinate, terrainType);
             case SPIKE_PRESSURE_PLATE:
                 return new SpikePressurePlate(coordinate, terrainType);
-            case BUOY:
-                return new Buoy(coordinate, terrainType);
+
             case BOAT:
                 return new Boat(coordinate, terrainType);
             case TELEPORTER:
@@ -192,7 +191,8 @@ public class TileMapBuilder {
             case STATUE_GREEN:
             case STATUE_RED:
                 return new Statue(coordinate, entityType);
-
+            case BUOY:
+                return new Buoy(coordinate, entityType);
             case BOMB:
                 return new Bomb(coordinate, entityType);
 
