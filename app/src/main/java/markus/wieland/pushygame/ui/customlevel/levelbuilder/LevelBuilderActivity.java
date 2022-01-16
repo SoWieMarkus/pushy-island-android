@@ -1,6 +1,5 @@
 package markus.wieland.pushygame.ui.customlevel.levelbuilder;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,7 +21,6 @@ import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 import markus.wieland.pushygame.ui.dialog.Dialog;
-import markus.wieland.pushygame.ui.dialog.DialogInteractionListener;
 import markus.wieland.pushygame.ui.game.PushyGridAdapter;
 import markus.wieland.pushygame.ui.game.PushyView;
 
@@ -78,7 +76,7 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         findViewById(R.id.activity_game_export).setOnClickListener(this::export);
         findViewById(R.id.activity_level_builder_fill).setOnClickListener(view -> {
             levelBuilder.fill();
-            ((ImageButton)findViewById(R.id.activity_level_builder_fill)).setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
+            ((ImageButton) findViewById(R.id.activity_level_builder_fill)).setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
         });
         findViewById(R.id.activity_level_builder_smooth).setOnClickListener(view -> levelBuilder.smooth());
 
@@ -145,7 +143,7 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
 
     @Override
     public void onBackPressed() {
-        if (levelBuilder.isSaved()){
+        if (levelBuilder.isSaved()) {
             super.onBackPressed();
             return;
         }

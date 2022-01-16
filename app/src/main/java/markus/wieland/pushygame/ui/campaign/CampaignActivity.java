@@ -14,11 +14,11 @@ import java.util.List;
 
 import markus.wieland.defaultappelements.uielements.activities.DefaultActivity;
 import markus.wieland.defaultappelements.uielements.adapter.iteractlistener.OnItemClickListener;
-import markus.wieland.pushygame.ui.game.GameActivity;
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.engine.level.LevelLoader;
 import markus.wieland.pushygame.persistence.LevelViewModel;
+import markus.wieland.pushygame.ui.game.GameActivity;
 
 public class CampaignActivity extends DefaultActivity implements OnItemClickListener<LevelDisplayItem>, Observer<List<LevelDisplayItem>> {
 
@@ -59,6 +59,7 @@ public class CampaignActivity extends DefaultActivity implements OnItemClickList
     @Override
     public void onClick(LevelDisplayItem levelDisplayItem) {
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(GameActivity.LEVEL_ID, levelDisplayItem.getNumber());
         intent.putExtra(GameActivity.LEVEL_PATH, levelDisplayItem.getFile());
         startActivity(intent);
     }

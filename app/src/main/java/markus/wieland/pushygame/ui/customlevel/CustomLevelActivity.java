@@ -77,12 +77,17 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
 
     @Override
     public void onShare(LevelDisplayItem levelDisplayItem) {
-        // TODO
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, levelDisplayItem.getFile());
+        startActivity(intent);
     }
 
     @Override
     public void onPlay(LevelDisplayItem levelDisplayItem) {
-        startActivity(new Intent(this, GameActivity.class).putExtra(GameActivity.LEVEL_CODE, levelDisplayItem.getFile()));
+        startActivity(new Intent(this, GameActivity.class)
+                .putExtra(GameActivity.LEVEL_ID, levelDisplayItem.getNumber())
+                .putExtra(GameActivity.LEVEL_CODE, levelDisplayItem.getFile()));
     }
 
     @Override

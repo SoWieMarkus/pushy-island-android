@@ -1,12 +1,11 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
 import android.app.Activity;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.events.LogicEvent;
@@ -14,8 +13,6 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.engine.level.EntityType;
-import markus.wieland.pushygame.engine.terrain.Cable;
-import markus.wieland.pushygame.engine.terrain.Terrain;
 
 public abstract class LogicGate extends Entity implements LogicOutput, LogicInput {
 
@@ -30,7 +27,7 @@ public abstract class LogicGate extends Entity implements LogicOutput, LogicInpu
     public LogicGate(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
         this.ports = new Ports();
-        for (Direction direction : Direction.class.getEnumConstants()) {
+        for (Direction direction : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             ports.configure(direction, configurePortType(direction));
         }
         this.ports.updateLists();
@@ -44,7 +41,7 @@ public abstract class LogicGate extends Entity implements LogicOutput, LogicInpu
     public static int[] getIOOverlay(Field field, int baseDrawable) {
         List<Integer> drawables = new ArrayList<>();
         drawables.add(baseDrawable);
-        for (Direction direction : Direction.class.getEnumConstants()) {
+        for (Direction direction : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             if (field instanceof LogicInput && ((LogicInput) field).isInput(direction))
                 drawables.add(LogicInput.drawableByDirection(direction));
             if (field instanceof LogicOutput && ((LogicOutput) field).isOutput(direction))

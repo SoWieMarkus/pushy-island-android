@@ -6,6 +6,7 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,14 +26,15 @@ import markus.wieland.pushygame.engine.level.RawLevel;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 
-public class GameActivity extends DefaultActivity implements GameEventListener, InventoryEventListener {
+public class GameActivity extends DefaultActivity implements GameEventListener, InventoryEventListener, Observer<LevelDisplayItem> {
 
     public static final String LEVEL_PATH = "markus.wieland.pushy.LEVEL_PATH";
+    public static final String LEVEL_ID = "markus.wieland.pushy.LEVEL_ID";
     public static final String LEVEL_CODE = "markus.wieland.pushy.LEVEL_CODE";
 
     private PushyView terrain;
     private PushyView entities;
-    private Game gameManager;
+    private Game game;
 
     private TextView levelName;
     private TextView levelNumber;
@@ -47,6 +49,8 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
     private InventoryAdapter inventoryAdapter;
     private LevelViewModel levelViewModel;
     private LevelDisplayItem levelDisplayItem;
+
+    private long id;
 
 
     public GameActivity() {
@@ -76,25 +80,54 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
     @Override
     public void initializeViews() {
-        up.setOnClickListener(view -> gameManager.move(Direction.NORTH));
-        down.setOnClickListener(view -> gameManager.move(Direction.SOUTH));
-        left.setOnClickListener(view -> gameManager.move(Direction.WEST));
-        right.setOnClickListener(view -> gameManager.move(Direction.EAST));
+        up.setOnClickListener(view -> game.move(Direction.NORTH));
+        down.setOnClickListener(view -> game.move(Direction.SOUTH));
+        left.setOnClickListener(view -> game.move(Direction.WEST));
+        right.setOnClickListener(view -> game.move(Direction.EAST));
         restart.setOnClickListener(view -> recreate());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 
     @Override
     public void execute() {
         inventoryAdapter = new InventoryAdapter();
         recyclerView.setAdapter(inventoryAdapter);
-        Level level;
+        id = getIntent().getLongExtra(LEVEL_ID, 1);
+        levelViewModel.getLevel(id).observe(this, this);
+    }
+
+
+    @Override
+    public void onFinish() {
+
+        levelDisplayItem.setSolved(true);
+        levelViewModel.update(levelDisplayItem);
+        if (getIntent().getStringExtra(LEVEL_PATH) == null) {
+            finish();
+            return;
+        }
+
+        String nextLevel = LevelLoader.getNextLevel(this, (int) id);
+        if (nextLevel != null) {
+            startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_PATH, nextLevel));
+        }
+        finish();
+    }
+
+    @Override
+    public void onInventoryChanged() {
+        inventoryAdapter.submitList(game.getInventory().getInventoryItems());
+    }
+
+    @Override
+    public void onChanged(LevelDisplayItem levelDisplayItem) {
+        this.levelDisplayItem = levelDisplayItem;
+
         String path = getIntent().getStringExtra(LEVEL_PATH);
         String code = getIntent().getStringExtra(LEVEL_CODE);
+        Level level;
         if (path != null) {
-            levelDisplayItem = new LevelDisplayItem(path);
             levelNumber.setText(levelDisplayItem.getNumberAsString());
             levelName.setText(levelDisplayItem.getName());
             level = LevelLoader.buildLevel(this, path);
@@ -122,33 +155,8 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
         terrain.setAdapter(new PushyGridAdapter<>(pushyTerrainViews));
         entities.setAdapter(new PushyGridAdapter<>(pushyEntityViews));
-        gameManager = new Game(pushyEntityViews, pushyTerrainViews);
-        gameManager.setGameEventListener(this);
-        gameManager.setInventoryEventListener(this);
-
-    }
-
-    @Override
-    public void onFinish() {
-
-        if (getIntent().getStringExtra(LEVEL_PATH) == null) {
-            finish();
-            return;
-        }
-        levelDisplayItem.setSolved(true);
-        levelViewModel.update(levelDisplayItem);
-
-
-        //TODO validate
-        String nextLevel = LevelLoader.getNextLevel(this, getIntent().getStringExtra(LEVEL_PATH));
-        if (nextLevel != null) {
-            startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_PATH, nextLevel));
-        }
-        finish();
-    }
-
-    @Override
-    public void onInventoryChanged() {
-        inventoryAdapter.submitList(gameManager.getInventory().getInventoryItems());
+        game = new Game(this, pushyEntityViews, pushyTerrainViews);
+        game.setGameEventListener(this);
+        game.setInventoryEventListener(this);
     }
 }

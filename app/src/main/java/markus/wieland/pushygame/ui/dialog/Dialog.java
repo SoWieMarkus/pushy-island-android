@@ -7,7 +7,6 @@ import markus.wieland.pushygame.R;
 
 public class Dialog {
 
-    private final Context context;
     private final AlertDialog.Builder builder;
 
     private String message;
@@ -20,7 +19,6 @@ public class Dialog {
 
 
     public Dialog(Context context) {
-        this.context = context;
         this.builder = new AlertDialog.Builder(context);
         okMessage = context.getString(R.string.dialog_yes);
         declineMessage = context.getString(R.string.dialog_no);

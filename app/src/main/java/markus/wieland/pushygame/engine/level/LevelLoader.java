@@ -32,12 +32,11 @@ public class LevelLoader {
         return levels;
     }
 
-    public static String getNextLevel(Activity activity, String levelName){
-        LevelDisplayItem levelDisplayItem = new LevelDisplayItem(levelName);
-        long levelNumber = Long.parseLong(levelDisplayItem.getNumberAsString()); // We dont have to increment because level number starts at index 1
+    public static String getNextLevel(Activity activity, int id){
         List<LevelDisplayItem> levelDisplayItems = getLocalLevels(activity);
-        if (levelNumber >= levelDisplayItems.size()) return null;
-        return getLocalLevels(activity).get((int)levelNumber).getFile();
+        if (id >= levelDisplayItems.size()) return null;
+        // We dont have to increment because level number starts at index 1
+        return getLocalLevels(activity).get(id + 1).getFile();
     }
 
     private static RawLevel load(Activity activity, String name) {

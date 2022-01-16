@@ -2,10 +2,8 @@ package markus.wieland.pushygame.engine.events;
 
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.logic.Edge;
-import markus.wieland.pushygame.engine.entity.logic.LogicGate;
 import markus.wieland.pushygame.engine.entity.logic.LogicInput;
 import markus.wieland.pushygame.engine.entity.logic.LogicOutput;
-import markus.wieland.pushygame.engine.entity.logic.PortType;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Field;
@@ -29,10 +27,10 @@ public class LogicEvent extends Event {
         Entity entity = getGame().getEntityManager().getObject(coordinate);
         Terrain terrain = getGame().getTerrainManager().getObject(coordinate);
         if (entity instanceof LogicInput && ((LogicInput) entity).isInput(direction)) {
-            edge.addInput((LogicInput)entity);
+            edge.addInput((LogicInput) entity);
         }
         if (terrain instanceof LogicInput && ((LogicInput) terrain).isInput(direction)) {
-            edge.addInput((LogicInput)terrain);
+            edge.addInput((LogicInput) terrain);
         }
         if (terrain instanceof Cable) {
             getEdgeFrom((Cable) terrain);

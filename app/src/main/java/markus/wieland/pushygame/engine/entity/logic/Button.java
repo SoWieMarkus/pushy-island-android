@@ -1,6 +1,6 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
-import android.app.Activity;
+import java.util.Objects;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
@@ -33,21 +33,21 @@ public class Button extends InteractableEntity implements LogicOutput {
         game.getEntityManager().invalidate(this);
 
         Thread thread = new Thread(() -> {
-            for (Direction direction1 : Direction.class.getEnumConstants()) {
+            for (Direction direction1 : Objects.requireNonNull(Direction.class.getEnumConstants())) {
                 game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
             }
 
-            ((Activity)game.getEntityManager().getView(getCoordinate()).getContext()).runOnUiThread(() -> game.getEntityManager().invalidate(Button.this));
+            game.getActivity().runOnUiThread(() -> game.getEntityManager().invalidate(Button.this));
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             active = false;
-            for (Direction direction1 : Direction.class.getEnumConstants()) {
+            for (Direction direction1 : Objects.requireNonNull(Direction.class.getEnumConstants())) {
                 game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
             }
-            ((Activity)game.getEntityManager().getView(getCoordinate()).getContext()).runOnUiThread(() -> game.getEntityManager().invalidate(Button.this));
+            game.getActivity().runOnUiThread(() -> game.getEntityManager().invalidate(Button.this));
 
         });
         thread.start();

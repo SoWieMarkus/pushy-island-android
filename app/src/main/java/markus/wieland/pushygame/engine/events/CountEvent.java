@@ -1,8 +1,5 @@
 package markus.wieland.pushygame.engine.events;
 
-import android.app.Activity;
-import android.content.Context;
-
 import markus.wieland.pushygame.engine.entity.movable.Count;
 
 import static java.lang.Thread.sleep;
@@ -31,8 +28,7 @@ public class CountEvent extends Event {
                     try {
                         sleep(500);
                         countOfList.setUncovered(false);
-                        Context context = game.getEntityManager().getView(countOfList.getCoordinate()).getContext();
-                        ((Activity) context).runOnUiThread(() -> game.getEntityManager().invalidate(countOfList));
+                        game.getActivity().runOnUiThread(() -> game.getEntityManager().invalidate(countOfList));
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
