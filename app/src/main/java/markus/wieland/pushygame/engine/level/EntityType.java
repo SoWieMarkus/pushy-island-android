@@ -54,16 +54,16 @@ public enum EntityType implements Type {
     @SerializedName("leaf_changer_west") LEAF_CHANGER_WEST(44, R.drawable.leaf_changer_west),
     @SerializedName("leaf_changer_north") LEAF_CHANGER_NORTH(45, R.drawable.leaf_changer_north),
     @SerializedName("leaf_changer_south") LEAF_CHANGER_SOUTH(46, R.drawable.leaf_changer_south),
-    @SerializedName("logic_gate_and") LOGIC_GATE_AND(47, R.drawable.logic_gate_and),
-    @SerializedName("logic_gate_or") LOGIC_GATE_OR(48, R.drawable.logic_gate_or),
-    @SerializedName("logic_gate_xor") LOGIC_GATE_XOR(49, R.drawable.logic_gate_xor),
-    @SerializedName("logic_gate_lamp") LAMP(50, R.drawable.lamp),
-    @SerializedName("lever") LEVER(51, R.drawable.lever),
-    @SerializedName("power_block") POWER_BLOCK(52, R.drawable.power_block),
-    @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not),
+    @SerializedName("logic_gate_and") LOGIC_GATE_AND(47, R.drawable.logic_gate_and,true),
+    @SerializedName("logic_gate_or") LOGIC_GATE_OR(48, R.drawable.logic_gate_or,true),
+    @SerializedName("logic_gate_xor") LOGIC_GATE_XOR(49, R.drawable.logic_gate_xor, true),
+    @SerializedName("logic_gate_lamp") LAMP(50, R.drawable.lamp, true),
+    @SerializedName("lever") LEVER(51, R.drawable.lever, true),
+    @SerializedName("power_block") POWER_BLOCK(52, R.drawable.power_block, true),
+    @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not, true),
     @SerializedName("energy") ENERGY(54, R.drawable.energy),
-    @SerializedName("button") BUTTON(55, R.drawable.button),
-    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three);
+    @SerializedName("button") BUTTON(55, R.drawable.button, true),
+    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three, true);
 
     private final int value;
 
@@ -74,22 +74,38 @@ public enum EntityType implements Type {
 
     static final int AMOUNT_BITS = 6;
 
-    EntityType(int value, @DrawableRes int drawable, int amountAllowedEntities) {
+    private final boolean isLogicPart;
+
+    EntityType(int value, int drawable, int allowedInstances) {
         this.value = value;
         this.drawable = drawable;
-        this.allowedInstances = amountAllowedEntities;
+        this.allowedInstances = allowedInstances;
+        this.isLogicPart = false;
+    }
+
+    EntityType(int value, @DrawableRes int drawable, boolean isLogicPart) {
+        this.value = value;
+        this.drawable = drawable;
+        this.allowedInstances = Type.UNLIMITED;
+        this.isLogicPart = isLogicPart;
     }
 
     EntityType(int value, @DrawableRes int drawable) {
         this.value = value;
         this.drawable = drawable;
         this.allowedInstances = Type.UNLIMITED;
+        this.isLogicPart = false;
     }
 
     @Override
     public String getValue() {
         String binaryString = Integer.toBinaryString(value);
         return Type.addRedundantZeros(binaryString, AMOUNT_BITS);
+    }
+
+    @Override
+    public boolean isLogicPart() {
+        return isLogicPart;
     }
 
     @Override

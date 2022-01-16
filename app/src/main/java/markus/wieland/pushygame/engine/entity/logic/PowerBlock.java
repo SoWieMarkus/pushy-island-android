@@ -19,6 +19,11 @@ public class PowerBlock extends MovableEntity implements LogicOutput {
     }
 
     @Override
+    public boolean isOutput(Direction direction) {
+        return true;
+    }
+
+    @Override
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         Coordinate coordinateBefore = new Coordinate(getCoordinate().getX(), getCoordinate().getY());
         super.executeMove(nextCoordinate, game);

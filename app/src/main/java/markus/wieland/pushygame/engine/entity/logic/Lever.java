@@ -49,4 +49,9 @@ public class Lever extends InteractableEntity implements LogicOutput {
     public boolean isOutputActive(Game game) {
         return active;
     }
+
+    @Override
+    public boolean isOutput(Direction direction) {
+        return true;
+    }
 }

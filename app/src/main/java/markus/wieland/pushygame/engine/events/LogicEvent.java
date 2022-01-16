@@ -3,10 +3,12 @@ package markus.wieland.pushygame.engine.events;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.logic.Edge;
 import markus.wieland.pushygame.engine.entity.logic.LogicGate;
+import markus.wieland.pushygame.engine.entity.logic.LogicInput;
 import markus.wieland.pushygame.engine.entity.logic.LogicOutput;
 import markus.wieland.pushygame.engine.entity.logic.PortType;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
+import markus.wieland.pushygame.engine.helper.Field;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 
@@ -26,8 +28,11 @@ public class LogicEvent extends Event {
     public void execute() {
         Entity entity = getGame().getEntityManager().getObject(coordinate);
         Terrain terrain = getGame().getTerrainManager().getObject(coordinate);
-        if (entity instanceof LogicGate && ((LogicGate) entity).getPortType(direction.getOppositeDirection()) == PortType.INPUT) {
-            edge.addInput((LogicGate) entity);
+        if (entity instanceof LogicInput && ((LogicInput) entity).isInput(direction)) {
+            edge.addInput((LogicInput)entity);
+        }
+        if (terrain instanceof LogicInput && ((LogicInput) terrain).isInput(direction)) {
+            edge.addInput((LogicInput)terrain);
         }
         if (terrain instanceof Cable) {
             getEdgeFrom((Cable) terrain);
@@ -45,20 +50,24 @@ public class LogicEvent extends Event {
 
     private void check(Direction direction, Coordinate coordinate) {
         Entity entity = game.getEntityManager().getObject(coordinate);
-        if (entity instanceof LogicOutput
-                && ((LogicOutput) entity).getPortType(direction.getOppositeDirection()) == PortType.OUTPUT
-                && !edge.containsOutput((LogicOutput) entity)) {
+        Terrain terrain = game.getTerrainManager().getObject(coordinate);
+        if (isOutput(entity, direction)) {
             edge.addOutput((LogicOutput) entity);
             return;
         }
-        if (entity instanceof LogicGate
-                && ((LogicGate) entity).getPortType(direction.getOppositeDirection()) == PortType.INPUT
-                && !edge.containsInput((LogicGate)entity)) {
-            edge.addInput((LogicGate) entity);
+        if (isInput(entity, direction)) {
+            edge.addInput((LogicInput) entity);
+            return;
+        }
+        if (isOutput(terrain, direction)) {
+            edge.addOutput((LogicOutput) terrain);
+            return;
+        }
+        if (isInput(terrain, direction)) {
+            edge.addInput((LogicInput) terrain);
             return;
         }
 
-        Terrain terrain = game.getTerrainManager().getObject(coordinate);
         if (!(terrain instanceof Cable)) return;
 
         Cable cable = (Cable) terrain;
@@ -71,5 +80,17 @@ public class LogicEvent extends Event {
         check(Direction.EAST, coordinate.getNextCoordinate(Direction.EAST));
         check(Direction.WEST, coordinate.getNextCoordinate(Direction.WEST));
 
+    }
+
+    private boolean isOutput(Field field, Direction direction) {
+        return field instanceof LogicOutput
+                && ((LogicOutput) field).isOutput(direction)
+                && !edge.containsOutput((LogicOutput) field);
+    }
+
+    private boolean isInput(Field field, Direction direction) {
+        return field instanceof LogicInput
+                && ((LogicInput) field).isInput(direction)
+                && !edge.containsInput((LogicInput) field);
     }
 }

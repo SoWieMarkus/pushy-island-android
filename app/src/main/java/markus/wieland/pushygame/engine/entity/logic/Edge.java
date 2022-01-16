@@ -13,7 +13,7 @@ public class Edge {
     private final List<Cable> cables;
 
     private final List<LogicOutput> outputs;
-    private final List<LogicGate> inputs;
+    private final List<LogicInput> inputs;
 
     public Edge() {
         this.active = false;
@@ -26,7 +26,7 @@ public class Edge {
         this.cables.add(cable);
     }
 
-    public void addInput(LogicGate input) {
+    public void addInput(LogicInput input) {
         this.inputs.add(input);
     }
 
@@ -54,8 +54,8 @@ public class Edge {
             game.getTerrainManager().invalidate(cable);
         }
 
-        for (LogicGate logicGate : inputs) {
-            logicGate.update(game);
+        for (LogicInput logicInput : inputs) {
+            logicInput.update(game);
         }
 
     }
@@ -64,7 +64,7 @@ public class Edge {
         return cables.contains(cable);
     }
 
-    public boolean containsInput(LogicGate logicGate) {
+    public boolean containsInput(LogicInput logicGate) {
         return inputs.contains(logicGate);
     }
 

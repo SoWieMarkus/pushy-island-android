@@ -7,7 +7,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class Lamp extends LogicGate implements GameFinishEntity {
+public class Lamp extends LogicGate implements GameFinishEntity, LogicInput {
 
     private boolean active;
 
@@ -15,13 +15,17 @@ public class Lamp extends LogicGate implements GameFinishEntity {
         super(coordinate, entityType);
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
     @Override
-    public PortType configurePortNorth() {
+    public PortType configurePortSouth() {
         return PortType.INPUT;
     }
 
     @Override
-    public PortType configurePortWest() {
+    public PortType configurePortNorth() {
         return PortType.INPUT;
     }
 
@@ -31,12 +35,8 @@ public class Lamp extends LogicGate implements GameFinishEntity {
     }
 
     @Override
-    public PortType configurePortSouth() {
+    public PortType configurePortWest() {
         return PortType.INPUT;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public void setActive(boolean active) {
@@ -46,6 +46,11 @@ public class Lamp extends LogicGate implements GameFinishEntity {
     @Override
     public int getDrawable() {
         return active ? R.drawable.lamp_active : super.getDrawable();
+    }
+
+    @Override
+    public boolean isInput(Direction direction) {
+        return true;
     }
 
     @Override

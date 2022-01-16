@@ -5,7 +5,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.EntityType;
 
-public class NotGate extends LogicGate{
+public class NotGate extends LogicGate {
 
     public NotGate(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);

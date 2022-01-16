@@ -7,6 +7,8 @@ public interface LogicOutput {
 
     boolean isOutputActive(Game game);
 
+    boolean isOutput(Direction direction);
+
     PortType getPortType(Direction direction);
 
 }

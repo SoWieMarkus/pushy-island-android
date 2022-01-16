@@ -50,6 +50,7 @@ import markus.wieland.pushygame.engine.terrain.Buoy;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 import markus.wieland.pushygame.engine.terrain.CoconutTunnel;
+import markus.wieland.pushygame.engine.terrain.Door;
 import markus.wieland.pushygame.engine.terrain.Farm;
 import markus.wieland.pushygame.engine.terrain.FlowerFinish;
 import markus.wieland.pushygame.engine.terrain.Grass;
@@ -66,6 +67,7 @@ import markus.wieland.pushygame.engine.terrain.pressure.CoconutTunnelFinish;
 import markus.wieland.pushygame.engine.terrain.pressure.Ice;
 import markus.wieland.pushygame.engine.terrain.pressure.InvisibleWaterPressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.ItemTeleporter;
+import markus.wieland.pushygame.engine.terrain.pressure.LogicPressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.SpikePressurePlate;
 import markus.wieland.pushygame.engine.terrain.pressure.Spring;
 import markus.wieland.pushygame.engine.terrain.pressure.StringPressurePlate;
@@ -154,6 +156,11 @@ public class TileMapBuilder {
 
             case CABLE:
                 return new Cable(coordinate, terrainType);
+
+            case DOOR:
+                return new Door(coordinate, terrainType);
+            case LOGIC_PRESSURE_PLATE:
+                return new LogicPressurePlate(coordinate, terrainType);
             default:
                 throw new UnknownTileException(terrainType);
         }

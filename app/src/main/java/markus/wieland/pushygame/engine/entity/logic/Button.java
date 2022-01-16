@@ -51,10 +51,6 @@ public class Button extends InteractableEntity implements LogicOutput {
 
         });
         thread.start();
-
-
-
-
     }
 
     @Override
@@ -65,6 +61,11 @@ public class Button extends InteractableEntity implements LogicOutput {
     @Override
     public boolean isOutputActive(Game game) {
         return active;
+    }
+
+    @Override
+    public boolean isOutput(Direction direction) {
+        return true;
     }
 
 

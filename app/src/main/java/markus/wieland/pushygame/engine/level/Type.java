@@ -8,6 +8,8 @@ public interface Type {
 
     String getValue();
 
+    boolean isLogicPart();
+
     @DrawableRes
     int getDrawable();
 

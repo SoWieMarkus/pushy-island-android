@@ -1,6 +1,7 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
 import android.app.Activity;
+import android.util.Log;
 
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
@@ -11,7 +12,7 @@ import markus.wieland.pushygame.engine.level.EntityType;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 
-public abstract class LogicGate extends Entity implements LogicOutput {
+public abstract class LogicGate extends Entity implements LogicOutput, LogicInput {
 
     private final Ports ports;
 
@@ -63,18 +64,18 @@ public abstract class LogicGate extends Entity implements LogicOutput {
         }
     }
 
-    public boolean isInputActive(Game game, Direction direction) {
-        if (ports.getPortType(direction) != PortType.INPUT) throw new IllegalArgumentException();
-        Coordinate coordinate = getCoordinate().getNextCoordinate(direction);
+    @Override
+    public boolean isInput(Direction direction) {
+        return getPorts().getPortType(direction.getOppositeDirection()) == PortType.INPUT;
+    }
 
-        if (game.getEntityManager().isNotInsideField(coordinate)) return false;
-        Entity entity = game.getEntityManager().getObject(coordinate);
-        if (entity instanceof LogicOutput) {
-            return ((LogicOutput) entity).isOutputActive(game);
-        }
-        Terrain terrain = game.getTerrainManager().getObject(coordinate);
-        if (!(terrain instanceof Cable)) return false;
-        return ((Cable) terrain).isActive();
+    @Override
+    public boolean isOutput(Direction direction) {
+        return getPorts().getPortType(direction.getOppositeDirection()) == PortType.OUTPUT;
+    }
+
+    public boolean isInputActive(Game game, Direction direction) {
+        return LogicInput.isInputActive(game, direction, getCoordinate());
     }
 
     public void update(Game game) {

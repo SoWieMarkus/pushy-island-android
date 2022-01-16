@@ -59,7 +59,9 @@ public enum TerrainType implements Type {
 
     @SerializedName("barrel_finish") BARREL_FINISH(36, R.drawable.barrel_finish),
 
-    @SerializedName("barrel_finish") CABLE(37, R.drawable.cable);
+    @SerializedName("barrel_finish") CABLE(37, R.drawable.cable),
+    @SerializedName("barrel_finish") LOGIC_PRESSURE_PLATE(38, R.drawable.logic_pressure_plate, true),
+    @SerializedName("barrel_finish") DOOR(39, R.drawable.door, true);
 
     private final int value;
 
@@ -70,22 +72,38 @@ public enum TerrainType implements Type {
 
     private final int allowedInstances;
 
+    private final boolean isLogicPart;
+
     TerrainType(int value, int drawable, int allowedInstances) {
         this.value = value;
         this.drawable = drawable;
         this.allowedInstances = allowedInstances;
+        this.isLogicPart = false;
+    }
+
+    TerrainType(int value, @DrawableRes int drawable, boolean isLogicPart) {
+        this.value = value;
+        this.drawable = drawable;
+        this.allowedInstances = Type.UNLIMITED;
+        this.isLogicPart = isLogicPart;
     }
 
     TerrainType(int value, @DrawableRes int drawable) {
         this.value = value;
         this.drawable = drawable;
         this.allowedInstances = Type.UNLIMITED;
+        this.isLogicPart = false;
     }
 
 
     @Override
     public String getValue() {
         return Type.addRedundantZeros(Integer.toBinaryString(value), AMOUNT_BITS);
+    }
+
+    @Override
+    public boolean isLogicPart() {
+        return isLogicPart;
     }
 
     @Override
