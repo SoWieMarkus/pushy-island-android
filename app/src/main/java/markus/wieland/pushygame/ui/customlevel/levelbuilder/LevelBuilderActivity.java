@@ -1,5 +1,6 @@
 package markus.wieland.pushygame.ui.customlevel.levelbuilder;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +21,8 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 import markus.wieland.pushygame.persistence.LevelViewModel;
+import markus.wieland.pushygame.ui.dialog.Dialog;
+import markus.wieland.pushygame.ui.dialog.DialogInteractionListener;
 import markus.wieland.pushygame.ui.game.PushyGridAdapter;
 import markus.wieland.pushygame.ui.game.PushyView;
 
@@ -138,6 +141,19 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         levelBuilder.setSelectedField(type);
         levelBuilderTerrainAdapter.select(type);
         levelBuilderEntityAdapter.select(type);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (levelBuilder.isSaved()){
+            super.onBackPressed();
+            return;
+        }
+        Dialog dialog = new Dialog(this);
+        dialog.setMessage(getString(R.string.dialog_changes_without_save))
+                .setOkEvent(alertDialog -> LevelBuilderActivity.super.onBackPressed())
+                .getDialog()
+                .show();
     }
 
 

@@ -19,6 +19,7 @@ import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 import markus.wieland.pushygame.ui.customlevel.levelbuilder.LevelBuilderActivity;
+import markus.wieland.pushygame.ui.dialog.Dialog;
 import markus.wieland.pushygame.ui.game.GameActivity;
 
 public class CustomLevelActivity extends DefaultActivity implements View.OnClickListener, Observer<List<LevelDisplayItem>>, CustomLevelInteractionListener {
@@ -86,6 +87,10 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
 
     @Override
     public void onDelete(LevelDisplayItem levelDisplayItem) {
-        levelViewModel.delete(levelDisplayItem);
+        Dialog dialog = new Dialog(this);
+        dialog.setMessage(getString(R.string.dialog_sure_delete))
+                .setOkEvent(alertDialog -> levelViewModel.delete(levelDisplayItem))
+                .getDialog()
+                .show();
     }
 }

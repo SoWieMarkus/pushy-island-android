@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PushyGame</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_changes_without_save">Discard changes?</string>
+    <string name="dialog_sure_delete">Sure you want to delete this level?</string>
 </resources>

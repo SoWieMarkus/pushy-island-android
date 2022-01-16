@@ -10,6 +10,7 @@ import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.TerrainManager;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.logic.LogicOutput;
+import markus.wieland.pushygame.engine.entity.logic.PortType;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.TerrainType;
@@ -80,7 +81,7 @@ public class Cable extends Sand {
         Entity entity = entityManager.getObject(coordinate);
         Terrain terrain = terrainManager.getObject(coordinate);
         if (terrain instanceof Cable) return true;
-        return entity instanceof LogicOutput;
+        return entity instanceof LogicOutput && ((LogicOutput) entity).getPortType(direction.getOppositeDirection()) != PortType.VOID;
     }
 
 

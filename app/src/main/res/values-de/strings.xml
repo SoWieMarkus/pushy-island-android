@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PushyGame</string>
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nein</string>
+    <string name="dialog_changes_without_save">Änderungen verwerfen?</string>
+    <string name="dialog_sure_delete">Sicher, dass du dieses Level löschen möchtest?</string>
+</resources>

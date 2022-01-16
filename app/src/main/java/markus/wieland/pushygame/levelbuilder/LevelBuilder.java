@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import markus.wieland.pushygame.engine.EntityManager;
@@ -52,12 +51,16 @@ public class LevelBuilder {
 
     private final Activity activity;
 
+    private boolean saved;
+
     public LevelBuilder(Activity activity) {
         isFillMode = false;
         pushyTerrainViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
         pushyEntityViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
 
         this.activity = activity;
+
+        this.saved = false;
 
         for (int x = 0; x < LEVEL_HEIGHT; x++) {
             for (int y = 0; y < LEVEL_WIDTH; y++) {
@@ -165,6 +168,10 @@ public class LevelBuilder {
         return false;
     }
 
+    public boolean isSaved() {
+        return saved || !hasChanges();
+    }
+
     public void set(Coordinate coordinate) {
         Task task;
 
@@ -197,7 +204,7 @@ public class LevelBuilder {
     public String export() {
         // If I want to change something which would make "old" level corrupted I want to increase the version number and
         // make new Parser for the new version
-
+        saved = true;
         createThumbnail(activity, terrainManager, entityManager);
 
         int version = 1;
@@ -311,7 +318,6 @@ public class LevelBuilder {
                     d.setBounds(width, height, width + TILE_SIZE, height + TILE_SIZE);
                     d.draw(thumbnail);
                 }
-
 
 
                 Entity entity = entityManager.getObject(coordinate);
