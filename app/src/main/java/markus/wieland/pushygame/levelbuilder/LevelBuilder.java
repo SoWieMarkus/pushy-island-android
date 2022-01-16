@@ -179,7 +179,7 @@ public class LevelBuilder {
             task = new PlaceCombinationTask(this, coordinate, selectedField);
         } else if (selectedField.getAmountOfAllowedInstances() != Type.UNLIMITED) {
             task = new ReplaceTask(this, selectedField, coordinate);
-        } else if (selectedFieldIsOneOf(EntityType.COUNT_DOWN, EntityType.LEVER, EntityType.BUTTON, EntityType.LAMP, TerrainType.CABLE)) {
+        } else if (selectedField.isLogicPart()) {
             task = new SetLogicTask(this, coordinate, selectedField);
         } else {
             task = isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField);

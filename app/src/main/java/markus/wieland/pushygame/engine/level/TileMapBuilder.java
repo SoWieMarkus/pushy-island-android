@@ -24,6 +24,7 @@ import markus.wieland.pushygame.engine.entity.logic.Lever;
 import markus.wieland.pushygame.engine.entity.logic.NotGate;
 import markus.wieland.pushygame.engine.entity.logic.OrGate;
 import markus.wieland.pushygame.engine.entity.logic.PowerBlock;
+import markus.wieland.pushygame.engine.entity.logic.Repeater;
 import markus.wieland.pushygame.engine.entity.logic.XORGate;
 import markus.wieland.pushygame.engine.entity.movable.Barrel;
 import markus.wieland.pushygame.engine.entity.movable.Bomb;
@@ -276,6 +277,11 @@ public class TileMapBuilder {
                 return new CountDown(coordinate, entityType);
             case BUTTON:
                 return new Button(coordinate, entityType);
+            case REPEATER_EAST:
+            case REPEATER_WEST:
+            case REPEATER_NORTH:
+            case REPEATER_SOUTH:
+                return new Repeater(coordinate, entityType);
             default:
                 throw new UnknownTileException(entityType);
         }

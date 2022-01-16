@@ -63,7 +63,11 @@ public enum EntityType implements Type {
     @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not, true),
     @SerializedName("energy") ENERGY(54, R.drawable.energy),
     @SerializedName("button") BUTTON(55, R.drawable.button, true),
-    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three, true);
+    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three, true),
+    @SerializedName("count_down") REPEATER_NORTH(57, R.drawable.repeater_north_active, true),
+    @SerializedName("count_down") REPEATER_SOUTH(58, R.drawable.repeater_south_active, true),
+    @SerializedName("count_down") REPEATER_WEST(59, R.drawable.repeater_west_active, true),
+    @SerializedName("count_down") REPEATER_EAST(60, R.drawable.repeater_east_active, true);
 
     private final int value;
 

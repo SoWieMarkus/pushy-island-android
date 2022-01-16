@@ -34,7 +34,7 @@ public class LogicPressurePlate extends PressurePlateTerrain implements LogicOut
 
     @Override
     public void interact(Entity entity, Game game) {
-        if (entity == null || entity == lastEntity) return;
+        if (entity == lastEntity) return;
         lastEntity = entity;
         for (Direction direction : Direction.class.getEnumConstants()) {
             game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction), direction));
