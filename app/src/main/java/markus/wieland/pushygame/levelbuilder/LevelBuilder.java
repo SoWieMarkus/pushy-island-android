@@ -132,10 +132,12 @@ public class LevelBuilder {
     public boolean validate() {
         if (entityManager.getOfType(Finish.class).isEmpty()) {
             Toast.makeText(activity, "Please place a finish!", Toast.LENGTH_SHORT).show();
+            return false;
 
         }
         if (entityManager.getOfType(Pushy.class).isEmpty()) {
             Toast.makeText(activity, "Please place a pushy!", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
 

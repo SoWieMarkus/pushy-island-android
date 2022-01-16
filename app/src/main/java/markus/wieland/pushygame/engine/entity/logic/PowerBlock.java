@@ -26,9 +26,14 @@ public class PowerBlock extends MovableEntity implements LogicOutput {
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         Coordinate coordinateBefore = new Coordinate(getCoordinate().getX(), getCoordinate().getY());
         super.executeMove(nextCoordinate, game);
+        executePowerEvent(game, coordinateBefore, nextCoordinate);
+    }
+
+    public void executePowerEvent(Game game, Coordinate coordinateBefore, Coordinate nextCoordinate){
         for (Direction direction : Direction.class.getEnumConstants()) {
-            game.execute(new LogicEvent(nextCoordinate.getNextCoordinate(direction), direction));
             game.execute(new LogicEvent(coordinateBefore.getNextCoordinate(direction), direction));
+            if (nextCoordinate == null) continue;
+            game.execute(new LogicEvent(nextCoordinate.getNextCoordinate(direction), direction));
         }
     }
 

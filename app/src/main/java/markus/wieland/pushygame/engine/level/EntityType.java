@@ -61,7 +61,9 @@ public enum EntityType implements Type {
     @SerializedName("lever") LEVER(51, R.drawable.lever),
     @SerializedName("power_block") POWER_BLOCK(52, R.drawable.power_block),
     @SerializedName("power_block") LOGIC_GATE_NOT(53, R.drawable.logic_gate_not),
-    @SerializedName("energy") ENERGY(54, R.drawable.energy);
+    @SerializedName("energy") ENERGY(54, R.drawable.energy),
+    @SerializedName("button") BUTTON(55, R.drawable.button),
+    @SerializedName("count_down") COUNT_DOWN(56, R.drawable.count_down_three);
 
     private final int value;
 

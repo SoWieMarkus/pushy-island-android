@@ -17,6 +17,8 @@ import markus.wieland.pushygame.engine.entity.interactable.Pirate;
 import markus.wieland.pushygame.engine.entity.interactable.SlingShot;
 import markus.wieland.pushygame.engine.entity.interactable.Tower;
 import markus.wieland.pushygame.engine.entity.logic.AndGate;
+import markus.wieland.pushygame.engine.entity.logic.Button;
+import markus.wieland.pushygame.engine.entity.logic.CountDown;
 import markus.wieland.pushygame.engine.entity.logic.Lamp;
 import markus.wieland.pushygame.engine.entity.logic.Lever;
 import markus.wieland.pushygame.engine.entity.logic.NotGate;
@@ -263,6 +265,10 @@ public class TileMapBuilder {
                 return new XORGate(coordinate, entityType);
             case LOGIC_GATE_AND:
                 return new AndGate(coordinate, entityType);
+            case COUNT_DOWN:
+                return new CountDown(coordinate, entityType);
+            case BUTTON:
+                return new Button(coordinate, entityType);
             default:
                 throw new UnknownTileException(entityType);
         }

@@ -4,10 +4,12 @@ import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.GameFinishEntity;
 import markus.wieland.pushygame.engine.entity.interactable.Flower;
 import markus.wieland.pushygame.engine.entity.logic.NotGate;
+import markus.wieland.pushygame.engine.entity.logic.PowerBlock;
 import markus.wieland.pushygame.engine.entity.movable.Box;
 import markus.wieland.pushygame.engine.entity.movable.Count;
 import markus.wieland.pushygame.engine.entity.movable.Pushy;
 import markus.wieland.pushygame.engine.entity.movable.SeaStar;
+import markus.wieland.pushygame.engine.events.CountEvent;
 import markus.wieland.pushygame.engine.events.Event;
 import markus.wieland.pushygame.engine.events.GameEventListener;
 import markus.wieland.pushygame.engine.events.InventoryEventListener;
@@ -67,9 +69,14 @@ public class Game {
             entityManager.invalidate(count);
         }
 
+        for (PowerBlock powerBlock : entityManager.getOfType(PowerBlock.class)) {
+            powerBlock.executePowerEvent(this, powerBlock.getCoordinate(), null);
+        }
+
         StringEvent.setIsStringActive(false);
         SpikeEvent.setExecutedThisRound(false);
         ShowInvisibleWaterBlocksEvent.setExecutedThisRound(false);
+        CountEvent.setCurrentCount(1);
     }
 
     public void setInventoryEventListener(InventoryEventListener inventoryEventListener) {
