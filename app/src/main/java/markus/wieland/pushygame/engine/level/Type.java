@@ -2,6 +2,9 @@ package markus.wieland.pushygame.engine.level;
 
 import androidx.annotation.DrawableRes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public interface Type {
 
     public static final int UNLIMITED = Integer.MAX_VALUE;
@@ -38,5 +41,14 @@ public interface Type {
         }
         binary = binaryBuilder.toString();
         return binary;
+    }
+
+    static List<Type> getListByFirstAppearance(Type[] types, int currentLevel){
+        List<Type> filteredTypes = new ArrayList<>();
+        for (Type type : types) {
+            if (type.firstAppearance() < currentLevel)
+                filteredTypes.add(type);
+        }
+        return filteredTypes;
     }
 }

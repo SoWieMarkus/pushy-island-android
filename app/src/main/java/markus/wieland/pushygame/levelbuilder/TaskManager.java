@@ -47,6 +47,11 @@ public class TaskManager {
         tasksToUndo.add(task);
     }
 
+    public void clear(){
+        this.tasksToRedo.clear();
+        this.tasksToUndo.clear();
+    }
+
     public boolean hasChanges(){
         return !tasksToUndo.isEmpty();
     }

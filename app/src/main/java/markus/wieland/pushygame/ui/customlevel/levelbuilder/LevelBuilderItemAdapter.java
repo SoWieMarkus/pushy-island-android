@@ -62,5 +62,6 @@ public class LevelBuilderItemAdapter extends DefaultAdapter<Type, LevelBuilderIt
             itemView.setBackgroundColor(type == selected ? Color.RED : Color.TRANSPARENT);
             icon.setOnClickListener(view -> getOnItemInteractListener().onClick(type));
         }
+
     }
 }

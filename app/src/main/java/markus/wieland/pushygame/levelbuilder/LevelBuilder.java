@@ -59,6 +59,7 @@ public class LevelBuilder {
         pushyEntityViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
 
         this.activity = activity;
+        TaskManager.getInstance().clear();
 
         this.saved = false;
 
@@ -197,8 +198,6 @@ public class LevelBuilder {
      * <p>
      * = 2 * 6 bit * 12 * 20 + 1 byte = 361 byte
      * + following will be the level name
-     *
-     * @return
      */
 
     public String export() {

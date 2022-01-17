@@ -125,8 +125,9 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
 
         levelBuilderTerrainAdapter.select(levelBuilder.getSelectedField());
 
-        levelBuilderEntityAdapter.submitList(EntityType.class.getEnumConstants());
-        levelBuilderTerrainAdapter.submitList(TerrainType.class.getEnumConstants());
+        levelBuilderEntityAdapter.submitList(Type.getListByFirstAppearance(EntityType.class.getEnumConstants(),177));
+        levelBuilderTerrainAdapter.submitList(Type.getListByFirstAppearance(TerrainType.class.getEnumConstants(),177));
+
 
         recyclerViewTerrain.setAdapter(levelBuilderTerrainAdapter);
         recyclerViewEntity.setAdapter(levelBuilderEntityAdapter);

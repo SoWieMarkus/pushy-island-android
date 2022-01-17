@@ -69,6 +69,5 @@ public class MainActivity extends DefaultActivity implements Observer<List<Level
         }
 
         findViewById(R.id.activity_main_level_builder).setEnabled(levelDisplayItems.get(0).isSolved());
-
     }
 }
