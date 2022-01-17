@@ -26,11 +26,11 @@ public interface LogicInput {
         Entity entity = game.getEntityManager().getObject(coordinate);
         Terrain terrain = game.getTerrainManager().getObject(coordinate);
 
-        if (entity instanceof LogicOutput && ((LogicOutput) entity).isOutput(direction.getOppositeDirection())) {
+        if (entity instanceof LogicOutput && ((LogicOutput) entity).isOutput(direction)) {
             return ((LogicOutput) entity).isOutputActive(game);
         }
 
-        if (terrain instanceof LogicOutput && ((LogicOutput) terrain).isOutput(direction.getOppositeDirection())) {
+        if (terrain instanceof LogicOutput && ((LogicOutput) terrain).isOutput(direction)) {
             return ((LogicOutput) terrain).isOutputActive(game);
         }
 
