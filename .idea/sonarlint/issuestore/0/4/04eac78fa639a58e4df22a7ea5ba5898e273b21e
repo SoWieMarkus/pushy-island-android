@@ -1,7 +1,8 @@
 
 S
-java:S1874 "7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8³Ÿù¡æ/
-S
-java:S1874 "7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8³Ÿù¡æ/
+java:S1874""7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8³Ÿù¡æ/
 P
-java:S1481.".Remove this unused "!unknown!" local variable.(Í®ƒÐýÿÿÿÿ8‰îï¦æ/
+java:S14810".Remove this unused "!unknown!" local variable.(Í®ƒÐýÿÿÿÿ8‰îï¦æ/
+S
+java:S1874""7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD8³Ÿù¡æ/
+U	java:S106F"9Replace this use of System.out or System.err by a logger.(š‹“Ð8ùÌÒÁæ/

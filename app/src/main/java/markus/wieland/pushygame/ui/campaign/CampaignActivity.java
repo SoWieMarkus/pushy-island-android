@@ -60,7 +60,6 @@ public class CampaignActivity extends DefaultActivity implements OnItemClickList
     public void onClick(LevelDisplayItem levelDisplayItem) {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra(GameActivity.LEVEL_ID, levelDisplayItem.getNumber());
-        intent.putExtra(GameActivity.LEVEL_PATH, levelDisplayItem.getFile());
         startActivity(intent);
     }
 

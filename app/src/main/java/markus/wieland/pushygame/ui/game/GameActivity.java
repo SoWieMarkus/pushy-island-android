@@ -20,6 +20,7 @@ import markus.wieland.pushygame.engine.events.InventoryEventListener;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.helper.Matrix;
 import markus.wieland.pushygame.engine.level.Level;
+import markus.wieland.pushygame.engine.level.LevelConverter;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.engine.level.LevelLoader;
 import markus.wieland.pushygame.engine.level.RawLevel;
@@ -30,7 +31,7 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
     public static final String LEVEL_PATH = "markus.wieland.pushy.LEVEL_PATH";
     public static final String LEVEL_ID = "markus.wieland.pushy.LEVEL_ID";
-    public static final String LEVEL_CODE = "markus.wieland.pushy.LEVEL_CODE";
+    public static final String LEVEL_TEST = "markus.wieland.pushy.LEVEL_TEST";
 
     private PushyView terrain;
     private PushyView entities;
@@ -103,17 +104,14 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
         levelDisplayItem.setSolved(true);
         levelViewModel.update(levelDisplayItem);
-        if (getIntent().getStringExtra(LEVEL_PATH) == null) {
-            finish();
-            return;
-        }
 
         String nextLevel = LevelLoader.getNextLevel(this, (int) id);
-        if (nextLevel != null) {
-            startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_PATH, nextLevel));
+        if (nextLevel != null && !getIntent().getBooleanExtra(LEVEL_TEST, false)) {
+            startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_ID, id+1));
         }
         finish();
     }
+
 
     @Override
     public void onInventoryChanged() {
@@ -124,17 +122,9 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
     public void onChanged(LevelDisplayItem levelDisplayItem) {
         this.levelDisplayItem = levelDisplayItem;
 
-        String path = getIntent().getStringExtra(LEVEL_PATH);
-        String code = getIntent().getStringExtra(LEVEL_CODE);
-        Level level;
-        if (path != null) {
-            levelNumber.setText(levelDisplayItem.getNumberAsString());
-            levelName.setText(levelDisplayItem.getName());
-            level = LevelLoader.buildLevel(this, path);
-        } else {
-            RawLevel rawLevel = new RawLevel(code);
-            level = new Level(rawLevel);
-        }
+        Level level = LevelConverter.getLevelFromCode(levelDisplayItem.getFile());
+
+        levelName.setText(level.getName());
 
         terrain.setNumColumns(level.getTerrain().getSizeY());
         entities.setNumColumns(level.getTerrain().getSizeY());

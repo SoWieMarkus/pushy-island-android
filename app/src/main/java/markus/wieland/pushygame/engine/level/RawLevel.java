@@ -23,7 +23,7 @@ public class RawLevel {
         terrain = new ArrayList<>(new ArrayList<>());
         entities = new ArrayList<>(new ArrayList<>());
 
-        String binary = LevelBuilder.hexToBinary(hex);
+        String binary = LevelConverter.hexToBinary(hex);
         this.version = binary.substring(0, 8);
         binary = binary.substring(8);
 
@@ -45,7 +45,7 @@ public class RawLevel {
                 entities.get(x).add(entityType);
             }
         }
-        this.name = LevelBuilder.binaryStringToString(binary);
+        this.name = LevelConverter.binaryStringToString(binary);
     }
 
     public String getName() {

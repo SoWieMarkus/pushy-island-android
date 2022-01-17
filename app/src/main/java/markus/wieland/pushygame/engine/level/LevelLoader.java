@@ -36,7 +36,7 @@ public class LevelLoader {
         List<LevelDisplayItem> levelDisplayItems = getLocalLevels(activity);
         if (id >= levelDisplayItems.size()) return null;
         // We dont have to increment because level number starts at index 1
-        return getLocalLevels(activity).get(id + 1).getFile();
+        return getLocalLevels(activity).get(id).getFile();
     }
 
     private static RawLevel load(Activity activity, String name) {

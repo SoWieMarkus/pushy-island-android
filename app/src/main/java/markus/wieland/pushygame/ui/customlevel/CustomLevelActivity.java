@@ -87,7 +87,7 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
     public void onPlay(LevelDisplayItem levelDisplayItem) {
         startActivity(new Intent(this, GameActivity.class)
                 .putExtra(GameActivity.LEVEL_ID, levelDisplayItem.getNumber())
-                .putExtra(GameActivity.LEVEL_CODE, levelDisplayItem.getFile()));
+                .putExtra(GameActivity.LEVEL_TEST, true));
     }
 
     @Override

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import markus.wieland.defaultappelements.uielements.activities.DefaultActivity;
+import markus.wieland.pushygame.engine.level.Level;
+import markus.wieland.pushygame.engine.level.LevelConverter;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.engine.level.LevelLoader;
 import markus.wieland.pushygame.persistence.LevelViewModel;
@@ -46,6 +48,7 @@ public class MainActivity extends DefaultActivity implements Observer<List<Level
             for (LevelDisplayItem levelDisplayItem : levelDisplayItems) {
                 if (!levelDisplayItem.isSolved()) {
                     levelDisplayItem.setSolved(true);
+
                     levelViewModel.update(levelDisplayItem);
                 }
             }
@@ -63,6 +66,8 @@ public class MainActivity extends DefaultActivity implements Observer<List<Level
         this.levelDisplayItems.addAll(levelDisplayItems);
         if (levelDisplayItems.isEmpty()) {
             for (LevelDisplayItem levelDisplayItem : LevelLoader.getLocalLevels(this)) {
+                Level level = LevelLoader.buildLevel(this, levelDisplayItem.getFile());
+                levelDisplayItem.setFile(LevelConverter.convertToLevelCode(levelDisplayItem.getName(), level));
                 levelViewModel.insert(levelDisplayItem);
             }
             return;

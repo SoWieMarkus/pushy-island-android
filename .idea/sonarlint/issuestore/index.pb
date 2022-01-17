@@ -348,3 +348,5 @@ Lapp/src/main/java/markus/wieland/pushygame/ui/campaign/CampaignActivity.java,a
 Kapp/src/main/java/markus/wieland/pushygame/engine/entity/logic/AndGate.java,6\4\64ddfca307d453b9404a38afa7b7de96301dd5e6
 z
 Japp/src/main/java/markus/wieland/pushygame/engine/entity/logic/Button.java,5\7\57b74a4746e5877250c85fb9e8a446b1529cf12b
+{
+Kapp/src/main/java/markus/wieland/pushygame/engine/level/LevelConverter.java,9\d\9d82b7ba9942c1464bd0b879e72964f07ce51c9a

@@ -5,6 +5,7 @@ import java.util.List;
 
 import markus.wieland.pushygame.engine.exceptions.FieldViewShouldNotBeNullException;
 import markus.wieland.pushygame.engine.level.Type;
+import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 import markus.wieland.pushygame.ui.game.PushyFieldView;
 
 public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
@@ -14,6 +15,10 @@ public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
     public Manager(Matrix<T> pushyFieldViews) {
         this.pushyFieldViews = pushyFieldViews;
         initialize();
+    }
+
+    public Matrix<T> getPushyFieldViews() {
+        return pushyFieldViews;
     }
 
     public boolean isNotInsideField(Coordinate coordinate) {
@@ -94,6 +99,15 @@ public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
         for (PushyFieldView<F> pushyFieldView : pushyFieldViews) {
             if (pushyFieldView.get() == null) continue;
             list.add(pushyFieldView.get());
+        }
+        return list;
+    }
+
+    public Matrix<F> getAllAsMatrix() {
+        Matrix<F> list = new Matrix<>(LevelBuilder.LEVEL_HEIGHT, LevelBuilder.LEVEL_WIDTH);
+        for (PushyFieldView<F> pushyFieldView : pushyFieldViews) {
+            if (pushyFieldView.get() == null) continue;
+            list.set(pushyFieldView.get().getCoordinate(), pushyFieldView.get());
         }
         return list;
     }

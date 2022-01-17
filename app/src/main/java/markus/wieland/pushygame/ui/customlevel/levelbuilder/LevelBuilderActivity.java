@@ -14,6 +14,7 @@ import markus.wieland.defaultappelements.uielements.activities.DefaultActivity;
 import markus.wieland.defaultappelements.uielements.adapter.iteractlistener.OnItemClickListener;
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.level.EntityType;
+import markus.wieland.pushygame.engine.level.LevelConverter;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.engine.level.RawLevel;
 import markus.wieland.pushygame.engine.level.TerrainType;
@@ -88,7 +89,7 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
     }
 
     public void export(View view) {
-        if (!levelBuilder.hasChanges()) {
+        if (levelBuilder.hasNoChanges()) {
             finish();
             return;
         }
@@ -101,12 +102,12 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         if (levelId != NO_LEVEL_ID) {
             levelDisplayItem.setFile(levelCode);
             levelDisplayItem.setSolved(false);
-            levelDisplayItem.setThumbnail(LevelBuilder.createThumbnail(this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager()));
+            levelDisplayItem.setThumbnail(LevelConverter.createThumbnail(this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager()));
             levelViewModel.update(levelDisplayItem);
             finish();
             return;
         }
-        levelViewModel.insert(new LevelDisplayItem(new RawLevel(levelCode), levelCode, LevelBuilder.createThumbnail(this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager())));
+        levelViewModel.insert(new LevelDisplayItem(new RawLevel(levelCode), levelCode, LevelConverter.createThumbnail(this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager())));
         finish();
     }
 
