@@ -23,13 +23,11 @@ import markus.wieland.pushygame.engine.level.Level;
 import markus.wieland.pushygame.engine.level.LevelConverter;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
 import markus.wieland.pushygame.engine.level.LevelLoader;
-import markus.wieland.pushygame.engine.level.RawLevel;
 import markus.wieland.pushygame.engine.terrain.Terrain;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 
 public class GameActivity extends DefaultActivity implements GameEventListener, InventoryEventListener, Observer<LevelDisplayItem> {
 
-    public static final String LEVEL_PATH = "markus.wieland.pushy.LEVEL_PATH";
     public static final String LEVEL_ID = "markus.wieland.pushy.LEVEL_ID";
     public static final String LEVEL_TEST = "markus.wieland.pushy.LEVEL_TEST";
 
@@ -107,7 +105,7 @@ public class GameActivity extends DefaultActivity implements GameEventListener, 
 
         String nextLevel = LevelLoader.getNextLevel(this, (int) id);
         if (nextLevel != null && !getIntent().getBooleanExtra(LEVEL_TEST, false)) {
-            startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_ID, id+1));
+            startActivity(new Intent(this, GameActivity.class).putExtra(LEVEL_ID, id + 1));
         }
         finish();
     }
