@@ -1,7 +1,7 @@
 
-L
-java:S18748"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
-L
-java:S18748"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
 l
-java:S1905P"VRemove this unnecessary cast to "org.sonar.java.resolve.Symbols$UnknownType@714a200d".(•ÃŞ
+java:S1905P"VRemove this unnecessary cast to "org.sonar.java.resolve.Symbols$UnknownType@7814f964".(•ÃŞ
+L
+java:S18748"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
+L
+java:S18748"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD

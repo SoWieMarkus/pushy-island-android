@@ -17,10 +17,14 @@ import java.util.List;
 
 import markus.wieland.defaultappelements.uielements.activities.DefaultActivity;
 import markus.wieland.pushygame.R;
+import markus.wieland.pushygame.engine.level.LevelConverter;
 import markus.wieland.pushygame.engine.level.LevelDisplayItem;
+import markus.wieland.pushygame.engine.level.RawLevel;
+import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 import markus.wieland.pushygame.ui.customlevel.levelbuilder.LevelBuilderActivity;
 import markus.wieland.pushygame.ui.dialog.Dialog;
+import markus.wieland.pushygame.ui.dialog.TextInputDialog;
 import markus.wieland.pushygame.ui.game.GameActivity;
 
 public class CustomLevelActivity extends DefaultActivity implements View.OnClickListener, Observer<List<LevelDisplayItem>>, CustomLevelInteractionListener {
@@ -60,9 +64,24 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
         add.setOnClickListener(this);
 
         levelBuilderButton.setOnClickListener(view -> startActivity(new Intent(this, LevelBuilderActivity.class)));
-        levelImportButton.setOnClickListener(view -> Toast.makeText(CustomLevelActivity.this, "Will be implemented later", Toast.LENGTH_SHORT).show());
+        levelImportButton.setOnClickListener(this);
 
         add.initialize(levelBuilderButton, levelImportButton);
+    }
+
+    public void importLevel(TextInputDialog dialog) {
+        String code = dialog.getText();
+        LevelBuilder levelBuilder = new LevelBuilder(this);
+        try {
+            levelBuilder.importLevel(code);
+            RawLevel rawLevel = new RawLevel(code);
+            LevelDisplayItem levelDisplayItem = new LevelDisplayItem(rawLevel, code, LevelConverter.createThumbnail(CustomLevelActivity.this, levelBuilder.getTerrainManager(), levelBuilder.getEntityManager()));
+            levelViewModel.insert(levelDisplayItem);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.level_builder_invalid_code), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -74,7 +93,12 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
-
+        TextInputDialog dialog = new TextInputDialog(this, "");
+        dialog.setDeclineMessage(getString(R.string.dialog_cancel))
+                .setMessage(getString(R.string.dialog_enter_code))
+                .setOkEvent(dialog1 -> importLevel((TextInputDialog) dialog1))
+                .getDialog()
+                .show();
     }
 
     @Override

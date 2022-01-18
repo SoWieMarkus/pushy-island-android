@@ -254,8 +254,6 @@ Mapp/src/main/java/markus/wieland/pushygame/ui/campaign/PushyLevelAdapter.java,
 `app/src/main/java/markus/wieland/pushygame/ui/customlevel/levelbuilder/LevelBuilderActivity.java,c\6\c6a48382d2da9c637aafb5bc317b2ed76f24f56d
 ì
 capp/src/main/java/markus/wieland/pushygame/ui/customlevel/levelbuilder/LevelBuilderItemAdapter.java,9\d\9d18c1caf8721bc4a22794821d22e42ff7209685
-
-Oapp/src/main/java/markus/wieland/pushygame/ui/customlevel/AddLevelActivity.java,4\6\46bcc5c1cdc74147a1622531ca3b8c6f57a801b7
 Å
 Qapp/src/main/java/markus/wieland/pushygame/ui/customlevel/CustomLevelAdapter.java,6\7\677aa132eb98be0f658b7a8b7369574e953746b1
 Ç
@@ -350,3 +348,7 @@ z
 Japp/src/main/java/markus/wieland/pushygame/engine/entity/logic/Button.java,5\7\57b74a4746e5877250c85fb9e8a446b1529cf12b
 {
 Kapp/src/main/java/markus/wieland/pushygame/engine/level/LevelConverter.java,9\d\9d82b7ba9942c1464bd0b879e72964f07ce51c9a
+ç
+]app/src/main/java/markus/wieland/pushygame/ui/customlevel/ExpandableFloatingActionButton.java,4\8\488c5a0c5f2ac018daf68f688bb18b17665f8069
+y
+Iapp/src/main/java/markus/wieland/pushygame/ui/dialog/TextInputDialog.java,5\4\545181e3dc4337c4921e2d46e6020ee946cbcbb1

@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PushyGame">
         <activity
-            android:name=".ui.customlevel.AddLevelActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".ui.customlevel.CustomLevelActivity"
             android:screenOrientation="landscape" />
         <activity

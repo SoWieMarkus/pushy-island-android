@@ -5,4 +5,9 @@
     <string name="dialog_no">Nein</string>
     <string name="dialog_changes_without_save">Änderungen verwerfen?</string>
     <string name="dialog_sure_delete">Sicher, dass du dieses Level löschen möchtest?</string>
+    <string name="dialog_cancel">Abbrechen</string>
+    <string name="level_builder_invalid_code">Ungültiger code</string>
+    <string name="dialog_enter_code">Gib einen Level Code ein</string>
+    <string name="main_campaign">Kampagne</string>
+    <string name="main_custom_level">Eigene Level</string>
 </resources>

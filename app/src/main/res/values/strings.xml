@@ -4,4 +4,9 @@
     <string name="dialog_no">No</string>
     <string name="dialog_changes_without_save">Discard changes?</string>
     <string name="dialog_sure_delete">Sure you want to delete this level?</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="level_builder_invalid_code">Invalid code</string>
+    <string name="dialog_enter_code">Enter level code</string>
+    <string name="main_campaign">Campaign</string>
+    <string name="main_custom_level">Custom level</string>
 </resources>
