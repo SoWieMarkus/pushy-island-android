@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -24,10 +25,13 @@ import markus.wieland.pushygame.ui.game.GameActivity;
 
 public class CustomLevelActivity extends DefaultActivity implements View.OnClickListener, Observer<List<LevelDisplayItem>>, CustomLevelInteractionListener {
 
-    private FloatingActionButton add;
+    private ExpandableFloatingActionButton add;
     private RecyclerView recyclerView;
     private LevelViewModel levelViewModel;
     private CustomLevelAdapter customLevelAdapter;
+
+    private FloatingActionButton levelBuilderButton;
+    private FloatingActionButton levelImportButton;
 
     public CustomLevelActivity() {
         super(R.layout.activity_custom_level);
@@ -44,6 +48,9 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
         add = findViewById(R.id.activity_custom_level_add);
         recyclerView = findViewById(R.id.activity_custom_level_recycler_view);
         levelViewModel = ViewModelProviders.of(this).get(LevelViewModel.class);
+
+        levelBuilderButton = findViewById(R.id.activity_custom_level_builder_level);
+        levelImportButton = findViewById(R.id.activity_custom_level_import_level);
     }
 
     @Override
@@ -51,6 +58,11 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         add.setOnClickListener(this);
+
+        levelBuilderButton.setOnClickListener(view -> startActivity(new Intent(this, LevelBuilderActivity.class)));
+        levelImportButton.setOnClickListener(view -> Toast.makeText(CustomLevelActivity.this, "Will be implemented later", Toast.LENGTH_SHORT).show());
+
+        add.initialize(levelBuilderButton, levelImportButton);
     }
 
     @Override
@@ -62,7 +74,7 @@ public class CustomLevelActivity extends DefaultActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(this, LevelBuilderActivity.class));
+
     }
 
     @Override

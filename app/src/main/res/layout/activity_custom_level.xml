@@ -7,6 +7,30 @@
     android:background="@drawable/background_image"
     tools:context=".ui.customlevel.CustomLevelActivity">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_custom_level_import_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/activity_custom_level_add"
+        app:layout_constraintEnd_toEndOf="@+id/activity_custom_level_add"
+        app:layout_constraintStart_toStartOf="@+id/activity_custom_level_add"
+        app:srcCompat="@drawable/ic_edit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_custom_level_builder_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/activity_custom_level_import_level"
+        app:layout_constraintEnd_toEndOf="@+id/activity_custom_level_import_level"
+        app:layout_constraintStart_toStartOf="@+id/activity_custom_level_import_level"
+        app:srcCompat="@drawable/ic_builder" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_custom_level_recycler_view"
         android:layout_width="match_parent"
@@ -20,7 +44,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <markus.wieland.pushygame.ui.customlevel.ExpandableFloatingActionButton
         android:id="@+id/activity_custom_level_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
