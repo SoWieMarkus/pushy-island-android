@@ -201,6 +201,11 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
     }
 
     public void onClick(Type type) {
+
+        if (levelBuilder.getSetMode() == SetMode.ERASE) {
+            select(SetMode.PENCIL);
+        }
+
         levelBuilder.setSelectedField(type);
         levelBuilderTerrainAdapter.select(type);
         levelBuilderEntityAdapter.select(type);

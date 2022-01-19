@@ -93,6 +93,10 @@ public class LevelBuilder {
         return coordinate.getX() < 0 || coordinate.getX() >= LEVEL_HEIGHT || coordinate.getY() < 0 || coordinate.getY() >= LEVEL_WIDTH;
     }
 
+    public SetMode getSetMode() {
+        return setMode;
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }
