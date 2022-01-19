@@ -17,49 +17,83 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/activity_level_builder_export"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_save" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/activity_level_builder_fill"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_fill" />
+                <ImageButton
+                    android:id="@+id/activity_level_builder_export"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="#43A047"
+                    app:srcCompat="@drawable/ic_save" />
 
-            <ImageButton
-                android:id="@+id/activity_level_builder_undo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_undo" />
+                <ImageButton
+                    android:id="@+id/activity_level_builder_undo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_undo" />
 
-            <ImageButton
-                android:id="@+id/actvity_level_builder_redo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_redo" />
+                <ImageButton
+                    android:id="@+id/activity_level_builder_pencil"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_edit" />
 
-            <ImageButton
-                android:id="@+id/activity_level_builder_smooth"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_smooth" />
+                <ImageButton
+                    android:id="@+id/activity_level_builder_erase"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_erase" />
 
-            <ImageButton
-                android:id="@+id/activity_level_builder_name"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_text" />
+                <ImageButton
+                    android:id="@+id/activity_level_builder_name"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_text" />
 
-            <ImageButton
-                android:id="@+id/activity_level_builder_reset"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:srcCompat="@drawable/ic_restart" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/activity_level_builder_reset"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="#E53935"
+                    app:srcCompat="@drawable/ic_restart" />
+
+                <ImageButton
+                    android:id="@+id/actvity_level_builder_redo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_redo" />
+
+                <ImageButton
+                    android:id="@+id/activity_level_builder_fill"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_fill" />
+
+                <ImageButton
+                    android:id="@+id/activity_level_builder_smooth"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_smooth" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

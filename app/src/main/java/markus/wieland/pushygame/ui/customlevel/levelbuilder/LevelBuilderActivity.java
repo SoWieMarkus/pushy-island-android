@@ -1,5 +1,6 @@
 package markus.wieland.pushygame.ui.customlevel.levelbuilder;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +25,7 @@ import markus.wieland.pushygame.engine.level.RawLevel;
 import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
+import markus.wieland.pushygame.levelbuilder.SetMode;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 import markus.wieland.pushygame.ui.dialog.Dialog;
 import markus.wieland.pushygame.ui.dialog.DialogInteractionListener;
@@ -31,7 +33,7 @@ import markus.wieland.pushygame.ui.dialog.TextInputDialog;
 import markus.wieland.pushygame.ui.game.PushyGridAdapter;
 import markus.wieland.pushygame.ui.game.PushyView;
 
-public class LevelBuilderActivity extends DefaultActivity implements OnItemClickListener<Type>, Observer<LevelDisplayItem>, DialogInteractionListener {
+public class LevelBuilderActivity extends DefaultActivity implements OnItemClickListener<Type>, Observer<LevelDisplayItem> {
 
     public static final String KEY_LEVEL_ID = "markus.wieland.pushygame.ui.customlevel.levelbuilder.LEVEL_ID";
     public static final long NO_LEVEL_ID = -1;
@@ -58,6 +60,8 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
     private TextInputValidator textInputValidator;
 
     private ImageButton levelBuilderFillMode;
+    private ImageButton levelBuilderPencilMode;
+    private ImageButton levelBuilderEraseMode;
     private ImageButton levelBuilderUndo;
     private ImageButton levelBuilderRedo;
     private ImageButton levelBuilderSmooth;
@@ -84,6 +88,8 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         recyclerViewEntity = findViewById(R.id.activity_level_builder_entities_items);
 
         levelBuilderName = findViewById(R.id.activity_level_builder_name);
+        levelBuilderPencilMode = findViewById(R.id.activity_level_builder_pencil);
+        levelBuilderEraseMode = findViewById(R.id.activity_level_builder_erase);
         levelBuilderUndo = findViewById(R.id.activity_level_builder_undo);
         levelBuilderRedo = findViewById(R.id.actvity_level_builder_redo);
         levelBuilderSmooth = findViewById(R.id.activity_level_builder_smooth);
@@ -104,7 +110,9 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         levelBuilderRedo.setOnClickListener(view -> levelBuilder.redo());
         levelBuilderReset.setOnClickListener(view -> levelBuilder.reset());
         levelBuilderSave.setOnClickListener(this::export);
-        levelBuilderFillMode.setOnClickListener(this::fill);
+        levelBuilderFillMode.setOnClickListener(view -> select(SetMode.FILL));
+        levelBuilderEraseMode.setOnClickListener(view -> select(SetMode.ERASE));
+        levelBuilderPencilMode.setOnClickListener(view -> select(SetMode.PENCIL));
         levelBuilderSmooth.setOnClickListener(view -> levelBuilder.smooth());
 
         recyclerViewTerrain.setHasFixedSize(true);
@@ -115,13 +123,29 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         textInputDialog = new TextInputDialog(this, null);
         textInputDialog.setMessage(getString(R.string.level_builder_enter_name))
                 .setOkMessage(getString(R.string.dialog_commit))
-                .setDeclineMessage(getString(R.string.dialog_cancel))
-                .setOkEvent(this);
+                .setDeclineMessage(getString(R.string.dialog_cancel));
     }
 
-    private void fill(View view) {
-        levelBuilder.fill();
-        levelBuilderFillMode.setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
+    public void select(SetMode setMode) {
+
+        int highlightColor = Color.rgb(0,50,255);
+
+        levelBuilderPencilMode.setColorFilter(Color.WHITE);
+        levelBuilderEraseMode.setColorFilter(Color.WHITE);
+        levelBuilderFillMode.setColorFilter(Color.WHITE);
+        levelBuilder.setSetMode(setMode);
+        switch (setMode){
+            case ERASE:
+                levelBuilderEraseMode.setColorFilter(highlightColor);
+                break;
+            case FILL:
+                levelBuilderFillMode.setColorFilter(highlightColor);
+                break;
+            default:
+                levelBuilderPencilMode.setColorFilter(highlightColor);
+                break;
+
+        }
     }
 
     public void export(View view) {
@@ -195,22 +219,11 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
                 .show();
     }
 
-
     @Override
     public void onChanged(LevelDisplayItem levelDisplayItem) {
         this.levelDisplayItem = levelDisplayItem;
         textInputDialog.setText(levelDisplayItem.getName());
         levelBuilderName.setVisibility(View.VISIBLE);
         levelBuilder.importLevel(levelDisplayItem.getFile());
-    }
-
-    @Override
-    public void onClick(Dialog dialog) {
-        TextInputDialog textInputDialog = (TextInputDialog) dialog;
-        String levelName = textInputDialog.getText();
-        ValidatorResult result = textInputValidator.validate(levelName);
-        if (result.isValid()) {
-            // TODO
-        }
     }
 }

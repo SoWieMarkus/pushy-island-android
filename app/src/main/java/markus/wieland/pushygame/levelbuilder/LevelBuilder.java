@@ -3,6 +3,8 @@ package markus.wieland.pushygame.levelbuilder;
 import android.app.Activity;
 import android.widget.Toast;
 
+import java.util.Set;
+
 import markus.wieland.pushygame.engine.EntityManager;
 import markus.wieland.pushygame.engine.TerrainManager;
 import markus.wieland.pushygame.engine.entity.Entity;
@@ -18,6 +20,7 @@ import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.engine.terrain.Terrain;
+import markus.wieland.pushygame.levelbuilder.tasks.EraseTask;
 import markus.wieland.pushygame.levelbuilder.tasks.FillTask;
 import markus.wieland.pushygame.levelbuilder.tasks.PlaceCombinationTask;
 import markus.wieland.pushygame.levelbuilder.tasks.ReplaceTask;
@@ -47,6 +50,8 @@ public class LevelBuilder {
 
     private boolean saved;
 
+    private SetMode setMode;
+
     public LevelBuilder(Activity activity) {
         isFillMode = false;
         pushyTerrainViews = new Matrix<>(LEVEL_HEIGHT, LEVEL_WIDTH);
@@ -73,6 +78,7 @@ public class LevelBuilder {
         this.entityManager = new EntityManager(pushyEntityViews);
         this.terrainManager = new TerrainManager(pushyTerrainViews);
         this.selectedField = TerrainType.SAND;
+        this.setMode = SetMode.PENCIL;
     }
 
     public Matrix<PushyFieldView<Terrain>> getPushyTerrainViews() {
@@ -145,16 +151,12 @@ public class LevelBuilder {
 
     }
 
-    public boolean isFillMode() {
-        return isFillMode;
-    }
-
     public void smooth() {
         TaskManager.getInstance().execute(new SmoothTask(this));
     }
 
-    public void fill() {
-        isFillMode = !isFillMode;
+    public void setSetMode(SetMode setMode) {
+        this.setMode = setMode;
     }
 
     public boolean selectedFieldIsOneOf(Type... type) {
@@ -169,6 +171,12 @@ public class LevelBuilder {
     }
 
     public void set(Coordinate coordinate) {
+        if (setMode == SetMode.ERASE) {
+            TaskManager.getInstance().execute(new EraseTask(this, coordinate));
+            return;
+        }
+
+
         Task task;
 
         if (selectedFieldIsOneOf(EntityType.PIRATE_HUT, EntityType.PIRATE)) {
@@ -178,10 +186,11 @@ public class LevelBuilder {
         } else if (selectedField.isLogicPart()) {
             task = new SetLogicTask(this, coordinate, selectedField);
         } else {
-            task = isFillMode ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField);
+            task = setMode == SetMode.FILL ? new FillTask(this, coordinate, selectedField) : new SetTask(this, coordinate, selectedField);
         }
-
         TaskManager.getInstance().execute(task);
+
+
     }
 
     public String export(String levelName) {
