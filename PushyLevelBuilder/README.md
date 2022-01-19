@@ -7,3 +7,4 @@ When I started this project I used this HTML file to build level for the game. B
 - export / import level
 - build level
 - change height and width (not needed because all level are 12x20)
+- place pirate and pirate hut at the same time
