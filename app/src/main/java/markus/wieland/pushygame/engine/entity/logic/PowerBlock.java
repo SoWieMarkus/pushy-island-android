@@ -1,5 +1,7 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
+import java.util.Objects;
+
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.movable.MovableEntity;
 import markus.wieland.pushygame.engine.events.LogicEvent;
@@ -31,7 +33,7 @@ public class PowerBlock extends MovableEntity implements LogicOutput {
     }
 
     public void executePowerEvent(Game game, Coordinate coordinateBefore, Coordinate nextCoordinate) {
-        for (Direction direction : Direction.class.getEnumConstants()) {
+        for (Direction direction : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             game.execute(new LogicEvent(coordinateBefore.getNextCoordinate(direction), direction));
             if (nextCoordinate == null) continue;
             game.execute(new LogicEvent(nextCoordinate.getNextCoordinate(direction), direction));
@@ -39,8 +41,4 @@ public class PowerBlock extends MovableEntity implements LogicOutput {
         game.execute(new UpdateCableEvent());
     }
 
-    @Override
-    public PortType getPortType(Direction direction) {
-        return PortType.OUTPUT;
-    }
 }

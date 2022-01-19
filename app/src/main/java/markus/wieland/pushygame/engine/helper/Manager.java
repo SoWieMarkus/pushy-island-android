@@ -17,10 +17,6 @@ public abstract class Manager<F extends Field, T extends PushyFieldView<F>> {
         initialize();
     }
 
-    public Matrix<T> getPushyFieldViews() {
-        return pushyFieldViews;
-    }
-
     public boolean isNotInsideField(Coordinate coordinate) {
         return coordinate.getX() < 0 || coordinate.getY() < 0 || coordinate.getX() >= pushyFieldViews.getSizeX() || coordinate.getY() >= pushyFieldViews.getSizeY();
     }

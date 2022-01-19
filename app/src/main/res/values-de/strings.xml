@@ -10,4 +10,9 @@
     <string name="dialog_enter_code">Gib einen Level Code ein</string>
     <string name="main_campaign">Kampagne</string>
     <string name="main_custom_level">Eigene Level</string>
+    <string name="level_builder_enter_name">Gib einen Levelnamen ein:</string>
+    <string name="dialog_commit">Speichern</string>
+    <string name="error_level_builder_name_too_long">Der Name ist zu lang! (20 Zeichen max.)</string>
+    <string name="error_level_builder_name_too_short">Der Name ist zu kurz! (3 Zeichen min.)</string>
+    <string name="level_builder_missing_validation">Level ungelöst</string>
 </resources>

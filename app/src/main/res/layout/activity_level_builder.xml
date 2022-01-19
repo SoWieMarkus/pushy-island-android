@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/activity_game_export"
+                android:id="@+id/activity_level_builder_export"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:srcCompat="@drawable/ic_save" />
@@ -48,6 +48,12 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 app:srcCompat="@drawable/ic_smooth" />
+
+            <ImageButton
+                android:id="@+id/activity_level_builder_name"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_text" />
 
             <ImageButton
                 android:id="@+id/activity_level_builder_reset"

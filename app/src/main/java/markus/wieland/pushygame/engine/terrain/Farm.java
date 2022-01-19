@@ -14,8 +14,9 @@ public class Farm extends Sand {
     }
 
     @Override
-    public int getDrawable() {
-        return hasSeed ? R.drawable.farm_with_seed : super.getDrawable();
+    public int[] getDrawableList() {
+        if (!hasSeed) return super.getDrawableList();
+        return new int[]{super.getDrawable(), R.drawable.seed};
     }
 
     public boolean hasSeed() {

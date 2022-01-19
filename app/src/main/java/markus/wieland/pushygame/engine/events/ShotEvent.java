@@ -13,6 +13,10 @@ import markus.wieland.pushygame.engine.terrain.Terrain;
 
 public class ShotEvent extends Event {
 
+    // because of the leafs its possible to create a infinite loop
+    // so I break after MAX_STEPS steps
+    private static final int MAX_STEPS = 1000;
+
     private final SlingShot slingShot;
 
     public ShotEvent(SlingShot slingShot) {
@@ -26,7 +30,7 @@ public class ShotEvent extends Event {
         Coordinate nextCoordinate = slingShot.getCoordinate().getNextCoordinate(direction);
         int count = 0;
 
-        while (!game.getEntityManager().isNotInsideField(nextCoordinate) && count < 1000) {
+        while (!game.getEntityManager().isNotInsideField(nextCoordinate) && count < MAX_STEPS) {
             Terrain terrain = game.getTerrainManager().getObject(nextCoordinate);
             Entity entity = game.getEntityManager().getObject(nextCoordinate);
 

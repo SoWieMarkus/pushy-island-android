@@ -34,14 +34,6 @@ public class Edge {
         this.outputs.add(output);
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public List<Cable> getCables() {
-        return cables;
-    }
-
     public void update(Game game) {
         active = false;
 

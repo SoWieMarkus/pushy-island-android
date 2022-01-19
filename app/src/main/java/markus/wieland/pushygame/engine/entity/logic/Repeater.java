@@ -75,11 +75,6 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
     }
 
     @Override
-    public PortType getPortType(Direction direction) {
-        return null;
-    }
-
-    @Override
     protected void executeMove(Coordinate nextCoordinate, Game game) {
         Direction direction = getCoordinate().getDirection(nextCoordinate);
         super.executeMove(nextCoordinate, game);
@@ -94,9 +89,9 @@ public class Repeater extends MovableEntity implements LogicInput, LogicOutput {
         if (isOutputActive == currentOutput) return;
         currentOutput = isOutputActive;
         game.getEntityManager().invalidate(this);
-        for (Direction direction1 : Objects.requireNonNull(Direction.class.getEnumConstants())) {
-            if (isOutput(direction1.getOppositeDirection()))
-                game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction1), direction1));
+        for (Direction directionFromList : Objects.requireNonNull(Direction.class.getEnumConstants())) {
+            if (isOutput(directionFromList.getOppositeDirection()))
+                game.execute(new LogicEvent(getCoordinate().getNextCoordinate(directionFromList), directionFromList));
         }
     }
 }

@@ -53,8 +53,8 @@ public enum TerrainType implements Type {
     @SerializedName("flower_pressure_plate") FLOWER_YELLOW_PRESSURE_PLATE(32, R.drawable.flower_pressure_plate, 105),
 
     @SerializedName("string_pressure_plate") STRING_PRESSURE_PLATE(33, R.drawable.string_pressure_plate, 130),
-    @SerializedName("changable_flower_red") CHANGEABLE_FLOWER_RED(34, R.drawable.changable_flower_red, 130),
-    @SerializedName("changable_flower_green") CHANGEABLE_FLOWER_GREEN(35, R.drawable.changable_flower_green, 130),
+    @SerializedName("changeable_flower_red") CHANGEABLE_FLOWER_RED(34, R.drawable.changable_flower_red, 130),
+    @SerializedName("changeable_flower_green") CHANGEABLE_FLOWER_GREEN(35, R.drawable.changable_flower_green, 130),
 
     @SerializedName("barrel_finish") BARREL_FINISH(36, R.drawable.barrel_finish, 148),
 

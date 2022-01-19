@@ -3,6 +3,7 @@
     <words>
       <w>explodable</w>
       <w>teleportable</w>
+      <w>teleported</w>
       <w>teleporter</w>
     </words>
   </dictionary>

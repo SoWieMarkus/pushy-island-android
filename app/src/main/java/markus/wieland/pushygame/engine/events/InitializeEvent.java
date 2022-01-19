@@ -11,8 +11,9 @@ import markus.wieland.pushygame.engine.level.TerrainType;
 import markus.wieland.pushygame.engine.level.TileMapBuilder;
 import markus.wieland.pushygame.engine.terrain.InvisibleWater;
 import markus.wieland.pushygame.engine.terrain.Water;
+import markus.wieland.pushygame.engine.terrain.pressure.PressurePlateTerrain;
 
-public class InitializeEvent extends Event{
+public class InitializeEvent extends Event {
     @Override
     public void execute() {
         EntityManager entityManager = game.getEntityManager();
@@ -45,6 +46,10 @@ public class InitializeEvent extends Event{
 
         for (PowerBlock powerBlock : entityManager.getOfType(PowerBlock.class)) {
             powerBlock.executePowerEvent(game, powerBlock.getCoordinate(), null);
+        }
+
+        for (PressurePlateTerrain pressurePlateTerrain : terrainManager.getPressurePlateTerrains()) {
+            pressurePlateTerrain.interact(entityManager.getObject(pressurePlateTerrain), game);
         }
 
         game.execute(new UpdateCableEvent());

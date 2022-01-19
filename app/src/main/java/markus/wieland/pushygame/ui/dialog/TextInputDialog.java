@@ -9,11 +9,15 @@ import markus.wieland.pushygame.R;
 public class TextInputDialog extends Dialog {
 
     private EditText editText;
-    private final String text;
+    private String text;
 
     public TextInputDialog(Context context, String text) {
         super(context);
         setLayout(R.layout.dialog_text_input);
+        setText(text);
+    }
+
+    public void setText(String text) {
         this.text = text == null ? "" : text;
     }
 

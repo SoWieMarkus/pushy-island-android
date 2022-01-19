@@ -1,7 +1,5 @@
 package markus.wieland.pushygame.engine.entity.logic;
 
-import android.app.Activity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,13 +14,11 @@ import markus.wieland.pushygame.engine.level.EntityType;
 
 public abstract class LogicGate extends Entity implements LogicOutput, LogicInput {
 
+    public static final int TICK = 300;
+
     private final Ports ports;
 
     private boolean currentOutput;
-
-    public PortType getPortType(Direction direction) {
-        return ports.getPortType(direction);
-    }
 
     public LogicGate(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
@@ -98,29 +94,44 @@ public abstract class LogicGate extends Entity implements LogicOutput, LogicInpu
         return getPorts().getPortType(direction.getOppositeDirection()) == PortType.OUTPUT;
     }
 
+
+    @Override
     public boolean isInputActive(Game game, Direction direction) {
         return LogicInput.isInputActive(game, direction, getCoordinate());
     }
 
+    @Override
     public void update(Game game) {
         boolean isOutputActive = isOutputActive(game);
         if (currentOutput == isOutputActive) return;
         currentOutput = isOutputActive;
         game.getEntityManager().invalidate(this);
-        Thread thread = new Thread(() -> {
+        LogicGateThread logicGateThread = new LogicGateThread(game);
+        logicGateThread.start();
+    }
+
+    private class LogicGateThread extends Thread {
+
+        private final Game game;
+
+        public LogicGateThread(Game game) {
+            this.game = game;
+        }
+
+        @Override
+        public void run() {
             try {
-                Thread.sleep(300);
-                ((Activity) game.getEntityManager().getView(getCoordinate()).getContext()).runOnUiThread(() -> {
+                Thread.sleep(TICK);
+                game.getActivity().runOnUiThread(() -> {
                     for (Direction direction : getPorts().getOutputs()) {
                         game.execute(new LogicEvent(getCoordinate().getNextCoordinate(direction), direction));
                     }
-
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
-        });
-        thread.start();
+        }
     }
 
 }

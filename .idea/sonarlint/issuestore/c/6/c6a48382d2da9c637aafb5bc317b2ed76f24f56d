@@ -1,7 +1,10 @@
 
+L
+java:S1874B"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
+a
+java:S1117½"CRename "textInputDialog" which hides the field declared at line 56.(Í·8‰Ô„úæ/
 l
-java:S1905P"VRemove this unnecessary cast to "org.sonar.java.resolve.Symbols$UnknownType@7814f964".(•ÃŞ
+java:S1905Z"VRemove this unnecessary cast to "org.sonar.java.resolve.Symbols$UnknownType@232ecfe1".(•ÃŞ
 L
-java:S18748"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
-L
-java:S18748"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
+java:S1874B"7Remove this use of "FLAG_FULLSCREEN"; it is deprecated.(±ùËD
+F	java:S108À")Either remove or fill this block of code.(“ë£‰8å™úæ/

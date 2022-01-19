@@ -27,5 +27,4 @@ public class InvisibleWater extends Terrain {
         return true;
     }
 
-
 }

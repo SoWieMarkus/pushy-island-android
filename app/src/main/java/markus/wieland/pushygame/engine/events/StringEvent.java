@@ -5,7 +5,7 @@ import markus.wieland.pushygame.engine.entity.statics.String;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower;
 
-public class StringEvent extends Event{
+public class StringEvent extends Event {
 
     private static Direction stringDirection;
     private static boolean isStringActive;

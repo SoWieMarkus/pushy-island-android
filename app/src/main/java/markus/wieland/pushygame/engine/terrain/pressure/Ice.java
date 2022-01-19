@@ -1,5 +1,6 @@
 package markus.wieland.pushygame.engine.terrain.pressure;
 
+import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.helper.Coordinate;
@@ -13,6 +14,11 @@ public class Ice extends PressurePlateTerrain {
     public Ice(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);
         wasVisited = false;
+    }
+
+    @Override
+    public int[] getDrawableList() {
+        return new int[]{R.drawable.water, super.getDrawable()};
     }
 
     @Override

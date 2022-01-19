@@ -5,7 +5,7 @@ import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.engine.terrain.Cable;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
-public class SetLogicTask extends MultipleTask{
+public class SetLogicTask extends MultipleTask {
 
     private final Coordinate coordinate;
     private final Type type;
@@ -22,7 +22,7 @@ public class SetLogicTask extends MultipleTask{
         updateCables();
     }
 
-    private void updateCables(){
+    private void updateCables() {
         for (Cable cable : getLevelBuilder().getTerrainManager().getOfType(Cable.class)) {
             cable.updateDrawables(getLevelBuilder());
         }

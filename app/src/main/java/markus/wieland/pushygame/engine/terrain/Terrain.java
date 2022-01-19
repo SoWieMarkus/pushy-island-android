@@ -23,12 +23,6 @@ public abstract class Terrain extends Field {
         return getElevation() > ELEVATION_SAND;
     }
 
-    public boolean isPossibleToMove(Terrain terrain) {
-        if (terrain == null) throw new IllegalArgumentException("Terrain should not be null.");
-        if (getElevation() == ELEVATION_WATER || terrain.getElevation() == ELEVATION_WATER) return false;
-        return getElevation() >= terrain.getElevation();
-    }
-
     public boolean hasSameElevationAs(Terrain terrain) {
         if (terrain == null) throw new IllegalArgumentException("Terrain should not be null.");
         return getElevation() == terrain.getElevation();

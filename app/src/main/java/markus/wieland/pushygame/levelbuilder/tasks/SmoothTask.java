@@ -85,7 +85,8 @@ public class SmoothTask extends MultipleTask {
 
     private void checkForSmooth(Coordinate coordinate) {
         Terrain terrain = getLevelBuilder().getTerrainManager().getObject(coordinate);
-        if (!(terrain.getClass().equals(Grass.class) || terrain.getClass().equals(Sand.class))) return;
+        if (!(terrain.getClass().equals(Grass.class) || terrain.getClass().equals(Sand.class)))
+            return;
         TerrainType terrainType = null;
         if (terrain instanceof Grass) {
             terrainType = checkGrass(coordinate);

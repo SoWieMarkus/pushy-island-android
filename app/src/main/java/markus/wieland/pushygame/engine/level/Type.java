@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Type {
 
-    public static final int UNLIMITED = Integer.MAX_VALUE;
+    int UNLIMITED = Integer.MAX_VALUE;
 
     String getValue();
 

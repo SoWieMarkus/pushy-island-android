@@ -1,9 +1,10 @@
 package markus.wieland.pushygame.engine.terrain;
 
+import java.util.Objects;
+
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
 import markus.wieland.pushygame.engine.entity.logic.LogicInput;
-import markus.wieland.pushygame.engine.entity.logic.PortType;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.helper.Direction;
 import markus.wieland.pushygame.engine.level.TerrainType;
@@ -32,11 +33,6 @@ public class Door extends Sand implements LogicInput {
     }
 
     @Override
-    public PortType getPortType(Direction direction) {
-        return PortType.INPUT;
-    }
-
-    @Override
     public int getElevation() {
         return open ? super.getElevation() : Integer.MAX_VALUE;
     }
@@ -44,7 +40,7 @@ public class Door extends Sand implements LogicInput {
     @Override
     public void update(Game game) {
         open = false;
-        for (Direction direction : Direction.class.getEnumConstants()) {
+        for (Direction direction : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             if (isInputActive(game, direction)) {
                 open = true;
             }

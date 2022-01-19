@@ -7,16 +7,13 @@ import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
 public class RawLevel {
     private String name;
-    private String version;
+    private final String version;
     private long number;
     private List<List<TerrainType>> terrain;
     private List<List<EntityType>> entities;
 
     public String getVersion() {
         return version;
-    }
-
-    public RawLevel() {
     }
 
     public RawLevel(String hex) {

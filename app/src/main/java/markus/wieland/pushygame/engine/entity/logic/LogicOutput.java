@@ -10,8 +10,6 @@ public interface LogicOutput {
 
     boolean isOutput(Direction direction);
 
-    PortType getPortType(Direction direction);
-
     static int drawableByDirection(Direction direction){
         direction = direction.getOppositeDirection();
         switch (direction) {

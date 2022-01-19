@@ -46,23 +46,25 @@ public class Inventory {
     }
 
     public boolean has(Class<? extends CollectibleEntity> type, int amount) {
-        if (inventoryItems.get(type) == null) return false;
-        return inventoryItems.get(type).size() >= amount;
+        List<CollectibleEntity> entities = inventoryItems.get(type);
+        if (entities == null) return false;
+        return entities.size() >= amount;
     }
 
     public int getAmount(Class<? extends CollectibleEntity> type) {
-        if (inventoryItems.get(type) == null) return 0;
-        return inventoryItems.get(type).size();
+        List<CollectibleEntity> entities = inventoryItems.get(type);
+        if (entities == null) return 0;
+        return entities.size();
     }
 
     public List<InventoryItem> getInventoryItems() {
         List<InventoryItem> inventoryItemsList = new ArrayList<>();
 
-        for (Map.Entry<Class<? extends CollectibleEntity>, List<CollectibleEntity>> entry: inventoryItems.entrySet()) {
-            if (entry.getValue().isEmpty())continue;
+        for (Map.Entry<Class<? extends CollectibleEntity>, List<CollectibleEntity>> entry : inventoryItems.entrySet()) {
+            if (entry.getValue().isEmpty()) continue;
             inventoryItemsList.add(new InventoryItem(entry.getValue().get(0).getDrawable(), entry.getValue().size()));
         }
-        
+
         return inventoryItemsList;
     }
 }

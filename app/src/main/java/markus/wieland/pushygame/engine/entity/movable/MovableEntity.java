@@ -18,23 +18,23 @@ public abstract class MovableEntity extends Entity {
         super(coordinate, entityType);
     }
 
-    public boolean isPushableIntoWater(){
+    public boolean isPushableIntoWater() {
         return false;
     }
 
-    public boolean canCollectEntities(){
+    public boolean canCollectEntities() {
         return false;
     }
 
-    public boolean canMoveEntities(){
+    public boolean canMoveEntities() {
         return false;
     }
 
-    public boolean canInteractWithEntities(){
+    public boolean canInteractWithEntities() {
         return false;
     }
 
-    public boolean canSwimWithABoat(){
+    public boolean canSwimWithABoat() {
         return false;
     }
 
@@ -68,7 +68,7 @@ public abstract class MovableEntity extends Entity {
         // ATTENTION! This also includes Water. So if you are on land, and for what ever reason there is a collectible
         // entity on this field you can also collect it
         // This is not a bug. It's a feature.
-        if (nextEntity.isCollectibleEntity() && canCollectEntities()){
+        if (nextEntity.isCollectibleEntity() && canCollectEntities()) {
             ((CollectibleEntity) nextEntity).collect(game);
             return true;
         }
@@ -78,14 +78,14 @@ public abstract class MovableEntity extends Entity {
 
             // We can move objects ...
             if (nextEntity.isMovableEntity() && canMoveEntities())
-                return ((MovableEntity)nextEntity).move(nextCoordinate.getNextCoordinate(direction), game);
+                return ((MovableEntity) nextEntity).move(nextCoordinate.getNextCoordinate(direction), game);
 
             // or interact with them
             if (nextEntity.isInteractEntity() && canInteractWithEntities()) {
-                ((InteractableEntity)nextEntity).interact(direction, game);
+                ((InteractableEntity) nextEntity).interact(direction, game);
                 return false;
             }
-         }
+        }
 
         return false;
 
@@ -96,7 +96,7 @@ public abstract class MovableEntity extends Entity {
     }
 
     public boolean move(Coordinate nextCoordinate, Game game) {
-        if (isMovePossible(nextCoordinate, game)){
+        if (isMovePossible(nextCoordinate, game)) {
             executeMove(nextCoordinate, game);
             return true;
         }

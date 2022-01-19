@@ -14,8 +14,6 @@ public interface LogicInput {
 
     boolean isInput(Direction direction);
 
-    PortType getPortType(Direction direction);
-
     void update(Game game);
 
     static boolean isInputActive(Game game, Direction direction, Coordinate currentCoordinate) {

@@ -3,6 +3,7 @@ package markus.wieland.pushygame.engine.terrain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.EntityManager;
@@ -24,7 +25,7 @@ public class Cable extends Sand {
     public Cable(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);
         this.active = false;
-        this.directionsOfCable = new ArrayList<>(Arrays.asList(Direction.class.getEnumConstants()));
+        this.directionsOfCable = new ArrayList<>(Arrays.asList(Objects.requireNonNull(Direction.class.getEnumConstants())));
     }
 
     public void updateDrawables(Game game) {
@@ -37,12 +38,14 @@ public class Cable extends Sand {
 
     public void updateDrawables(TerrainManager terrainManager, EntityManager entityManager) {
         this.directionsOfCable.clear();
-        for (Direction direction : Direction.class.getEnumConstants()) {
+        for (Direction direction : Objects.requireNonNull(Direction.class.getEnumConstants())) {
             if (shouldHaveCable(terrainManager, entityManager, direction))
                 directionsOfCable.add(direction);
         }
+
+        // if there is no cable/logic gate next to this cable I want the cable to "look" into every direction
         if (directionsOfCable.isEmpty()) {
-            this.directionsOfCable.addAll(Arrays.asList(Direction.class.getEnumConstants()));
+            this.directionsOfCable.addAll(Arrays.asList(Objects.requireNonNull(Direction.class.getEnumConstants())));
         }
         terrainManager.invalidate(this);
     }
@@ -85,8 +88,10 @@ public class Cable extends Sand {
         Entity entity = entityManager.getObject(coordinate);
         Terrain terrain = terrainManager.getObject(coordinate);
         if (terrain instanceof Cable) return true;
-        if (terrain instanceof LogicOutput && ((LogicOutput) terrain).isOutput(direction)) return true;
-        if (entity instanceof LogicOutput && ((LogicOutput) entity).isOutput(direction)) return true;
+        if (terrain instanceof LogicOutput && ((LogicOutput) terrain).isOutput(direction))
+            return true;
+        if (entity instanceof LogicOutput && ((LogicOutput) entity).isOutput(direction))
+            return true;
         if (entity instanceof LogicInput && ((LogicInput) entity).isInput(direction)) return true;
         return terrain instanceof LogicInput && ((LogicInput) terrain).isInput(direction);
     }

@@ -67,6 +67,7 @@ public class LevelBuilder {
                 pushyEntityView.invalidate();
                 pushyTerrainView.invalidate();
                 pushyEntityView.setOnClickListener(view -> set(coordinate));
+
             }
         }
         this.entityManager = new EntityManager(pushyEntityViews);
@@ -183,9 +184,9 @@ public class LevelBuilder {
         TaskManager.getInstance().execute(task);
     }
 
-    public String export() {
+    public String export(String levelName) {
         saved = true;
-        return LevelConverter.convertToLevelCode("Levelname", terrainManager, entityManager);
+        return LevelConverter.convertToLevelCode(levelName, terrainManager, entityManager);
     }
 
     public void importLevel(String code) {

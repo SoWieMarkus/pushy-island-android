@@ -62,6 +62,6 @@ public class Count extends MovableEntity implements GameFinishEntity {
 
     @Override
     public boolean check(Game game) {
-        return isUncovered;
+        return isUncovered();
     }
 }

@@ -2,8 +2,8 @@ package markus.wieland.pushygame.engine.helper;
 
 public class Coordinate {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -14,16 +14,8 @@ public class Coordinate {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public Coordinate getNextCoordinate(Direction direction) {
@@ -33,7 +25,7 @@ public class Coordinate {
     }
 
     public Direction getDirection(Coordinate to) {
-        int differenceX = to.getX() - x ;
+        int differenceX = to.getX() - x;
         int differenceY = to.getY() - y;
 
         if (differenceX <= -1 && differenceY == 0) return Direction.NORTH;

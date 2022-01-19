@@ -93,6 +93,7 @@ public class Dialog {
     }
 
     protected void initializeView(View view) {
+        // will be used from child classes
     }
 
 }

@@ -29,8 +29,8 @@ public abstract class Entity extends Field {
         return false;
     }
 
-    public boolean isTeleported() {
-        return teleported;
+    public boolean isNotTeleported() {
+        return !teleported;
     }
 
     public void setTeleported(boolean teleported) {

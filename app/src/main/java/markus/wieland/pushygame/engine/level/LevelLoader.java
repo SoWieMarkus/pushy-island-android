@@ -1,6 +1,7 @@
 package markus.wieland.pushygame.engine.level;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -12,15 +13,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class LevelLoader {
+
     private static final Gson GSON = new Gson();
+
+    private static final String LEVEL_PATH = "level";
 
     private LevelLoader() {
     }
 
-    public static List<LevelDisplayItem> getLocalLevels(Activity activity){
+    public static List<LevelDisplayItem> getLocalLevels(Activity activity) {
         String[] list;
         try {
-            list = activity.getAssets().list("level");
+            list = activity.getAssets().list(LEVEL_PATH);
         } catch (IOException e) {
             return new ArrayList<>();
         }
@@ -32,21 +36,20 @@ public class LevelLoader {
         return levels;
     }
 
-    public static String getNextLevel(Activity activity, int id){
+    public static String getNextLevel(Activity activity, int id) {
         List<LevelDisplayItem> levelDisplayItems = getLocalLevels(activity);
         if (id >= levelDisplayItems.size()) return null;
-        // We dont have to increment because level number starts at index 1
+        // We don't have to increment because level number starts at index 1
         return getLocalLevels(activity).get(id).getFile();
     }
 
     private static RawLevel load(Activity activity, String name) {
-        String json = null;
-        try {
-            InputStream is = activity.getAssets().open("level/" + name);
-            int size = is.available();
+        String json;
+        try (InputStream inputStream = activity.getAssets().open(LEVEL_PATH + "/" + name)) {
+            int size = inputStream.available();
             byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
+            long bytes = inputStream.read(buffer);
+            Log.i("LevelLoader", "Loaded file " + name + " size: " +bytes + " bytes");
             json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -55,7 +58,7 @@ public class LevelLoader {
         return GSON.fromJson(json, RawLevel.class);
     }
 
-    public static Level buildLevel(Activity activity, String name){
+    public static Level buildLevel(Activity activity, String name) {
         return new Level(Objects.requireNonNull(load(activity, name)));
     }
 }

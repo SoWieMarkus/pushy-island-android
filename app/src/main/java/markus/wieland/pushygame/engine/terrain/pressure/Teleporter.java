@@ -11,7 +11,6 @@ public class Teleporter extends PressurePlateTerrain {
 
     public Teleporter(Coordinate coordinate, TerrainType terrainType) {
         super(coordinate, terrainType);
-
     }
 
     @Override
@@ -22,6 +21,6 @@ public class Teleporter extends PressurePlateTerrain {
 
     public boolean isTeleportable(Entity entity) {
         if (entity == null) return false;
-        return entity instanceof Pushy && !entity.isTeleported();
+        return entity instanceof Pushy && entity.isNotTeleported();
     }
 }

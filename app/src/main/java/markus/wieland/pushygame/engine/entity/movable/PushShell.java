@@ -12,7 +12,7 @@ public class PushShell extends MovableEntity implements GameFinishEntity {
     public static final int MEDIUM = 1;
     public static final int UNHAPPY = 0;
 
-    private int count = 0;
+    private int count;
 
     public PushShell(Coordinate coordinate, EntityType entityType) {
         super(coordinate, entityType);
@@ -70,6 +70,6 @@ public class PushShell extends MovableEntity implements GameFinishEntity {
 
     @Override
     public boolean check(Game game) {
-        return count == HAPPY;
+        return getCount() == HAPPY;
     }
 }

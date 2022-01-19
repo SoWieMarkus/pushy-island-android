@@ -16,12 +16,14 @@ import markus.wieland.pushygame.ui.game.PushyFieldView;
 public class EntityManager extends Manager<Entity, PushyFieldView<Entity>> {
 
     private Pushy pushy;
-    private CrabMama crabMama;
-    private Pirate pirate;
 
     public EntityManager(Matrix<PushyFieldView<Entity>> pushyFieldViews) {
         super(pushyFieldViews);
         Inventory inventory = new Inventory();
+
+        CrabMama crabMama = null;
+        Pirate pirate = null;
+
         for (PushyFieldView<Entity> pushyFieldView : pushyFieldViews) {
             Entity entity = pushyFieldView.get();
             if (entity instanceof Pushy) pushy = (Pushy) entity;

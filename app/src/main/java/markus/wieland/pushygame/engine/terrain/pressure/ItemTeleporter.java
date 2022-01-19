@@ -10,11 +10,10 @@ public class ItemTeleporter extends Teleporter {
         super(coordinate, terrainType);
     }
 
-
     @Override
     public boolean isTeleportable(Entity entity) {
         if (entity == null) return false;
-        return !entity.isTeleported();
+        return entity.isNotTeleported();
     }
 
 }

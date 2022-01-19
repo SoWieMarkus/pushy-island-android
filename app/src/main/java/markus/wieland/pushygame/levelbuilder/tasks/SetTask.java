@@ -4,7 +4,7 @@ import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 
-public class SetTask extends Task{
+public class SetTask extends Task {
 
     private final Coordinate coordinate;
     private final Type currentTypeOfTheField;

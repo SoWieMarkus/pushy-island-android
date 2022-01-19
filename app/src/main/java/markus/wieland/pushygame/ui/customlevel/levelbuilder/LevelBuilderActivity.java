@@ -10,6 +10,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import markus.wieland.defaultappelements.textinputvalidator.TextInputValidator;
+import markus.wieland.defaultappelements.textinputvalidator.ValidatorResult;
+import markus.wieland.defaultappelements.textinputvalidator.arguments.MaxLengthValidatorArgument;
+import markus.wieland.defaultappelements.textinputvalidator.arguments.MinLengthValidatorArgument;
 import markus.wieland.defaultappelements.uielements.activities.DefaultActivity;
 import markus.wieland.defaultappelements.uielements.adapter.iteractlistener.OnItemClickListener;
 import markus.wieland.pushygame.R;
@@ -22,10 +26,12 @@ import markus.wieland.pushygame.engine.level.Type;
 import markus.wieland.pushygame.levelbuilder.LevelBuilder;
 import markus.wieland.pushygame.persistence.LevelViewModel;
 import markus.wieland.pushygame.ui.dialog.Dialog;
+import markus.wieland.pushygame.ui.dialog.DialogInteractionListener;
+import markus.wieland.pushygame.ui.dialog.TextInputDialog;
 import markus.wieland.pushygame.ui.game.PushyGridAdapter;
 import markus.wieland.pushygame.ui.game.PushyView;
 
-public class LevelBuilderActivity extends DefaultActivity implements OnItemClickListener<Type>, Observer<LevelDisplayItem> {
+public class LevelBuilderActivity extends DefaultActivity implements OnItemClickListener<Type>, Observer<LevelDisplayItem>, DialogInteractionListener {
 
     public static final String KEY_LEVEL_ID = "markus.wieland.pushygame.ui.customlevel.levelbuilder.LEVEL_ID";
     public static final long NO_LEVEL_ID = -1;
@@ -47,6 +53,18 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
 
     private LevelDisplayItem levelDisplayItem;
 
+    private TextInputDialog textInputDialog;
+
+    private TextInputValidator textInputValidator;
+
+    private ImageButton levelBuilderFillMode;
+    private ImageButton levelBuilderUndo;
+    private ImageButton levelBuilderRedo;
+    private ImageButton levelBuilderSmooth;
+    private ImageButton levelBuilderSave;
+    private ImageButton levelBuilderName;
+    private ImageButton levelBuilderReset;
+
     public LevelBuilderActivity() {
         super(R.layout.activity_level_builder);
     }
@@ -64,6 +82,14 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         entityView = findViewById(R.id.game_level_builder_entities);
         recyclerViewTerrain = findViewById(R.id.activity_level_builder_terrain_items);
         recyclerViewEntity = findViewById(R.id.activity_level_builder_entities_items);
+
+        levelBuilderName = findViewById(R.id.activity_level_builder_name);
+        levelBuilderUndo = findViewById(R.id.activity_level_builder_undo);
+        levelBuilderRedo = findViewById(R.id.actvity_level_builder_redo);
+        levelBuilderSmooth = findViewById(R.id.activity_level_builder_smooth);
+        levelBuilderSave = findViewById(R.id.activity_level_builder_export);
+        levelBuilderReset = findViewById(R.id.activity_level_builder_reset);
+        levelBuilderFillMode = findViewById(R.id.activity_level_builder_fill);
     }
 
     @Override
@@ -71,21 +97,31 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         terrainView.setNumColumns(LevelBuilder.LEVEL_WIDTH);
         entityView.setNumColumns(LevelBuilder.LEVEL_WIDTH);
 
-        findViewById(R.id.activity_level_builder_undo).setOnClickListener(view -> levelBuilder.undo());
-        findViewById(R.id.actvity_level_builder_redo).setOnClickListener(view -> levelBuilder.redo());
-        findViewById(R.id.activity_level_builder_reset).setOnClickListener(view -> levelBuilder.reset());
-        findViewById(R.id.activity_game_export).setOnClickListener(this::export);
-        findViewById(R.id.activity_level_builder_fill).setOnClickListener(view -> {
-            levelBuilder.fill();
-            ((ImageButton) findViewById(R.id.activity_level_builder_fill)).setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
-        });
-        findViewById(R.id.activity_level_builder_smooth).setOnClickListener(view -> levelBuilder.smooth());
+        levelBuilderName.setVisibility(View.GONE);
+        levelBuilderName.setOnClickListener(view -> textInputDialog.getDialog().show());
+
+        levelBuilderUndo.setOnClickListener(view -> levelBuilder.undo());
+        levelBuilderRedo.setOnClickListener(view -> levelBuilder.redo());
+        levelBuilderReset.setOnClickListener(view -> levelBuilder.reset());
+        levelBuilderSave.setOnClickListener(this::export);
+        levelBuilderFillMode.setOnClickListener(this::fill);
+        levelBuilderSmooth.setOnClickListener(view -> levelBuilder.smooth());
 
         recyclerViewTerrain.setHasFixedSize(true);
         recyclerViewEntity.setHasFixedSize(true);
         recyclerViewTerrain.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerViewEntity.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
+        textInputDialog = new TextInputDialog(this, null);
+        textInputDialog.setMessage(getString(R.string.level_builder_enter_name))
+                .setOkMessage(getString(R.string.dialog_commit))
+                .setDeclineMessage(getString(R.string.dialog_cancel))
+                .setOkEvent(this);
+    }
+
+    private void fill(View view) {
+        levelBuilder.fill();
+        levelBuilderFillMode.setImageResource(levelBuilder.isFillMode() ? R.drawable.ic_edit : R.drawable.ic_fill);
     }
 
     public void export(View view) {
@@ -94,11 +130,9 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
             return;
         }
 
-        if (!levelBuilder.validate()) {
-            return;
-        }
+        if (!levelBuilder.validate()) return;
 
-        String levelCode = levelBuilder.export();
+        String levelCode = levelBuilder.export("Levelname");
         if (levelId != NO_LEVEL_ID) {
             levelDisplayItem.setFile(levelCode);
             levelDisplayItem.setSolved(false);
@@ -117,6 +151,7 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
         levelId = getIntent().getLongExtra(KEY_LEVEL_ID, NO_LEVEL_ID);
 
         levelBuilder = new LevelBuilder(this);
+
         if (levelId != NO_LEVEL_ID) {
             levelViewModel.getLevel(levelId).observe(this, this);
         }
@@ -126,15 +161,18 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
 
         levelBuilderTerrainAdapter.select(levelBuilder.getSelectedField());
 
-        levelBuilderEntityAdapter.submitList(Type.getListByFirstAppearance(EntityType.class.getEnumConstants(),177));
-        levelBuilderTerrainAdapter.submitList(Type.getListByFirstAppearance(TerrainType.class.getEnumConstants(),177));
-
+        levelBuilderEntityAdapter.submitList(Type.getListByFirstAppearance(EntityType.class.getEnumConstants(), 177));
+        levelBuilderTerrainAdapter.submitList(Type.getListByFirstAppearance(TerrainType.class.getEnumConstants(), 177));
 
         recyclerViewTerrain.setAdapter(levelBuilderTerrainAdapter);
         recyclerViewEntity.setAdapter(levelBuilderEntityAdapter);
 
         terrainView.setAdapter(new PushyGridAdapter<>(levelBuilder.getPushyTerrainViews()));
         entityView.setAdapter(new PushyGridAdapter<>(levelBuilder.getPushyEntityViews()));
+
+        textInputValidator = new TextInputValidator();
+        textInputValidator.add(new MinLengthValidatorArgument(1, getString(R.string.error_level_builder_name_too_short)));
+        textInputValidator.add(new MaxLengthValidatorArgument(20, getString(R.string.error_level_builder_name_too_long)));
 
     }
 
@@ -161,6 +199,18 @@ public class LevelBuilderActivity extends DefaultActivity implements OnItemClick
     @Override
     public void onChanged(LevelDisplayItem levelDisplayItem) {
         this.levelDisplayItem = levelDisplayItem;
+        textInputDialog.setText(levelDisplayItem.getName());
+        levelBuilderName.setVisibility(View.VISIBLE);
         levelBuilder.importLevel(levelDisplayItem.getFile());
+    }
+
+    @Override
+    public void onClick(Dialog dialog) {
+        TextInputDialog textInputDialog = (TextInputDialog) dialog;
+        String levelName = textInputDialog.getText();
+        ValidatorResult result = textInputValidator.validate(levelName);
+        if (result.isValid()) {
+            // TODO
+        }
     }
 }

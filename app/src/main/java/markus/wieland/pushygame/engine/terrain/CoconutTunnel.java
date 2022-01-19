@@ -14,7 +14,6 @@ public class CoconutTunnel extends Sand {
         return true;
     }
 
-
     @Override
     public boolean coconutCanEnterFromTunnel() {
         return true;

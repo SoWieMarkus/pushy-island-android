@@ -8,7 +8,7 @@ import markus.wieland.pushygame.engine.events.StringEvent;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.TerrainType;
 
-public class StringPressurePlate extends PressurePlateTerrain{
+public class StringPressurePlate extends PressurePlateTerrain {
 
     private boolean interacted;
 
