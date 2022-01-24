@@ -54,7 +54,7 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Hut
 
-<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/hut.png" alt="hut">
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/finish.png" alt="finish">
 
 #### Tree
 
@@ -62,7 +62,11 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Stone
 
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/stone.png" alt="stone">
+
 #### Grass
+
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass.png" alt="grass"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_left.png" alt="grass_top_left"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_right.png" alt="grass_top_right"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_left.png" alt="grass_bottom_left"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_right.png" alt="grass_bottom_right">
 
 #### Sand
 
