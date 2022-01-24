@@ -64,6 +64,9 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/stone.png" alt="stone">
 
+- static entity (can't be moved)
+- can be destroyed by an exploding [bom](#Bomb) right next to it
+
 #### Grass
 
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass.png" alt="grass"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_left.png" alt="grass_top_left"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_right.png" alt="grass_top_right"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_left.png" alt="grass_bottom_left"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_right.png" alt="grass_bottom_right">
@@ -134,6 +137,16 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_finish_red.png" alt="red finish"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_finish_blue.png" alt="blue finish"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_finish_green.png" alt="green finish">
+
+#### Bomb
+
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bomb.png" alt="bomb">
+
+- movable entity
+- press the [bomb field](#Bomb-field) pressure plate to explode all bombs of the level
+- can destroy [stones](#Stone)
+
+#### Bomb field
 
 
 
