@@ -58,6 +58,12 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Stone
 
+#### Grass
+
+#### Sand
+
+#### Water
+
 #### Box
 
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/box.png" alt="box"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/box_water.png" alt="box">
