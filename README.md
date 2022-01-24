@@ -98,7 +98,16 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Seed
 
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/seed.png" alt="seed">
+
+- collectible entity
+- after collecting it you can place the seed on a [farm](#farm)
+
 #### Bottle
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle.png" alt="bottle"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle_filled.png" alt="bottle_filled">
+
+- movable entity
+- after collecting it you can place the seed on a [farm](#farm)
 
 #### Waterhole
 
