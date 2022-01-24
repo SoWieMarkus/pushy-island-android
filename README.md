@@ -101,17 +101,24 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/seed.png" alt="seed">
 
 - collectible entity
-- after collecting it you can place the seed on a [farm](#farm)
+- after collecting it you can place the seed on a [farm](#Farm)
 
 #### Bottle
-<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle.png" alt="bottle"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle_filled.png" alt="bottle_filled">
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle.png" alt="bottle"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle_filled.png" alt="bottle_with_water">
 
 - movable entity
-- after collecting it you can place the seed on a [farm](#farm)
+- if it is pushed onto a [water hole](#Water hole) the bottle will be filled with water
+- if you push a bottle with water on a [farm](#Farm) with a [seed](#Seed) the bottle will disappear and a [spring](#Spring) appears
 
-#### Waterhole
+#### Water hole
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_with_water.png" alt="water_hole">
 
 #### Farm
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/farm.png" alt="farm"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/farm_with_seed.png" alt="farm_with_seed">
+
+- if the player moves on this field and has a [seed](#Seed) in his inventory the farm will turn into a farm with a seed
+- if the player then pushes a bottle with water on this farm with a seed a [spring](#Spring) appears
+
 
 #### Spring
 
