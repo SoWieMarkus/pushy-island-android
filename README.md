@@ -80,8 +80,8 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/box.png" alt="box"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/box_water.png" alt="box_water">
 
-The box is a moveable entity. It can be pushed into water. If a box is pushed into the water you can walk on it. You can also push entities on the box in the water. With them you can build bridges to other islands.
-A box on land destroys flying stones shot from a slingshot. 
+The box is a moveable entity. It can be pushed into [water](#water). If a box is pushed into the water you can walk on it. You can also push entities on the box in the water. With them you can build bridges to other islands.
+A box on land destroys [flying stones](#shot) shot from a [slinsghot](#slinsghot). 
 
 #### Sea star
 
