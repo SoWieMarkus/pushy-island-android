@@ -90,6 +90,7 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Sea star
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/seastar.png" alt="sea_star">
+
 - moveable entitiy
 - can be pushed into [water](#water)
 - all sea stars on one islands have to pushed into the water before you can finish the level
