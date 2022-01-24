@@ -89,7 +89,7 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 - A box on land destroys [flying stones](#shot) shot from a [slinsghot](#slinsghot). 
 
 #### Sea star
-<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sea_star.png" alt="sea_star">
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/seastar.png" alt="sea_star">
 - moveable entitiy
 - can be pushed into [water](#water)
 - all sea stars on one islands have to pushed into the water before you can finish the level
