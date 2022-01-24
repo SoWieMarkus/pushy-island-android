@@ -15,11 +15,28 @@ There are three main height level.
 
 You can't walk on water, except you have a *boat*. You can jump from grass to sand, but not from sand to grass. For that you need a spring. Its the same with movable entities. You can push down a entity from grass to sand, but not the other way around.
 
+#### Hut
+
+#### Tree
+
+#### Stone
+
 #### Box
 
-The box is a moveable entity. 
+The box is a moveable entity. It can be pushed into water. If a box is pushed into the water you can walk on it. You can also push entities on the box in the water. With them you can build bridges to other islands.
+A box on land destroys flying stones shot from a slingshot. 
 
-A box on land destroys flying stones shot from a slingshot.
+#### Sea star
+
+#### Seed
+
+#### Bottle
+
+#### Waterhole
+
+#### Farm
+
+#### Spring
 
 
 
