@@ -66,11 +66,11 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Grass
 
-<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass.png" alt="grass"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_left.png" alt="grass_top_left"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_right.png" alt="grass_top_right"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_left.png" alt="grass_bottom_left"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_right.png" alt="grass_bottom_right">
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass.png" alt="grass"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_left.png" alt="grass_top_left"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_top_right.png" alt="grass_top_right"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_left.png" alt="grass_bottom_left"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/grass_bottom_right.png" alt="grass_bottom_right">
 
 #### Sand
 
-<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand.png" alt="sand"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_top_left.png" alt="sand_top_left"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_top_right.png" alt="sand_top_right"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_bottom_left.png" alt="sand_bottom_left"><img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_bottom_right.png" alt="sand_bottom_right">
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand.png" alt="sand"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_top_left.png" alt="sand_top_left"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_top_right.png" alt="sand_top_right"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_bottom_left.png" alt="sand_bottom_left"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_bottom_right.png" alt="sand_bottom_right">
 
 #### Water
 
@@ -88,6 +88,7 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 - A box on land destroys [flying stones](#shot) shot from a [slinsghot](#slinsghot). 
 
 #### Sea star
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/box.png" alt="box">
 
 #### Seed
 
