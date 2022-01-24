@@ -120,6 +120,13 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 #### Spring
 
+#### Statue
+
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_red.png" alt="red"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_blue.png" alt="blue"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_green.png" alt="green">
+
+
+#### Statue finish
+
 
 
 
