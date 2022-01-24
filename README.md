@@ -114,7 +114,7 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_with_water.png" alt="water_hole">
 
 #### Farm
-<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/farm.png" alt="farm"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/farm_with_seed.png" alt="farm_with_seed">
+<img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/sand_with_farm.png" alt="farm"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/farm_with_seed.png" alt="farm_with_seed">
 
 - if the player moves on this field and has a [seed](#Seed) in his inventory the farm will turn into a farm with a seed
 - if the player then pushes a bottle with water on this farm with a seed a [spring](#Spring) appears
