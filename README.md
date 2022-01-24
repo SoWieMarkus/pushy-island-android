@@ -107,7 +107,7 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle.png" alt="bottle"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/bottle_with_water.png" alt="bottle_with_water">
 
 - movable entity
-- if it is pushed onto a [water hole](#Water_hole) the bottle will be filled with water
+- if it is pushed onto a [water hole](#Water-hole) the bottle will be filled with water
 - if you push a bottle with water on a [farm](#Farm) with a [seed](#Seed) the bottle will disappear and a [spring](#Spring) appears
 
 #### Water hole
