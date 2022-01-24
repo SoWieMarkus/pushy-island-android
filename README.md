@@ -4,6 +4,10 @@ Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">
 
 ## Features
 
+### New entities not available in the original game
+
+I implemented all entities from the original game. Additionally to that I added some new entities. They are mostly logic gates. The functionallity is explained down below in the tutorial.
+
 ### Editor
 
 With the editor you can create your own level. It supports these functionalities:
