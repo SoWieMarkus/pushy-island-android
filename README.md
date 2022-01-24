@@ -85,7 +85,6 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 - If a box is pushed into the water you can walk on it
 - You can also push entities on the box in the water
 - With them you can build bridges to other islands
-- can execute pressure plate events
 - A box on land destroys [flying stones](#shot) shot from a [slinsghot](#slinsghot). 
 
 #### Sea star
@@ -94,7 +93,6 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 - moveable entitiy
 - can be pushed into [water](#water)
 - all sea stars on one islands have to pushed into the water before you can finish the level
-- can execute pressure plate events
 
 #### Seed
 
