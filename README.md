@@ -2,6 +2,17 @@
 
 Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">Lernwerkstatt</a>. No original code was used.
 
+## Features
+
+### Editor
+
+With the editor you can create your own level. It supports these functionalities:
+
+- undo / redo
+- fill
+- erase
+- auto smoothing corners
+
 ## How to play the game
 
 The main goal of the game is to reach the hut on the island. For that you use the arrow keys. But to enter the hut you have to solve all tasks on the island.
@@ -40,14 +51,4 @@ A box on land destroys flying stones shot from a slingshot.
 
 
 
-## Features
-
-### Editor
-
-With the editor you can create your own level. It supports these functionalities:
-
-- undo / redo
-- fill
-- erase
-- auto smoothing corners
 
