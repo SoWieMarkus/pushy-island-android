@@ -126,6 +126,9 @@ You can't walk on water, except you have a *boat*. You can jump from grass to sa
 
 <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_red.png" alt="red"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_blue.png" alt="blue"> <img src="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/res/drawable/statue_green.png" alt="green">
 
+- moveable entity
+- statues with the same color are linked. If you move one all other statues of this color will be moved as well (if nothing is blocking their way)
+- all statues have to be pushed on a [statue finish](#Statue-finish) with the same color to finish the level
 
 #### Statue finish
 
