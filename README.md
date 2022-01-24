@@ -32,10 +32,11 @@ In the version 1 the whole string can be interpreted as a byte string in hexadec
 
 The first byte is the version number. So usually it should be "01", which is equal to 1 in decimal. Afterwards there are 12 (height) * 20 (width) * 6 bits (be careful __not__ bytes) representing the terrain, followed by 12 * 20 * 6 bits representing the entities. So you have to decode the byte string in that range to a binary string and split it where the index mod 6 is 0. Those 6 bits represent a terrain type or entity type (depending on the position ofc.). You can see the "value" of a type <a href="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/java/markus/wieland/pushygame/engine/level/TerrainType.java">here (terrain)a#</a> and <a href="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/java/markus/wieland/pushygame/engine/level/EntityType.java">here (entities)</a>. After 20 tiles a new line begins. So the order is like this:
 
-
+```javascript
 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
 
 21 22 23 ...
+```
 
 
 
