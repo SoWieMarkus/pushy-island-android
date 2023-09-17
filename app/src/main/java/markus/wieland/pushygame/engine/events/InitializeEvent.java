@@ -56,6 +56,7 @@ public class InitializeEvent extends Event {
 
         StringEvent.setIsStringActive(false);
         SpikeEvent.setExecutedThisRound(false);
+        CoconutTunnelFinishEvent.setExecuted(false);
         ShowInvisibleWaterBlocksEvent.setExecutedThisRound(false);
         CountEvent.setCurrentCount(1);
     }
