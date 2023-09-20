@@ -35,10 +35,7 @@ public class ShotEvent extends Event {
             Entity entity = game.getEntityManager().getObject(nextCoordinate);
 
             if (entity instanceof Leaf) direction = ((Leaf) entity).getDirection();
-            if (entity instanceof Shell) {
-                ((Shell) entity).setOpen(true);
-                game.getEntityManager().invalidate(entity);
-            }
+
 
             nextCoordinate = nextCoordinate.getNextCoordinate(direction);
             if ((entity != null && entity.destroysFlyingStone()) || terrain.destroysFlyingStone()) {
@@ -47,6 +44,12 @@ public class ShotEvent extends Event {
                     game.getEntityManager().setObject(nextCoordinate, TileMapBuilder.build(EntityType.COCONUT, nextCoordinate));
                 break;
             }
+
+            if (entity instanceof Shell) {
+                ((Shell) entity).setOpen(true);
+                game.getEntityManager().invalidate(entity);
+            }
+
             count++;
         }
 

@@ -47,4 +47,9 @@ public class Shell extends MovableEntity {
     public EntityType getType() {
         return EntityType.SHELL;
     }
+
+    @Override
+    public boolean destroysFlyingStone() {
+        return isOpen;
+    }
 }
