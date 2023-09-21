@@ -2,6 +2,7 @@ package markus.wieland.pushygame.engine.entity.movable;
 
 import markus.wieland.pushygame.R;
 import markus.wieland.pushygame.engine.Game;
+import markus.wieland.pushygame.engine.entity.Entity;
 import markus.wieland.pushygame.engine.entity.collectible.Pearl;
 import markus.wieland.pushygame.engine.helper.Coordinate;
 import markus.wieland.pushygame.engine.level.EntityType;
@@ -45,6 +46,7 @@ public class Shell extends MovableEntity {
 
     @Override
     public EntityType getType() {
+        if (isOpen && hasPearl) return EntityType.SHELL_OPEN_WITH_PEARL;
         return EntityType.SHELL;
     }
 
