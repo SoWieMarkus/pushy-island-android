@@ -13,7 +13,7 @@ Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">
 
 ### New entities not available in the original game
 
-I implemented all entities from the original game. Additionally to that I added some new entities. They are mostly logic gates (AND / OR / XOR). The functionallity is explained down below in the tutorial.
+I implemented all entities from the original game. Additionally to that I added some new entities. They are mostly logic gates (AND / OR / XOR).
 
 ### Campaign
 
