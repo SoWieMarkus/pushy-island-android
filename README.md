@@ -1,6 +1,7 @@
 # Pushy-Island
 
-Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">Lernwerkstatt</a>. No original code was used.
+> [!NOTE]  
+> Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">Lernwerkstatt</a>. No original code was used.
 
 ## Screenshots
 
