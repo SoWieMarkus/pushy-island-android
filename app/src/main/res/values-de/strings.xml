@@ -1,18 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PushyGame</string>
-    <string name="dialog_yes">Ja</string>
-    <string name="dialog_no">Nein</string>
-    <string name="dialog_changes_without_save">Änderungen verwerfen?</string>
-    <string name="dialog_sure_delete">Sicher, dass du dieses Level löschen möchtest?</string>
-    <string name="dialog_cancel">Abbrechen</string>
-    <string name="level_builder_invalid_code">Ungültiger code</string>
-    <string name="dialog_enter_code">Gib einen Level Code ein</string>
-    <string name="main_campaign">Kampagne</string>
-    <string name="main_custom_level">Eigene Level</string>
-    <string name="level_builder_enter_name">Gib einen Levelnamen ein:</string>
-    <string name="dialog_commit">Speichern</string>
-    <string name="error_level_builder_name_too_long">Der Name ist zu lang! (20 Zeichen max.)</string>
-    <string name="error_level_builder_name_too_short">Der Name ist zu kurz! (3 Zeichen min.)</string>
-    <string name="level_builder_missing_validation">Level ungelöst</string>
+    <string name="menu_campaign">Kampagne</string>
+    <string name="menu_custom_levels">Eigene Level</string>
+    <string name="menu_custom_levels_locked">Löse Level 1 zum Freischalten</string>
+    <string name="menu_debug_solve_all">Debug: alle lösen</string>
+
+    <string name="back">Zurück</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="delete">Löschen</string>
+    <string name="discard">Verwerfen</string>
+    <string name="save">Speichern</string>
+    <string name="ok">OK</string>
+
+    <string name="campaign_title">Kampagne</string>
+    <string name="campaign_progress">Gelöst: %1$d / %2$d</string>
+    <string name="campaign_locked">Gesperrt</string>
+
+    <string name="custom_title">Eigene Level</string>
+    <string name="custom_empty">Noch keine eigenen Level. Bau eins oder importiere einen Code von Freunden!</string>
+    <string name="custom_new">Neues Level</string>
+    <string name="custom_import">Code importieren</string>
+    <string name="custom_import_hint">PUSHY2:…</string>
+    <string name="custom_import_invalid">Das ist kein gültiger Level-Code.</string>
+    <string name="custom_play">Spielen</string>
+    <string name="custom_edit">Bearbeiten</string>
+    <string name="custom_share">Teilen</string>
+    <string name="custom_share_locked">Löse das Level selbst, bevor du es teilst.</string>
+    <string name="custom_delete_confirm">\"%1$s\" löschen?</string>
+    <string name="custom_solved">Gelöst</string>
+    <string name="custom_unsolved">Noch nicht gelöst</string>
+
+    <string name="game_restart">Neustart</string>
+    <plurals name="game_moves">
+        <item quantity="one">%1$d Zug</item>
+        <item quantity="other">%1$d Züge</item>
+    </plurals>
+    <string name="game_solved_title">Gelöst!</string>
+    <plurals name="game_solved_text">
+        <item quantity="one">%1$s in %2$d Zug gelöst.</item>
+        <item quantity="other">%1$s in %2$d Zügen gelöst.</item>
+    </plurals>
+    <string name="game_next">Nächstes Level</string>
+    <string name="game_up">Hoch</string>
+    <string name="game_down">Runter</string>
+    <string name="game_left">Links</string>
+    <string name="game_right">Rechts</string>
+
+    <string name="editor_untitled">Ohne Namen</string>
+    <string name="editor_rename">Levelname</string>
+    <string name="editor_pencil">Stift</string>
+    <string name="editor_fill">Füllen</string>
+    <string name="editor_erase">Radieren</string>
+    <string name="editor_undo">Rückgängig</string>
+    <string name="editor_redo">Wiederholen</string>
+    <string name="editor_smooth">Ecken glätten</string>
+    <string name="editor_reset">Zurücksetzen</string>
+    <string name="editor_discard_changes">Änderungen verwerfen?</string>
+    <string name="editor_missing_pushy">Platziere zuerst Pushy.</string>
+    <string name="editor_missing_finish">Platziere zuerst ein Ziel.</string>
+    <string name="editor_invalid_name">Gib dem Level einen Namen (1–20 Zeichen).</string>
+    <string name="editor_too_many">Zu viele %1$s-Felder (max. %2$d).</string>
 </resources>

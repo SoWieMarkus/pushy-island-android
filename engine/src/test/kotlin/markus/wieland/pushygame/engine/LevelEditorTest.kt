@@ -34,6 +34,17 @@ class LevelEditorTest {
     }
 
     @Test
+    fun aStrokeIsOneUndoStep() {
+        val editor = editor()
+        editor.apply(Coordinate(0, 0), TerrainType.SAND, EditMode.PENCIL)
+        editor.apply(Coordinate(1, 0), TerrainType.SAND, EditMode.PENCIL)
+        editor.apply(Coordinate(1, 1), TerrainType.SAND, EditMode.PENCIL, continueStroke = true)
+        editor.apply(Coordinate(1, 2), TerrainType.SAND, EditMode.PENCIL, continueStroke = true)
+        editor.undo()
+        assertEquals(1, editor.level.terrain.count { it == TerrainType.SAND })
+    }
+
+    @Test
     fun singletonsMoveInsteadOfDuplicating() {
         val editor = editor()
         editor.place(Coordinate(0, 0), EntityType.PUSHY)

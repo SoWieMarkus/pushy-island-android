@@ -8,13 +8,13 @@ plugins {
 android {
     namespace = "markus.wieland.pushygame"
     compileSdk {
-        version = release(36)
+        version = release(37)
     }
 
     defaultConfig {
         applicationId = "markus.wieland.pushygame"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 2
         versionName = "2.0"
     }

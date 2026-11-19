@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="markus.wieland.pushygame">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:name=".PushyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PushyGame">
-        <activity
-            android:name=".ui.customlevel.CustomLevelActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ui.customlevel.levelbuilder.LevelBuilderActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".ui.game.GameActivity"
-            android:screenOrientation="landscape" />
+        android:theme="@style/Theme.PushyIsland">
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.campaign.CampaignActivity"
-            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -29,8 +29,23 @@ class LevelEditor(initial: LevelData) {
     val canUndo get() = undoStack.isNotEmpty()
     val canRedo get() = redoStack.isNotEmpty()
 
-    /** Applies [tile] at [c] the way the editor's [mode] says. */
-    fun apply(c: Coordinate, tile: TileType, mode: EditMode) = when (mode) {
+    /** When set, the next edits extend the previous undo step (one drag stroke = one undo step). */
+    private var mergeNext = false
+
+    /**
+     * Applies [tile] at [c] the way the editor's [mode] says. Pass [continueStroke] for every cell after
+     * the first one of a drag so the whole stroke is undone at once.
+     */
+    fun apply(c: Coordinate, tile: TileType, mode: EditMode, continueStroke: Boolean = false) {
+        mergeNext = continueStroke
+        try {
+            applyNow(c, tile, mode)
+        } finally {
+            mergeNext = false
+        }
+    }
+
+    private fun applyNow(c: Coordinate, tile: TileType, mode: EditMode) = when (mode) {
         EditMode.ERASE -> erase(c)
         EditMode.FILL -> if (tile.maxInstances != null || tile.isLogic) place(c, tile) else fill(c, tile)
         EditMode.PENCIL -> place(c, tile)
@@ -138,8 +153,10 @@ class LevelEditor(initial: LevelData) {
 
     private fun commit(next: LevelData) {
         if (next == level) return
-        undoStack.addLast(level)
-        if (undoStack.size > HISTORY_LIMIT) undoStack.removeFirst()
+        if (!mergeNext || undoStack.isEmpty()) {
+            undoStack.addLast(level)
+            if (undoStack.size > HISTORY_LIMIT) undoStack.removeFirst()
+        }
         redoStack.clear()
         level = next
     }
