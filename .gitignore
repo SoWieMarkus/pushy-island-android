@@ -8,6 +8,6 @@ local.properties
 .externalNativeBuild
 .cxx
 
-# IDE and tool settings (regenerated locally)
+# IDE settings (regenerated locally) and personal Claude Code settings
 .idea/
-.claude/
+.claude/settings.local.json
