@@ -3,42 +3,27 @@ package markus.wieland.pushygame.ui.editor
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Redo
-import androidx.compose.material.icons.automirrored.filled.Undo
-import androidx.compose.material.icons.automirrored.outlined.Backspace
-import androidx.compose.material.icons.filled.AutoFixHigh
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.DeleteSweep
-import androidx.compose.material.icons.filled.DriveFileRenameOutline
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.FormatColorFill
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconToggleButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,15 +32,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.FilterQuality
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import markus.wieland.pushygame.R
@@ -69,7 +53,16 @@ import markus.wieland.pushygame.engine.model.TileType
 import markus.wieland.pushygame.engine.previewSprites
 import markus.wieland.pushygame.render.BoardCanvas
 import markus.wieland.pushygame.render.LocalSprites
+import markus.wieland.pushygame.ui.Glyphs
+import markus.wieland.pushygame.ui.PixelDialog
+import markus.wieland.pushygame.ui.PixelDialogText
+import markus.wieland.pushygame.ui.PixelIconButton
+import markus.wieland.pushygame.ui.PixelTextField
 import markus.wieland.pushygame.ui.PushyColors
+import markus.wieland.pushygame.ui.pixelFrame
+import markus.wieland.pushygame.ui.pixelPanel
+import markus.wieland.pushygame.ui.pixelSlot
+import markus.wieland.pushygame.ui.pixelTextStyle
 
 @Composable
 fun EditorScreen(levelId: Long, onDone: () -> Unit) {
@@ -105,10 +98,19 @@ fun EditorScreen(levelId: Long, onDone: () -> Unit) {
                     val (terrain, entities) = remember(ui.level) { ui.level.previewSprites() }
                     BoardCanvas(sprites, terrain, entities, onCellPressed = viewModel::press)
                 }
-                Palette(ui.selected, viewModel::select, Modifier.width(232.dp).fillMaxHeight())
+                Palette(
+                    ui.selected,
+                    viewModel::select,
+                    Modifier.padding(top = 8.dp, end = 8.dp, bottom = 8.dp).width(232.dp).fillMaxHeight(),
+                )
             }
         }
-        SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter))
+        SnackbarHost(snackbar, Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp)) { data ->
+            PixelDialogText(
+                data.visuals.message,
+                Modifier.pixelPanel(seams = false).padding(horizontal = 18.dp, vertical = 14.dp),
+            )
+        }
     }
 
     if (renaming) {
@@ -122,14 +124,12 @@ fun EditorScreen(levelId: Long, onDone: () -> Unit) {
         )
     }
     if (confirmDiscard) {
-        AlertDialog(
+        PixelDialog(
             onDismissRequest = { confirmDiscard = false },
-            text = { Text(stringResource(R.string.editor_discard_changes)) },
-            confirmButton = { TextButton(onClick = onDone) { Text(stringResource(R.string.discard)) } },
-            dismissButton = {
-                TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.cancel)) }
-            },
-        )
+            confirmText = stringResource(R.string.discard),
+            onConfirm = onDone,
+            dismissText = stringResource(R.string.cancel),
+        ) { PixelDialogText(stringResource(R.string.editor_discard_changes)) }
     }
 }
 
@@ -144,67 +144,86 @@ private fun problemMessage(problem: LevelProblem): String = when (problem) {
 @Composable
 private fun Toolbar(ui: EditorUi, onBack: () -> Unit, onRename: () -> Unit, viewModel: EditorViewModel) {
     Row(
-        Modifier.background(PushyColors.Panel).padding(horizontal = 4.dp),
+        Modifier
+            .padding(start = 8.dp, end = 8.dp, top = 8.dp)
+            .pixelPanel(seams = false)
+            .padding(horizontal = 10.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) }
-        Text(
-            ui.level.name.ifBlank { stringResource(R.string.editor_untitled) },
-            style = MaterialTheme.typography.titleMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.weight(1f).clickable(onClick = onRename).padding(8.dp),
-        )
-        IconButton(onClick = onRename) { Icon(Icons.Filled.DriveFileRenameOutline, stringResource(R.string.editor_rename)) }
+        @Composable
+        fun Tool(glyph: List<String>, label: Int, onClick: () -> Unit, enabled: Boolean = true, selected: Boolean = false) {
+            PixelIconButton(glyph, stringResource(label), onClick, ToolButton, enabled = enabled, selected = selected)
+        }
 
         @Composable
-        fun ModeButton(mode: EditMode, icon: ImageVector, label: Int) {
-            IconToggleButton(checked = ui.mode == mode, onCheckedChange = { viewModel.setMode(mode) }) {
-                Icon(icon, stringResource(label), tint = if (ui.mode == mode) PushyColors.Sand else Color.White)
-            }
+        fun Gap() = Spacer(Modifier.width(12.dp))
+
+        Tool(Glyphs.Back, R.string.back, onBack)
+        Gap()
+        Text(
+            ui.level.name.ifBlank { stringResource(R.string.editor_untitled) },
+            style = pixelTextStyle(12.sp, shadow = 4f),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f).clickable(onClick = onRename).padding(vertical = 8.dp),
+        )
+        Tool(Glyphs.Rename, R.string.editor_rename, onRename)
+        Gap()
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Tool(Glyphs.Edit, R.string.editor_pencil, { viewModel.setMode(EditMode.PENCIL) }, selected = ui.mode == EditMode.PENCIL)
+            Tool(Glyphs.Fill, R.string.editor_fill, { viewModel.setMode(EditMode.FILL) }, selected = ui.mode == EditMode.FILL)
+            Tool(Glyphs.Erase, R.string.editor_erase, { viewModel.setMode(EditMode.ERASE) }, selected = ui.mode == EditMode.ERASE)
         }
-        ModeButton(EditMode.PENCIL, Icons.Filled.Edit, R.string.editor_pencil)
-        ModeButton(EditMode.FILL, Icons.Filled.FormatColorFill, R.string.editor_fill)
-        ModeButton(EditMode.ERASE, Icons.AutoMirrored.Outlined.Backspace, R.string.editor_erase)
-        IconButton(onClick = viewModel::undo, enabled = ui.canUndo) {
-            Icon(Icons.AutoMirrored.Filled.Undo, stringResource(R.string.editor_undo))
+        Gap()
+        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+            Tool(Glyphs.Undo, R.string.editor_undo, viewModel::undo, enabled = ui.canUndo)
+            Tool(Glyphs.Redo, R.string.editor_redo, viewModel::redo, enabled = ui.canRedo)
+            Tool(Glyphs.Smooth, R.string.editor_smooth, viewModel::smooth)
+            Tool(Glyphs.Delete, R.string.editor_reset, viewModel::reset)
         }
-        IconButton(onClick = viewModel::redo, enabled = ui.canRedo) {
-            Icon(Icons.AutoMirrored.Filled.Redo, stringResource(R.string.editor_redo))
-        }
-        IconButton(onClick = viewModel::smooth) { Icon(Icons.Filled.AutoFixHigh, stringResource(R.string.editor_smooth)) }
-        IconButton(onClick = viewModel::reset) { Icon(Icons.Filled.DeleteSweep, stringResource(R.string.editor_reset)) }
-        IconButton(onClick = viewModel::save) {
-            Icon(Icons.Filled.Check, stringResource(R.string.save), tint = PushyColors.Palm)
-        }
+        Gap()
+        Tool(Glyphs.Check, R.string.save, viewModel::save)
     }
 }
+
+private val ToolButton = Modifier.size(40.dp)
 
 @Composable
 private fun Palette(selected: TileType, onSelect: (TileType) -> Unit, modifier: Modifier = Modifier) {
     val sprites = LocalSprites.current
-    val tiles: List<TileType> = TerrainType.entries + EntityType.entries
+    val sections = listOf<Pair<Int, List<TileType>>>(
+        R.string.editor_terrain to TerrainType.entries,
+        R.string.editor_objects to EntityType.entries,
+    )
     LazyVerticalGrid(
         columns = GridCells.Fixed(5),
-        modifier = modifier.background(PushyColors.Panel).padding(6.dp),
+        modifier = modifier.pixelPanel(seams = false).padding(horizontal = 8.dp, vertical = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        items(tiles, key = { "${it.layer}-${it.id}" }) { tile ->
-            val isSelected = tile == selected
-            Box(
-                Modifier
-                    .padding(2.dp)
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(if (tile.layer == TileType.Layer.ENTITY) PushyColors.Sand.copy(alpha = 0.35f) else Color.Transparent)
-                    .border(if (isSelected) 3.dp else 0.dp, if (isSelected) PushyColors.Coral else Color.Transparent, RoundedCornerShape(4.dp))
-                    .clickable { onSelect(tile) },
-            ) {
-                Image(
-                    bitmap = sprites[tile.sprite],
-                    contentDescription = tile.id,
-                    filterQuality = FilterQuality.None,
-                    modifier = Modifier.fillMaxSize().padding(3.dp),
+        for ((title, tiles) in sections) {
+            item(key = title, span = { GridItemSpan(maxLineSpan) }) {
+                Text(
+                    stringResource(title),
+                    style = pixelTextStyle(9.sp, PushyColors.Sand, shadow = 3f),
+                    modifier = Modifier.padding(start = 2.dp, top = 4.dp, bottom = 2.dp),
                 )
+            }
+            items(tiles, key = { "${it.layer}-${it.id}" }) { tile ->
+                Box(
+                    Modifier
+                        .aspectRatio(1f)
+                        .pixelSlot()
+                        .then(if (tile == selected) Modifier.pixelFrame(PushyColors.Sand) else Modifier)
+                        .clickable(role = Role.Button) { onSelect(tile) },
+                ) {
+                    Image(
+                        bitmap = sprites[tile.sprite],
+                        contentDescription = tile.id,
+                        filterQuality = FilterQuality.None,
+                        modifier = Modifier.fillMaxSize().padding(5.dp),
+                    )
+                }
             }
         }
     }
@@ -214,19 +233,20 @@ private fun Palette(selected: TileType, onSelect: (TileType) -> Unit, modifier: 
 private fun RenameDialog(initial: String, onDismiss: () -> Unit, onConfirm: (String) -> Unit) {
     var name by remember { mutableStateOf(initial) }
     val valid = name.isNotBlank() && name.trim().length <= LevelData.MAX_NAME_LENGTH
-    AlertDialog(
+    PixelDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.editor_rename)) },
-        text = {
-            OutlinedTextField(
-                value = name,
-                onValueChange = { name = it.take(LevelData.MAX_NAME_LENGTH) },
-                singleLine = true,
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                supportingText = { Text("${name.length} / ${LevelData.MAX_NAME_LENGTH}") },
-            )
-        },
-        confirmButton = { TextButton(onClick = { onConfirm(name) }, enabled = valid) { Text(stringResource(R.string.ok)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
-    )
+        title = stringResource(R.string.editor_rename),
+        confirmText = stringResource(R.string.ok),
+        onConfirm = { onConfirm(name) },
+        confirmEnabled = valid,
+        dismissText = stringResource(R.string.cancel),
+    ) {
+        PixelTextField(
+            value = name,
+            onValueChange = { name = it.take(LevelData.MAX_NAME_LENGTH) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { if (valid) onConfirm(name) }),
+            supportingText = "${name.length} / ${LevelData.MAX_NAME_LENGTH}",
+        )
+    }
 }

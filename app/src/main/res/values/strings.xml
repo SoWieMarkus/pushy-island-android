@@ -60,6 +60,8 @@
     <string name="editor_redo">Redo</string>
     <string name="editor_smooth">Smooth corners</string>
     <string name="editor_reset">Reset</string>
+    <string name="editor_terrain">Terrain</string>
+    <string name="editor_objects">Objects</string>
     <string name="editor_discard_changes">Discard your changes?</string>
     <string name="editor_missing_pushy">Place Pushy first.</string>
     <string name="editor_missing_finish">Place a finish first.</string>

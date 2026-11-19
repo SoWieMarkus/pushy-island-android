@@ -16,11 +16,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -50,9 +47,12 @@ import markus.wieland.pushygame.ui.Glyphs
 import markus.wieland.pushygame.ui.IslandBackground
 import markus.wieland.pushygame.ui.LevelCard
 import markus.wieland.pushygame.ui.LevelPreview
+import markus.wieland.pushygame.ui.PixelDialog
+import markus.wieland.pushygame.ui.PixelDialogText
 import markus.wieland.pushygame.ui.PixelGlyph
 import markus.wieland.pushygame.ui.PixelIconButton
 import markus.wieland.pushygame.ui.PixelPlank
+import markus.wieland.pushygame.ui.PixelTextField
 import markus.wieland.pushygame.ui.ScreenHeader
 import markus.wieland.pushygame.ui.SolvedBadge
 import markus.wieland.pushygame.ui.pixelTextStyle
@@ -129,21 +129,15 @@ fun CustomLevelsScreen(onBack: () -> Unit, onPlay: (Long) -> Unit, onEdit: (Long
         )
     }
     deleting?.let { level ->
-        AlertDialog(
+        PixelDialog(
             onDismissRequest = { deleting = null },
-            text = { Text(stringResource(R.string.custom_delete_confirm, level.name)) },
-            confirmButton = {
-                TextButton(onClick = {
-                    scope.launch { repository.delete(level.id) }
-                    deleting = null
-                }) { Text(stringResource(R.string.delete)) }
+            confirmText = stringResource(R.string.delete),
+            onConfirm = {
+                scope.launch { repository.delete(level.id) }
+                deleting = null
             },
-            dismissButton = {
-                TextButton(onClick = {
-                    deleting = null
-                }) { Text(stringResource(R.string.cancel)) }
-            },
-        )
+            dismissText = stringResource(R.string.cancel),
+        ) { PixelDialogText(stringResource(R.string.custom_delete_confirm, level.name)) }
     }
 }
 
@@ -217,30 +211,25 @@ private fun ImportDialog(onDismiss: () -> Unit, onImport: suspend (String) -> Bo
     var code by remember { mutableStateOf("") }
     var invalid by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    AlertDialog(
+    PixelDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.custom_import)) },
-        text = {
-            OutlinedTextField(
-                value = code,
-                onValueChange = {
-                    code = it
-                    invalid = false
-                },
-                placeholder = { Text(stringResource(R.string.custom_import_hint)) },
-                isError = invalid,
-                supportingText = { if (invalid) Text(stringResource(R.string.custom_import_invalid)) },
-                maxLines = 4,
-            )
-        },
-        confirmButton = {
-            TextButton(
-                onClick = { scope.launch { invalid = !onImport(code) } },
-                enabled = code.isNotBlank()
-            ) {
-                Text(stringResource(R.string.ok))
-            }
-        },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) } },
-    )
+        title = stringResource(R.string.custom_import),
+        confirmText = stringResource(R.string.ok),
+        onConfirm = { scope.launch { invalid = !onImport(code) } },
+        confirmEnabled = code.isNotBlank(),
+        dismissText = stringResource(R.string.cancel),
+    ) {
+        PixelTextField(
+            value = code,
+            onValueChange = {
+                code = it
+                invalid = false
+            },
+            placeholder = stringResource(R.string.custom_import_hint),
+            isError = invalid,
+            supportingText = if (invalid) stringResource(R.string.custom_import_invalid) else null,
+            singleLine = false,
+            maxLines = 4,
+        )
+    }
 }

@@ -93,9 +93,25 @@ def mix(a, b, t):
 
 
 class Canvas:
-    def __init__(self, fill=None):
+    """A SIZE×SIZE tile, optionally with a transparent [margin] around it.
+
+    Drawing coordinates always refer to the tile: (0, 0) is the tile's top-left pixel, and with a
+    margin, negative coordinates or ones ≥ SIZE paint into the overhang. The renderer draws such
+    sprites centred on their cell so the overhang spills into the neighbouring cells.
+    """
+
+    def __init__(self, fill=None, margin=0):
         color = P[fill] if isinstance(fill, str) else fill
-        self.p = [[color or TRANSPARENT for _ in range(SIZE)] for _ in range(SIZE)]
+        self.m = margin
+        self.size = SIZE + 2 * margin
+        self.p = [[color or TRANSPARENT for _ in range(self.size)] for _ in range(self.size)]
+
+    def _blank(self):
+        return Canvas(margin=self.m)
+
+    def _span(self):
+        """Tile coordinates covering the whole canvas, margin included."""
+        return range(-self.m, SIZE + self.m)
 
     # -- basics ------------------------------------------------------------------------------
     @staticmethod
@@ -103,7 +119,9 @@ class Canvas:
         return P[color] if isinstance(color, str) else color
 
     def px(self, x, y, color):
-        if 0 <= x < SIZE and 0 <= y < SIZE and color is not None:
+        x += self.m
+        y += self.m
+        if 0 <= x < self.size and 0 <= y < self.size and color is not None:
             c = self._c(color)
             if c[3] == 255 or c[3] == 0:
                 self.p[y][x] = c
@@ -121,7 +139,7 @@ class Canvas:
                     )
 
     def get(self, x, y):
-        return self.p[y][x]
+        return self.p[y + self.m][x + self.m]
 
     def rect(self, x0, y0, x1, y1, color):
         for y in range(y0, y1 + 1):
@@ -141,8 +159,8 @@ class Canvas:
 
         shade=(light, dark) adds a top-left highlight and bottom-right shadow.
         """
-        for y in range(SIZE):
-            for x in range(SIZE):
+        for y in self._span():
+            for x in self._span():
                 dx = (x + 0.5 - cx) / rx
                 dy = (y + 0.5 - cy) / ry
                 if dx * dx + dy * dy <= 1:
@@ -160,8 +178,8 @@ class Canvas:
         self.ellipse(cx, cy, r, r, color, shade)
 
     def ring(self, cx, cy, r, color, width=1.0):
-        for y in range(SIZE):
-            for x in range(SIZE):
+        for y in self._span():
+            for x in self._span():
                 d = math.hypot(x + 0.5 - cx, y + 0.5 - cy)
                 if r - width <= d <= r:
                     self.px(x, y, color)
@@ -183,33 +201,34 @@ class Canvas:
 
     # -- whole-canvas helpers ----------------------------------------------------------------
     def copy(self):
-        c = Canvas()
+        c = self._blank()
         c.p = [row[:] for row in self.p]
         return c
 
     def over(self, other, dx=0, dy=0):
         """Draws [other] on top of this canvas."""
-        for y in range(SIZE):
-            for x in range(SIZE):
+        for y in range(other.size):
+            for x in range(other.size):
                 c = other.p[y][x]
                 if c[3]:
-                    self.px(x + dx, y + dy, c)
+                    self.px(x - other.m + dx, y - other.m + dy, c)
         return self
 
     def flip_h(self):
-        c = Canvas()
+        c = self._blank()
         c.p = [row[::-1] for row in self.p]
         return c
 
     def flip_v(self):
-        c = Canvas()
+        c = self._blank()
         c.p = [row[:] for row in self.p[::-1]]
         return c
 
     def rot90(self):
         """Rotates clockwise."""
-        c = Canvas()
-        c.p = [[self.p[SIZE - 1 - x][y] for x in range(SIZE)] for y in range(SIZE)]
+        c = self._blank()
+        n = self.size
+        c.p = [[self.p[n - 1 - x][y] for x in range(n)] for y in range(n)]
         return c
 
     def outline(self, color="outline", diagonal=False):
@@ -219,13 +238,14 @@ class Canvas:
         neighbours = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         if diagonal:
             neighbours += [(1, 1), (-1, -1), (1, -1), (-1, 1)]
-        for y in range(SIZE):
-            for x in range(SIZE):
+        n = self.size
+        for y in range(n):
+            for x in range(n):
                 if self.p[y][x][3] > 100:
                     continue
                 for dx, dy in neighbours:
                     nx, ny = x + dx, y + dy
-                    if 0 <= nx < SIZE and 0 <= ny < SIZE and self.p[ny][nx][3] > 200 and self.p[ny][nx] != col:
+                    if 0 <= nx < n and 0 <= ny < n and self.p[ny][nx][3] > 200 and self.p[ny][nx] != col:
                         out[y][x] = col
                         break
         self.p = out
@@ -233,18 +253,19 @@ class Canvas:
 
     def shadow(self, cx=8, cy=13.5, rx=5.5, ry=2):
         """Soft drop shadow drawn *below* existing pixels."""
-        under = Canvas()
+        under = self._blank()
         under.ellipse(cx, cy, rx, ry, P["shadow"])
         under.over(self)
         self.p = under.p
         return self
 
     def shift(self, dx, dy):
-        c = Canvas()
-        for y in range(SIZE):
-            for x in range(SIZE):
+        c = self._blank()
+        n = self.size
+        for y in range(n):
+            for x in range(n):
                 nx, ny = x + dx, y + dy
-                if 0 <= nx < SIZE and 0 <= ny < SIZE:
+                if 0 <= nx < n and 0 <= ny < n:
                     c.p[ny][nx] = self.p[y][x]
         return c
 

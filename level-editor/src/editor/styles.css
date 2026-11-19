@@ -163,6 +163,19 @@ main {
   pointer-events: none;
 }
 
+/* Entities sit above every cell's ground so overhangs aren't hidden by the next cell's terrain. */
+.cell img.entity {
+  z-index: 1;
+}
+
+.cell img.overhang {
+  inset: auto;
+  left: calc(50% - var(--overhang) * 50%);
+  top: calc(50% - var(--overhang) * 50%);
+  width: calc(var(--overhang) * 100%);
+  height: calc(var(--overhang) * 100%);
+}
+
 aside,
 footer section {
   background: var(--night);

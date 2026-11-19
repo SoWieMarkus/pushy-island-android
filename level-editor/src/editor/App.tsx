@@ -12,7 +12,7 @@ import { decodeShareCode, encodeShareCode, isShareCode } from '../format/shareCo
 import { ENTITY_TILES, TERRAIN_TILES, requireTile, type Tile } from '../format/tiles.ts'
 import { decodeV1Code, looksLikeV1Code } from '../format/v1.ts'
 import * as model from './model.ts'
-import { entitySprites, spriteUrl, terrainSprites } from './sprites.ts'
+import { entitySprites, markOverhang, spriteUrl, terrainSprites } from './sprites.ts'
 
 const DRAFT_KEY = 'pushy-island-editor-draft'
 
@@ -179,7 +179,14 @@ export function App() {
       cells.push(
         <div className="cell" key={`${row},${col}`}>
           {sprites.map((key) => (
-            <img key={key} src={spriteUrl(key.split(':')[1]!)} alt="" draggable={false} />
+            <img
+              key={key}
+              className={key.startsWith('entity:') ? 'entity' : undefined}
+              src={spriteUrl(key.split(':')[1]!)}
+              alt=""
+              draggable={false}
+              onLoad={markOverhang}
+            />
           ))}
         </div>,
       )

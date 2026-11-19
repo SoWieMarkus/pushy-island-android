@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -49,6 +50,14 @@ internal val Wood = PlankColors(
     highlight = Color(0xFFE2B37A),
     lip = Color(0xFF62391F),
     text = Color(0xFFFBF7EF),
+)
+/** Darker plank for a toggle that is switched on (it also stays pressed in). */
+internal val WoodSelected = PlankColors(
+    face = Color(0xFF9A6438),
+    grain = Color(0xFF7E4F2C),
+    highlight = Color(0xFFC08A52),
+    lip = Color(0xFF4A2A16),
+    text = Color(0xFFF9E7BD),
 )
 internal val Stone = PlankColors(
     face = Color(0xFF8F909C),
@@ -99,23 +108,29 @@ fun PixelIconButton(
     modifier: Modifier = Modifier,
     pixel: Dp = 2.dp,
     enabled: Boolean = true,
+    selected: Boolean = false,
 ) {
     PixelPlank(
         onClick,
         modifier.semantics { this.contentDescription = contentDescription },
         enabled = enabled,
+        selected = selected,
         pixel = pixel,
         nails = false,
         sidePadding = 0.dp,
     ) { colors -> PixelGlyph(glyph, pixel = pixel, color = colors.text) }
 }
 
-/** Shared plank button body; [content] is laid out centred on the plank face. */
+/**
+ * Shared plank button body; [content] is laid out centred on the plank face. A [selected] plank
+ * (an active toggle) stays sunk in and is drawn darker.
+ */
 @Composable
 fun PixelPlank(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    selected: Boolean = false,
     pixel: Dp = Px,
     nails: Boolean = true,
     sidePadding: Dp = pixel * 6,
@@ -123,8 +138,12 @@ fun PixelPlank(
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val sink = if (pressed && enabled) PRESS else 0
-    val colors = if (enabled) Wood else Stone
+    val sink = if ((pressed || selected) && enabled) PRESS else 0
+    val colors = when {
+        !enabled -> Stone
+        selected -> WoodSelected
+        else -> Wood
+    }
     Row(
         modifier
             .clickable(interaction, indication = null, enabled = enabled, role = Role.Button, onClick = onClick)
@@ -188,6 +207,12 @@ object Glyphs {
     val Check = listOf("......#", ".....##", "#...##.", "##.##..", ".###...", "..#....")
     val Import = listOf("...#...", "...#...", ".#.#.#.", "..###..", "#..#..#", "#.....#", "#######")
     val Add = listOf("..#..", "..#..", "#####", "..#..", "..#..")
+    val Rename = listOf("..#..", ".#.#.", "#...#", "#####", "#...#", "#...#")
+    val Fill = listOf("...#...", "..###..", ".#####.", "#######", "#######", ".#####.", "..###..")
+    val Erase = listOf("....##.", "...####", "..#####", ".#.###.", "#...#..", ".#.#...", "..#....")
+    val Undo = listOf("..#....", ".##....", "######.", ".##...#", "..#...#", ".....#.", "..###..")
+    val Redo = Undo.map { it.reversed() }
+    val Smooth = listOf("...#...", "...#...", "..###..", "#######", "..###..", "...#...", "...#...")
 }
 
 /** Rotates ASCII art a quarter turn counter-clockwise (an up arrow becomes a left arrow). */
@@ -217,6 +242,20 @@ fun Modifier.pixelPanel(pixel: Dp = Px, seams: Boolean = true): Modifier = drawB
         y += plank
     }
     drawRect(Wood.highlight, Offset(2 * p, 2 * p), Size(w - 4 * p, p))
+}
+
+/** Notched one-pixel frame drawn over the content, e.g. around a selected or invalid slot. */
+fun Modifier.pixelFrame(color: Color, pixel: Dp = 2.dp): Modifier = drawWithContent {
+    drawContent()
+    val p = pixel.toPx()
+    val w = size.width
+    val h = size.height
+    // Edges without the corner pixels, then one pixel inside each corner to round it off.
+    drawRect(color, Offset(p, 0f), Size(w - 2 * p, p))
+    drawRect(color, Offset(p, h - p), Size(w - 2 * p, p))
+    drawRect(color, Offset(0f, p), Size(p, h - 2 * p))
+    drawRect(color, Offset(w - p, p), Size(p, h - 2 * p))
+    for (x in listOf(p, w - 2 * p)) for (y in listOf(p, h - 2 * p)) drawRect(color, Offset(x, y), Size(p, p))
 }
 
 /** Recessed slot (inventory items) carved into the panel. */

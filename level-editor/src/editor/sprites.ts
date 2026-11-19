@@ -6,6 +6,18 @@ export function spriteUrl(sprite: string): string {
   return `${import.meta.env.BASE_URL}sprites/${sprite}.png`
 }
 
+/** Sprites are drawn for a 16×16 cell; bigger ones (a palm's crown, a crab's claws) spill over the neighbours. */
+export const TILE_PIXELS = 16
+
+export function markOverhang(event: { currentTarget: HTMLImageElement }) {
+  const img = event.currentTarget
+  if (img.naturalWidth > TILE_PIXELS) {
+    // Same pixel scale as the cell, centred on it.
+    img.classList.add('overhang')
+    img.style.setProperty('--overhang', String(img.naturalWidth / TILE_PIXELS))
+  }
+}
+
 function portFacing(level: LevelData, row: number, col: number, side: (typeof SIDES)[number]) {
   const terrain = requireTile(level.terrain[row]![col]!)
   const entityId = level.entities[row]![col]

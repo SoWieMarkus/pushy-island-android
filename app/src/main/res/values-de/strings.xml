@@ -59,6 +59,8 @@
     <string name="editor_redo">Wiederholen</string>
     <string name="editor_smooth">Ecken glätten</string>
     <string name="editor_reset">Zurücksetzen</string>
+    <string name="editor_terrain">Gelände</string>
+    <string name="editor_objects">Objekte</string>
     <string name="editor_discard_changes">Änderungen verwerfen?</string>
     <string name="editor_missing_pushy">Platziere zuerst Pushy.</string>
     <string name="editor_missing_finish">Platziere zuerst ein Ziel.</string>

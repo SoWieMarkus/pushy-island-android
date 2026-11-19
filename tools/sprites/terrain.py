@@ -59,44 +59,178 @@ def water_frames():
     return [water(f) for f in range(WATER_FRAMES)]
 
 
-# --- edges ---------------------------------------------------------------------------------
+# --- automatic transitions ------------------------------------------------------------------
+# Transparent overlays the renderer lays over the terrain wherever two materials meet, so plain
+# sand next to plain water gets a shoreline instead of a hard square edge. They live in
+# sprites/edges/ and are named <kind>_<low>_<high>_<where>:
+#   edge   – on the lower cell, the higher material lies towards <where> (n/e/s/w); a "_cut_<ends>"
+#            variant stops short at those ends because the neighbour's corner there is rounded off
+#   lip    – on the higher cell, the lower material lies towards <where>
+#   bite   – on the higher cell, both sides of corner <where> (nw/ne/se/sw) are lower: rounds it off
+# Inside corners stay square: the two straight edges meeting there already read as one bend.
 
-def corner_mask(corner, radius=7):
-    """True for pixels *outside* the rounded [corner] ("top_left", …)."""
-    cx = radius if "left" in corner else SIZE - radius
-    cy = radius if "top" in corner else SIZE - radius
-
-    def outside(x, y):
-        in_x = x < cx if "left" in corner else x >= cx
-        in_y = y < cy if "top" in corner else y >= cy
-        return in_x and in_y and math.hypot(x + 0.5 - cx, y + 0.5 - cy) > radius
-
-    def edge(x, y):
-        in_x = x < cx if "left" in corner else x >= cx
-        in_y = y < cy if "top" in corner else y >= cy
-        return in_x and in_y and radius - 1.3 < math.hypot(x + 0.5 - cx, y + 0.5 - cy) <= radius
-
-    return outside, edge
+EDGE_FRAMES = 4
+ROTATE = {"n": 0, "e": 1, "s": 2, "w": 3, "nw": 0, "ne": 1, "se": 2, "sw": 3}
 
 
-def rounded(top, bottom, corner, edge_color, rim=None):
-    """[top] tile with one rounded corner showing [bottom] underneath."""
-    out, edge = corner_mask(corner)
-    c = top.copy()
+def rotated(c, where):
+    for _ in range(ROTATE[where]):
+        c = c.rot90()
+    return c
+
+
+def alpha(colour, a):
+    return P[colour][:3] + (a,)
+
+
+def foam_edge(frame):
+    """Surf along the top of a water cell, gently lapping over [EDGE_FRAMES] frames."""
+    c = Canvas()
+    for x in range(SIZE):
+        gap = noise(x, frame, 21) < 0.18
+        c.px(x, 0, "water_light" if gap else "foam")
+        if (x + frame * 3) % 6 < 3:
+            c.px(x, 1, alpha("foam", 170))
+        else:
+            c.px(x, 1, alpha("water_light", 150))
+        if (x + frame * 2) % 4 != 0:
+            c.px(x, 2, alpha("water_light", 90))
+    return c
+
+
+def land_lip(high):
+    """The very edge of the land facing north into lower ground."""
+    c = Canvas()
+    for x in range(SIZE):
+        if high == "sand":
+            c.px(x, 0, alpha("wet_sand", 220))
+            if noise(x, 1, 5) < 0.5:
+                c.px(x, 1, alpha("wet_sand", 110))
+        else:
+            c.px(x, 0, "grass_edge")
+            if noise(x, 2, 7) < 0.35:
+                c.px(x, 1, "grass_dark")
+    return c
+
+
+# Grass hills cast a drop shadow down and to the right (light from the top-left). It is worked
+# out from the actual outline of the grass, rounded corners included, so straight edges, curves
+# and inside corners all join up. Masks are functions (x, y) -> bool in the coordinates of the
+# cell being drawn; they may look into the neighbouring cells (negative or ≥ SIZE).
+SOFT_SHADOW = mix(P["sand"], P["sand_shadow"], 0.45)
+SIDE_OFFSET = {"n": (0, -SIZE), "e": (SIZE, 0), "s": (0, SIZE), "w": (-SIZE, 0)}
+
+
+def rounded_out(x, y, ox, oy, corner, radius):
+    """True if (x, y) lies in [corner] of the cell at (ox, oy) but outside its rounding."""
+    cx = ox + (radius if "w" in corner else SIZE - radius)
+    cy = oy + (radius if "n" in corner else SIZE - radius)
+    in_box = (x < cx if "w" in corner else x >= cx) and (y < cy if "n" in corner else y >= cy)
+    return in_box and math.hypot(x + 0.5 - cx, y + 0.5 - cy) > radius
+
+
+def cell_mask(ox=0, oy=0, rounded=(), radius=None):
+    """The cell at offset (ox, oy) filled with grass, with the [rounded] corners cut off."""
+    radius = radius or BITE_RADIUS
+
+    def mask(x, y):
+        if not (ox <= x < ox + SIZE and oy <= y < oy + SIZE):
+            return False
+        return not any(rounded_out(x, y, ox, oy, corner, radius) for corner in rounded)
+    return mask
+
+
+def drop_shadow(c, grass):
+    """Paints the shadow of the [grass] mask onto the non-grass pixels of [c]."""
     for y in range(SIZE):
         for x in range(SIZE):
-            if out(x, y):
-                c.p[y][x] = bottom.p[y][x]
-            elif edge(x, y):
-                c.px(x, y, edge_color)
-    if rim:
-        # one pixel of foam / shadow just outside the edge
-        for y in range(SIZE):
-            for x in range(SIZE):
-                if out(x, y) and any(0 <= x + dx < SIZE and 0 <= y + dy < SIZE and not out(x + dx, y + dy)
-                                     for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]):
-                    c.px(x, y, rim)
+            if grass(x, y):
+                continue
+            if grass(x, y - 1):  # looking at the hill's face
+                c.px(x, y, "grass_edge")
+            elif grass(x, y - 2) or grass(x - 1, y) or grass(x - 1, y - 1):
+                c.px(x, y, "sand_shadow")
+            elif grass(x, y - 3) or grass(x - 1, y - 2) or grass(x - 2, y) or grass(x - 2, y - 1):
+                c.px(x, y, SOFT_SHADOW)
     return c
+
+
+def ledge_edge(where, cut=""):
+    """Sand next to a grass cell that lies towards [where]; that cell's corners at the [cut] ends are rounded."""
+    side = {"n": "s", "s": "n", "e": "w", "w": "e"}[where]
+    rounded = [side + e if where in "ns" else e + side for e in cut]
+    return drop_shadow(Canvas(), cell_mask(*SIDE_OFFSET[where], rounded=rounded))
+
+
+BITE_RADIUS = 6
+
+
+def bite(low, high, where, radius=BITE_RADIUS):
+    """Corner [where] (nw/ne/se/sw) of a [high] cell rounded off into [low].
+
+    The rim follows the curve the same way the straight edges do: surf on the water, and below a
+    grass hill the same face and shadow as [ledge_edge] on the sides facing away from the light.
+    """
+    base = {"water": Canvas("water"), "sand": sand()}[low]
+    c = Canvas()
+    cx = radius if "w" in where else SIZE - radius
+    cy = radius if "n" in where else SIZE - radius
+
+    def beyond(x, y):
+        """How far pixel (x, y) lies outside the rounded corner (≤ 0: still land)."""
+        in_box = (x < cx if "w" in where else x >= cx) and (y < cy if "n" in where else y >= cy)
+        return math.hypot(x + 0.5 - cx, y + 0.5 - cy) - radius if in_box else -1
+
+    for y in range(SIZE):
+        for x in range(SIZE):
+            if beyond(x, y) > 0:
+                c.p[y][x] = base.p[y][x]
+    if low == "sand":
+        drop_shadow(c, cell_mask(rounded=[where], radius=radius))
+    for y in range(SIZE):
+        for x in range(SIZE):
+            d = beyond(x, y)
+            if d <= 0:
+                if any(beyond(x + dx, y + dy) > 0 for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]):
+                    c.px(x, y, "wet_sand" if high == "sand" else "grass_edge")
+                continue
+            if low == "water":
+                if d < 1.2:
+                    c.px(x, y, "foam")
+                elif d < 2.2:
+                    c.px(x, y, alpha("foam", 150))
+    return c
+
+
+def cut_ends(strip, ends, radius=BITE_RADIUS):
+    """[strip] without the stretches next to a rounded-off corner at its [ends] (n/e/s/w)."""
+    c = strip.copy()
+    for y in range(SIZE):
+        for x in range(SIZE):
+            if ("w" in ends and x < radius) or ("e" in ends and x >= SIZE - radius) or                     ("n" in ends and y < radius) or ("s" in ends and y >= SIZE - radius):
+                c.p[y][x] = (0, 0, 0, 0)
+    return c
+
+
+def edges():
+    out = {}
+    for low, high in [("water", "sand"), ("water", "grass"), ("sand", "grass")]:
+        for where in ["n", "e", "s", "w"]:
+            name = f"edge_{low}_{high}_{where}"
+            # Where the neighbour's corner is rounded off, its bite carries the rim round the
+            # curve and the straight strip has to follow it.
+            ends = "ew" if where in "ns" else "ns"
+            for cut in ["", ends[0], ends[1], ends]:
+                if low == "water":
+                    frames = [cut_ends(rotated(foam_edge(f), where), cut) for f in range(EDGE_FRAMES)]
+                else:
+                    frames = [ledge_edge(where, cut)]
+                if any(px[3] for f in frames for row in f.p for px in row):
+                    out[name + (f"_cut_{cut}" if cut else "")] = frames
+            out[f"lip_{low}_{high}_{where}"] = [rotated(land_lip(high), where)]
+        for where in ["nw", "ne", "se", "sw"]:
+            out[f"bite_{low}_{high}_{where}"] = [bite(low, high, where)]
+    return out
 
 
 # --- decorated ground ----------------------------------------------------------------------
@@ -130,8 +264,11 @@ def build():
     out["water"] = w
 
     for corner in ["top_left", "top_right", "bottom_left", "bottom_right"]:
-        out[f"sand_{corner}"] = [rounded(s, wf, corner, "sand_light", rim="foam") for wf in w]
-        out[f"grass_{corner}"] = [rounded(g, s, corner, "grass_edge", rim="sand_shadow")]
+        # Same rounding the renderer applies automatically (it draws these as plain sand/grass plus a
+        # "bite" overlay); the PNGs are what the editors show in their palettes.
+        where = {"top_left": "nw", "top_right": "ne", "bottom_right": "se", "bottom_left": "sw"}[corner]
+        out[f"sand_{corner}"] = [s.copy().over(bite("water", "sand", where))]
+        out[f"grass_{corner}"] = [g.copy().over(bite("sand", "grass", where))]
 
     # Sunken box: a soggy crate under the surface.
     def box_water(frame):

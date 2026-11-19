@@ -22,8 +22,8 @@ def star_polygon(cx, cy, outer, inner, points=5, rotation=-math.pi / 2):
 
 
 def fill_polygon(c, verts, color):
-    for y in range(SIZE):
-        for x in range(SIZE):
+    for y in c._span():
+        for x in c._span():
             px, py = x + 0.5, y + 0.5
             inside = False
             j = len(verts) - 1
@@ -145,8 +145,13 @@ def shot():
 
 # --- nature --------------------------------------------------------------------------------
 
+# How far trees stand back from the bottom of their cell, so they never sit on a hill's edge;
+# the crown reaches into the cell above instead.
+TREE_LIFT = 3
+
+
 def tree():
-    c = Canvas()
+    c = Canvas(margin=OVERHANG)
     c.art([
         "................",
         "...LLL....LLL...",
@@ -164,8 +169,8 @@ def tree():
         ".......tTT......",
         "......ttTTT.....",
         "................",
-    ], {"L": "leaf", "G": "leaf_light", "c": "wood_dark", "t": "wood_light", "T": "wood_dark"})
-    return finish(c, cx=8.5, cy=14.5, rx=4, ry=1.3)
+    ], {"L": "leaf", "G": "leaf_light", "c": "wood_dark", "t": "wood_light", "T": "wood_dark"}, 0, -TREE_LIFT)
+    return finish(c, cx=8.5, cy=14.5 - TREE_LIFT, rx=4, ry=1.3)
 
 
 def leaf_up():
@@ -231,8 +236,12 @@ def sea_star():
 
 # --- creatures -----------------------------------------------------------------------------
 
+# Sprites that are allowed to spill this many pixels into the neighbouring cells.
+OVERHANG = 4
+
+
 def crab(big, mood, frame=0):
-    c = Canvas()
+    c = Canvas(margin=OVERHANG if big else 0)
     rx, ry, cy = (6, 4, 10) if big else (4, 2.8, 10.5)
     # legs
     for i in range(3):
@@ -312,27 +321,52 @@ def pirate():
 
 
 def pirate_hut():
+    """Weathered plank shack with a patched sail-cloth roof, a porthole and a Jolly Roger.
+
+    No overhang: the pirate always stands right above it, so the flag has to stay in the cell.
+    """
     c = Canvas()
+    # Plank walls: vertical boards with darker seams and a few nail heads.
+    c.rect(2, 8, 13, 14, "wood")
+    for x in (4, 8, 11):
+        c.rect(x, 8, x, 14, "wood_dark")
+    c.rect(2, 8, 2, 14, "wood_light")
+    c.rect(2, 8, 13, 8, "wood_dark")
+    c.rect(2, 14, 13, 14, "wood_dark")
+    # Door with a rounded top and a brass knob.
     c.art([
-        "................",
-        ".......yy.......",
-        "......yYYy......",
-        ".....yYYlYy.....",
-        "....yYlYYYYy....",
-        "...yYYYYYlYYy...",
-        "..yYlYYYYYYYYy..",
-        ".yyyyyyyyyyyyyy.",
-        "..wWWWWWWWWWWw..",
-        "..wWWddWWWWWWw..",
-        "..wWWddWWggWWw..",
-        "..wWWddWWggWWw..",
-        "..wWWddWWWWWWw..",
-        "..wwwddwwwwwww..",
-        "................",
-        "................",
-    ], {"y": "yellow_dark", "Y": "yellow", "l": "yellow_light", "W": "wood", "w": "wood_dark",
-        "d": "black", "g": "cyan_light"})
-    return finish(c, cy=14.3, rx=6.5, ry=1.2)
+        ".kk.",
+        "kkkk",
+        "kkkk",
+        "kkkk",
+        "kkkk",
+        "kkkk",
+    ], {"k": "outline"}, 4, 9)
+    c.px(6, 12, "yellow")
+    # Porthole: brass ring around glass.
+    c.art([
+        ".yy.",
+        "yggy",
+        "ygcy",
+        ".yy.",
+    ], {"y": "yellow_dark", "g": "cyan_light", "c": "glass_dark"}, 9, 9)
+    # Roof of red sail cloth with one patch, on a dark eave beam.
+    c.art([
+        "...rrrrrrrr...",
+        "..rLLLRRRRRr..",
+        ".rRRRRRPPRRRr.",
+        "rRRRRRRpPRRRRr",
+        "dddddddddddddd",
+    ], {"r": "red_dark", "R": "red", "L": "red_light", "p": "sand_dark", "P": "sand_light",
+        "d": "wood_dark"}, 1, 3)
+    # Flag pole on the roof with a little Jolly Roger.
+    c.rect(3, 0, 3, 2, "wood_dark")
+    c.art([
+        "kkkkk",
+        "kkwkk",
+        "kwkwk",
+    ], {"k": "black", "w": "white"}, 4, 0)
+    return finish(c, cy=14.6, rx=6.8, ry=1.2)
 
 
 def statue(colour):
@@ -601,7 +635,7 @@ def tower(lit, frame=0):
 
 def finish_hut(frame):
     """Goal hut with an open archway at the bottom: Pushy can only walk in from the south."""
-    c = Canvas()
+    c = Canvas(margin=OVERHANG)
     c.art([
         "................",
         "................",
@@ -622,8 +656,8 @@ def finish_hut(frame):
     ], {"y": "yellow_dark", "Y": "yellow", "l": "yellow_light", "d": "wood_dark", "W": "wood",
         "h": "wood_light", "w": "wood_dark", "k": "outline", "s": "sand_shadow"})
     # Pole with a little checkered pennant on the roof.
-    c.rect(7, 0, 7, 2, "wood_dark")
-    for y in range(0, 2):
+    c.rect(7, -3, 7, 2, "wood_dark")
+    for y in range(-3, -1):
         for x in range(8, 12):
             wave = round(0.6 * math.sin((x - 8) / 1.5 + frame * 2 * math.pi / 3)) if x > 8 else 0
             c.px(x, y + wave, "white" if (x + y) % 2 == 0 else "red")

@@ -22,6 +22,7 @@ import markus.wieland.pushygame.engine.GameEvent
 import markus.wieland.pushygame.engine.GameState
 import markus.wieland.pushygame.engine.model.Coordinate
 import markus.wieland.pushygame.engine.model.Direction
+import markus.wieland.pushygame.engine.model.Grid
 import markus.wieland.pushygame.engine.model.Sprite
 import markus.wieland.pushygame.engine.terrain.Terrain
 import kotlin.math.PI
@@ -48,9 +49,6 @@ private const val CELEBRATE_MS = 900f
 /** How long the foam a boat leaves behind stays on the water. */
 private const val WAKE_MS = 1400f
 
-/** Sprites are 16×16 pixel art; effects snap to the same pixel grid. */
-private const val SPRITE_PIXELS = 16
-
 /** Confetti colours for the level-finished burst. */
 private val CONFETTI = listOf(Color(0xFFFFD54A), Color(0xFFFF6B6B), Color(0xFF6BD6FF), Color(0xFF8BE07A), Color(0xFFFFFFFF))
 
@@ -72,6 +70,7 @@ private val PUSHY_SPRITES = setOf(Sprite.PUSHY, Sprite.PUSHY_EAST, Sprite.PUSHY_
 @Composable
 fun AnimatedBoard(state: GameState, sprites: SpriteSheet, modifier: Modifier = Modifier, startInset: Dp = 0.dp, endInset: Dp = 0.dp) {
     val animator = remember { BoardAnimator(state) }
+    val edges = remember { TerrainEdgesCache() }
     LaunchedEffect(state) { animator.offer(state) }
     LaunchedEffect(animator) {
         while (true) withFrameMillis { animator.tick(it, keepTicking = sprites.hasAnimations) }
@@ -87,15 +86,19 @@ fun AnimatedBoard(state: GameState, sprites: SpriteSheet, modifier: Modifier = M
         val usable = size.width - start - endInset.toPx()
         val side = floor(min(usable / cols, size.height / rows)).coerceAtLeast(1f)
         val cell = Size(side, side)
-        val wakes = { scope: DrawScope -> animator.wakes.forEach { scope.drawWake(it, now, cell) } }
+        // Drawn over the terrain, below everything else: soft shorelines first, then boat wakes.
+        val overTerrain = { scope: DrawScope, terrain: Grid<List<Sprite>> ->
+            edges.of(terrain).draw(scope, sprites, now, cell)
+            animator.wakes.forEach { scope.drawWake(it, now, cell) }
+        }
         val origin = Offset((start + (usable - side * cols) / 2).roundToInt().toFloat(), ((size.height - side * rows) / 2).roundToInt().toFloat())
         drawSea(sprites, now, cell, origin, cols, rows)
         translate(origin.x, origin.y) {
             val transition = animator.transition
             if (transition == null) {
-                drawStill(animator.shown, sprites, now, cell, wakes)
+                drawStill(animator.shown, sprites, now, cell, overTerrain)
             } else {
-                transition.draw(this, sprites, now, animator.elapsed(now), cell, wakes)
+                transition.draw(this, sprites, now, animator.elapsed(now), cell, overTerrain)
             }
         }
     }
@@ -174,9 +177,17 @@ private class BoardAnimator(initial: GameState) {
     }
 }
 
-private fun DrawScope.drawStill(state: GameState, sprites: SpriteSheet, now: Long, cell: Size, overTerrain: (DrawScope) -> Unit) {
-    for (c in state.terrain.coordinates) drawCell(sprites, state.terrain[c], c.col.toFloat(), c.row.toFloat(), cell, now + terrainPhase(c))
-    overTerrain(this)
+private fun DrawScope.drawStill(
+    state: GameState,
+    sprites: SpriteSheet,
+    now: Long,
+    cell: Size,
+    overTerrain: (DrawScope, Grid<List<Sprite>>) -> Unit,
+) {
+    for (c in state.terrain.coordinates) {
+        drawCell(sprites, TerrainEdges.displayed(state.terrain[c]), c.col.toFloat(), c.row.toFloat(), cell, now + terrainPhase(c))
+    }
+    overTerrain(this, state.terrain)
     for (c in state.entities.coordinates) {
         // Once the level is finished Pushy is inside the hut.
         val layers = if (state.isFinished) state.entities[c].filterNot { it in PUSHY_SPRITES } else state.entities[c]
@@ -188,7 +199,7 @@ private fun DrawScope.drawStill(state: GameState, sprites: SpriteSheet, now: Lon
 private fun phase(c: Coordinate) = (c.row * 7L + c.col * 13L) * 53L
 
 /** Water tiles each get their own timing so the sea doesn't pulse as one grid. */
-private fun terrainPhase(c: Coordinate): Long {
+internal fun terrainPhase(c: Coordinate): Long {
     var h = (c.row * 73856093) xor (c.col * 19349663)
     h = h xor (h ushr 13)
     return ((h * 1274126177) ushr 1).toLong() % 5000L
@@ -259,7 +270,7 @@ private fun DrawScope.drawWake(wake: Wake, now: Long, cell: Size) {
     val boat = wake.boat
     if (boat.cells == 0) return
     val t = wake.elapsed(now)
-    val pixel = cell.width / SPRITE_PIXELS
+    val pixel = cell.width / TILE_PIXELS
     val dirX = (boat.end.col - boat.start.col).toFloat() / boat.cells
     val dirY = (boat.end.row - boat.start.row).toFloat() / boat.cells
     fun dot(x: Float, y: Float, color: Color, size: Float = pixel) {
@@ -436,7 +447,14 @@ private class Transition(val from: GameState, val to: GameState) {
         ).maxOrNull() ?: 0f
     }
 
-    fun draw(scope: DrawScope, sprites: SpriteSheet, now: Long, t: Float, cell: Size, overTerrain: (DrawScope) -> Unit) = with(scope) {
+    fun draw(
+        scope: DrawScope,
+        sprites: SpriteSheet,
+        now: Long,
+        t: Float,
+        cell: Size,
+        overTerrain: (DrawScope, Grid<List<Sprite>>) -> Unit,
+    ) = with(scope) {
 
         // A little screen shake while a bomb goes off.
         val shake = if (blasts.isEmpty()) Offset.Zero else {
@@ -448,15 +466,15 @@ private class Transition(val from: GameState, val to: GameState) {
         translate(shake.x, shake.y) {
             // Terrain: the new layout, with old tiles fading out where something changed.
             for (c in to.terrain.coordinates) {
-                val layers = terrainUnder[c] ?: to.terrain[c]
+                val layers = TerrainEdges.displayed(terrainUnder[c] ?: to.terrain[c])
                 val tNow = now + terrainPhase(c)
                 drawCell(sprites, layers, c.col.toFloat(), c.row.toFloat(), cell, tNow)
                 crossfades[c]?.let { old ->
                     val p = progress(t, arrival[c] ?: 0f, CROSSFADE_MS)
-                    drawCell(sprites, old, c.col.toFloat(), c.row.toFloat(), cell, tNow, alpha = 1f - p)
+                    drawCell(sprites, TerrainEdges.displayed(old), c.col.toFloat(), c.row.toFloat(), cell, tNow, alpha = 1f - p)
                 }
             }
-            overTerrain(this)
+            overTerrain(this, to.terrain)
             for (slide in terrainSlides) {
                 val pos = slide.at(t)
                 drawCell(sprites, slide.sprites, pos.x, pos.y, cell, now)
