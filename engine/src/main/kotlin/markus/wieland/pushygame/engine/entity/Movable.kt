@@ -1,6 +1,7 @@
 package markus.wieland.pushygame.engine.entity
 
 import markus.wieland.pushygame.engine.Game
+import markus.wieland.pushygame.engine.GameEvent
 import markus.wieland.pushygame.engine.model.Coordinate
 import markus.wieland.pushygame.engine.model.Direction
 import markus.wieland.pushygame.engine.model.EntityType
@@ -122,6 +123,7 @@ class Box(type: EntityType, c: Coordinate) : Movable(type, c) {
     override fun executeMove(next: Coordinate, game: Game) {
         super.executeMove(next, game)
         if (game.board.terrain(this) is Water) {
+            game.consumed(this)
             game.board.setTerrain(coordinate, TerrainType.BOX_WATER)
             game.board.removeEntity(this)
         }
@@ -133,7 +135,10 @@ class SeaStar(type: EntityType, c: Coordinate) : Movable(type, c), GoalEntity {
 
     override fun executeMove(next: Coordinate, game: Game) {
         super.executeMove(next, game)
-        if (game.board.terrain(this).elevation == Terrain.ELEVATION_WATER) game.board.removeEntity(this)
+        if (game.board.terrain(this).elevation == Terrain.ELEVATION_WATER) {
+            game.consumed(this)
+            game.board.removeEntity(this)
+        }
     }
 
     /** Sea stars have to go back into the water. */
@@ -150,6 +155,7 @@ class Bottle(type: EntityType, c: Coordinate) : Movable(type, c) {
         super.executeMove(next, game)
         val terrain = game.board.terrain(this)
         if (terrain is Farm && terrain.hasSeed && isFilled) {
+            game.consumed(this)
             game.board.setTerrain(coordinate, TerrainType.SPRING)
             game.board.removeEntity(this)
         }
@@ -173,6 +179,7 @@ class Statue(type: EntityType, c: Coordinate) : Movable(type, c), GoalEntity {
 
 class Bomb(type: EntityType, c: Coordinate) : Movable(type, c) {
     fun explode(game: Game) {
+        game.emit(GameEvent.Exploded(coordinate))
         for (direction in Direction.entries) {
             val entity = game.board.entityAt(coordinate.next(direction))
             if (entity != null && entity.isExplodable) game.board.removeEntity(entity)
@@ -201,6 +208,7 @@ class Coconut(type: EntityType, c: Coordinate) : Movable(type, c) {
             val terrain = game.board.terrain(this)
             if (terrain is Hole && !terrain.isFilled) {
                 terrain.fill()
+                game.consumed(this)
                 game.board.removeEntity(this)
                 break
             }
@@ -324,7 +332,10 @@ class Octopus(type: EntityType, c: Coordinate) : Movable(type, c), GoalEntity {
 
     override fun executeMove(next: Coordinate, game: Game) {
         super.executeMove(next, game)
-        if (game.board.terrain(this) is WaterHole) game.board.removeEntity(this)
+        if (game.board.terrain(this) is WaterHole) {
+            game.consumed(this)
+            game.board.removeEntity(this)
+        }
     }
 
     override fun isSatisfied(game: Game) = false

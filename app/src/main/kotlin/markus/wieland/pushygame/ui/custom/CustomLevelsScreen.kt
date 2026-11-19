@@ -11,21 +11,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -45,6 +36,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,10 +46,16 @@ import markus.wieland.pushygame.data.LevelEntity
 import markus.wieland.pushygame.data.toLevelData
 import markus.wieland.pushygame.engine.level.LevelFormatException
 import markus.wieland.pushygame.engine.level.ShareCode
+import markus.wieland.pushygame.ui.Glyphs
 import markus.wieland.pushygame.ui.IslandBackground
+import markus.wieland.pushygame.ui.LevelCard
 import markus.wieland.pushygame.ui.LevelPreview
-import markus.wieland.pushygame.ui.PushyColors
+import markus.wieland.pushygame.ui.PixelGlyph
+import markus.wieland.pushygame.ui.PixelIconButton
+import markus.wieland.pushygame.ui.PixelPlank
 import markus.wieland.pushygame.ui.ScreenHeader
+import markus.wieland.pushygame.ui.SolvedBadge
+import markus.wieland.pushygame.ui.pixelTextStyle
 
 @Composable
 fun CustomLevelsScreen(onBack: () -> Unit, onPlay: (Long) -> Unit, onEdit: (Long) -> Unit) {
@@ -70,23 +68,19 @@ fun CustomLevelsScreen(onBack: () -> Unit, onPlay: (Long) -> Unit, onEdit: (Long
 
     fun share(level: LevelEntity) {
         val code = ShareCode.encode(level.toLevelData())
-        val intent = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, code)
+        val intent =
+            Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, code)
         context.startActivity(Intent.createChooser(intent, level.name))
     }
 
     IslandBackground {
         Column(Modifier.fillMaxSize()) {
             ScreenHeader(stringResource(R.string.custom_title), onBack) {
-                TextButton(onClick = { importing = true }) {
-                    Icon(Icons.Filled.Download, null)
-                    Spacer(Modifier.width(6.dp))
-                    Text(stringResource(R.string.custom_import), color = Color.White)
+                HeaderPlank(Glyphs.Import, stringResource(R.string.custom_import)) {
+                    importing = true
                 }
-                TextButton(onClick = { onEdit(0) }) {
-                    Icon(Icons.Filled.Add, null)
-                    Spacer(Modifier.width(6.dp))
-                    Text(stringResource(R.string.custom_new), color = Color.White)
-                }
+                Spacer(Modifier.width(10.dp))
+                HeaderPlank(Glyphs.Add, stringResource(R.string.custom_new)) { onEdit(0) }
             }
             if (levels.isEmpty()) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -144,7 +138,11 @@ fun CustomLevelsScreen(onBack: () -> Unit, onPlay: (Long) -> Unit, onEdit: (Long
                     deleting = null
                 }) { Text(stringResource(R.string.delete)) }
             },
-            dismissButton = { TextButton(onClick = { deleting = null }) { Text(stringResource(R.string.cancel)) } },
+            dismissButton = {
+                TextButton(onClick = {
+                    deleting = null
+                }) { Text(stringResource(R.string.cancel)) }
+            },
         )
     }
 }
@@ -158,30 +156,59 @@ private fun CustomLevelCard(
     onDelete: () -> Unit,
 ) {
     val data = remember(level.json) { level.toLevelData() }
-    Card(onClick = onPlay) {
-        LevelPreview(data, Modifier.fillMaxWidth())
-        Column(Modifier.padding(start = 10.dp, end = 4.dp, top = 8.dp)) {
-            Text(level.name, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    LevelCard(
+        onClick = onPlay,
+        preview = {
+            LevelPreview(data, Modifier.fillMaxWidth())
+            if (level.solved) SolvedBadge(Modifier
+                .align(Alignment.TopEnd)
+                .padding(6.dp))
+        },
+        footer = {
+            Text(
+                level.name,
+                style = pixelTextStyle(11.sp, shadow = 3f),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(top = 8.dp, start = 2.dp),
+            )
             Spacer(Modifier.height(4.dp))
             Text(
                 stringResource(if (level.solved) R.string.custom_solved else R.string.custom_unsolved),
-                style = MaterialTheme.typography.bodySmall,
-                color = if (level.solved) PushyColors.Palm else MaterialTheme.colorScheme.onSurfaceVariant,
+                style = pixelTextStyle(
+                    8.sp,
+                    if (level.solved) Color(0xFF8BE07A) else Color(0xFFF9E7BD),
+                    shadow = 2f
+                ),
+                modifier = Modifier.padding(start = 2.dp),
             )
-        }
-        Row {
-            IconButton(onClick = onPlay) { Icon(Icons.Filled.PlayArrow, stringResource(R.string.custom_play)) }
-            IconButton(onClick = onEdit) { Icon(Icons.Filled.Edit, stringResource(R.string.custom_edit)) }
-            // Like in the original game, a level can only be shared after its author solved it.
-            IconButton(onClick = onShare, enabled = level.solved) {
-                Icon(
-                    Icons.Filled.Share,
+            Spacer(Modifier.height(8.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                val button = Modifier.size(40.dp)
+                PixelIconButton(Glyphs.Play, stringResource(R.string.custom_play), onPlay, button)
+                PixelIconButton(Glyphs.Edit, stringResource(R.string.custom_edit), onEdit, button)
+                // Like in the original game, a level can only be shared after its author solved it.
+                PixelIconButton(
+                    Glyphs.Share,
                     stringResource(if (level.solved) R.string.custom_share else R.string.custom_share_locked),
+                    onShare,
+                    button,
+                    enabled = level.solved,
                 )
+                Spacer(Modifier.weight(1f))
+                PixelIconButton(Glyphs.Delete, stringResource(R.string.delete), onDelete, button)
             }
-            Spacer(Modifier.weight(1f))
-            IconButton(onClick = onDelete) { Icon(Icons.Filled.Delete, stringResource(R.string.delete)) }
-        }
+        },
+    )
+}
+
+/** Small plank button with a pixel icon and a label, for the header. */
+@Composable
+private fun HeaderPlank(glyph: List<String>, label: String, onClick: () -> Unit) {
+    PixelPlank(onClick, Modifier.height(44.dp), pixel = 2.dp, nails = false) { colors ->
+        PixelGlyph(glyph, pixel = 2.dp, color = colors.text)
+        Spacer(Modifier.width(8.dp))
+        Text(label, style = pixelTextStyle(10.sp, colors.text, shadow = 3f), maxLines = 1)
     }
 }
 
@@ -207,7 +234,10 @@ private fun ImportDialog(onDismiss: () -> Unit, onImport: suspend (String) -> Bo
             )
         },
         confirmButton = {
-            TextButton(onClick = { scope.launch { invalid = !onImport(code) } }, enabled = code.isNotBlank()) {
+            TextButton(
+                onClick = { scope.launch { invalid = !onImport(code) } },
+                enabled = code.isNotBlank()
+            ) {
                 Text(stringResource(R.string.ok))
             }
         },

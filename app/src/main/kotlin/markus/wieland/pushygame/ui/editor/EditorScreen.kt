@@ -22,13 +22,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Redo
 import androidx.compose.material.icons.automirrored.filled.Undo
+import androidx.compose.material.icons.automirrored.outlined.Backspace
 import androidx.compose.material.icons.filled.AutoFixHigh
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.DriveFileRenameOutline
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FormatColorFill
-import androidx.compose.material.icons.outlined.Backspace
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -165,7 +165,7 @@ private fun Toolbar(ui: EditorUi, onBack: () -> Unit, onRename: () -> Unit, view
         }
         ModeButton(EditMode.PENCIL, Icons.Filled.Edit, R.string.editor_pencil)
         ModeButton(EditMode.FILL, Icons.Filled.FormatColorFill, R.string.editor_fill)
-        ModeButton(EditMode.ERASE, Icons.Outlined.Backspace, R.string.editor_erase)
+        ModeButton(EditMode.ERASE, Icons.AutoMirrored.Outlined.Backspace, R.string.editor_erase)
         IconButton(onClick = viewModel::undo, enabled = ui.canUndo) {
             Icon(Icons.AutoMirrored.Filled.Undo, stringResource(R.string.editor_undo))
         }

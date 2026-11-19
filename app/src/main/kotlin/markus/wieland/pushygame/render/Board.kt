@@ -14,6 +14,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -23,17 +24,64 @@ import markus.wieland.pushygame.engine.model.Sprite
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-/** All sprites decoded once from `assets/sprites`. They are tiny pixel-art PNGs. */
-class SpriteSheet(private val images: Map<Sprite, ImageBitmap>) {
-    operator fun get(sprite: Sprite): ImageBitmap = images.getValue(sprite)
+/**
+ * All sprites decoded once from `assets/sprites`. They are tiny pixel-art PNGs.
+ *
+ * `<name>.png` is frame 0 (the only one the web editor knows about); optional animation frames
+ * live next to it as `<name>@1.png`, `<name>@2.png`, …
+ */
+class SpriteSheet(private val frames: Map<Sprite, List<ImageBitmap>>) {
+
+    /** First frame – used for icons, the editor and previews. */
+    operator fun get(sprite: Sprite): ImageBitmap = frames.getValue(sprite)[0]
+
+    /** The frame of [sprite] to show at [timeMs]. */
+    fun frame(sprite: Sprite, timeMs: Long): ImageBitmap {
+        val list = frames.getValue(sprite)
+        if (list.size == 1) return list[0]
+        return list[((timeMs / frameDurationMs(sprite)) % list.size).toInt()]
+    }
+
+    val hasAnimations: Boolean = frames.values.any { it.size > 1 }
 
     companion object {
-        fun load(assets: AssetManager) = SpriteSheet(
-            Sprite.entries.associateWith { sprite ->
-                assets.open("sprites/${sprite.fileName}.png").use { BitmapFactory.decodeStream(it) }.asImageBitmap()
-            },
-        )
+        fun load(assets: AssetManager): SpriteSheet {
+            val files = assets.list("sprites").orEmpty().toSet()
+            fun decode(file: String) = assets.open("sprites/$file").use { BitmapFactory.decodeStream(it) }.asImageBitmap()
+            return SpriteSheet(
+                Sprite.entries.associateWith { sprite ->
+                    val extra = generateSequence(1) { it + 1 }
+                        .map { "${sprite.fileName}@$it.png" }
+                        .takeWhile { it in files }
+                    listOf(decode("${sprite.fileName}.png")) + extra.map(::decode)
+                },
+            )
+        }
+
+        private fun frameDurationMs(sprite: Sprite): Long = when (sprite) {
+            Sprite.WATER, Sprite.WATER_HOLE, Sprite.WATER_INVISIBLE, Sprite.BOX_WATER, Sprite.BOAT, Sprite.BUOY -> 260
+            Sprite.ENERGY, Sprite.LAMP_ACTIVE, Sprite.TELEPORTER, Sprite.ITEM_TELEPORTER -> 140
+            Sprite.PUSHY, Sprite.PUSHY_EAST, Sprite.PUSHY_SOUTH, Sprite.PUSHY_WEST -> 260
+            else -> 200
+        }
     }
+}
+
+/**
+ * Draws [image] scaled into the cell rectangle at ([left], [top]) of size [width]×[height] as crisp
+ * pixel art. Rounds to whole pixels so neighbouring tiles never leave hairline gaps.
+ */
+fun DrawScope.drawSprite(image: ImageBitmap, left: Float, top: Float, width: Float, height: Float, alpha: Float = 1f) {
+    val l = left.roundToInt()
+    val t = top.roundToInt()
+    drawImage(
+        image = image,
+        srcSize = IntSize(image.width, image.height),
+        dstOffset = IntOffset(l, t),
+        dstSize = IntSize((left + width).roundToInt() - l, (top + height).roundToInt() - t),
+        alpha = alpha.coerceIn(0f, 1f),
+        filterQuality = FilterQuality.None,
+    )
 }
 
 val LocalSprites = compositionLocalOf<SpriteSheet> { error("No SpriteSheet provided") }
@@ -102,24 +150,7 @@ fun BoardCanvas(
         val cellHeight = size.height / height
         fun drawLayer(layer: Grid<List<Sprite>>) {
             for (c in layer.coordinates) {
-                val sprites0 = layer[c]
-                if (sprites0.isEmpty()) continue
-                val left = (c.col * cellWidth).roundToInt()
-                val top = (c.row * cellHeight).roundToInt()
-                val dstSize = IntSize(
-                    ((c.col + 1) * cellWidth).roundToInt() - left,
-                    ((c.row + 1) * cellHeight).roundToInt() - top,
-                )
-                for (sprite in sprites0) {
-                    val image = sprites[sprite]
-                    drawImage(
-                        image = image,
-                        srcSize = IntSize(image.width, image.height),
-                        dstOffset = IntOffset(left, top),
-                        dstSize = dstSize,
-                        filterQuality = FilterQuality.None,
-                    )
-                }
+                for (sprite in layer[c]) drawSprite(sprites[sprite], c.col * cellWidth, c.row * cellHeight, cellWidth, cellHeight)
             }
         }
         drawLayer(terrain)

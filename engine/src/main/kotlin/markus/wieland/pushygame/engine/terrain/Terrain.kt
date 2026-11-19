@@ -268,7 +268,7 @@ class Spring(type: TerrainType, c: Coordinate) : PressurePlate(type, c) {
 
     override fun interact(entity: Entity?, game: Game) {
         if (entity is Pushy && previousEntity !is Pushy) {
-            game.teleport(coordinate, coordinate.next(entity.facing))
+            game.teleport(coordinate, coordinate.next(entity.facing), jump = true)
             previousEntity = if (entity.isTeleported) null else entity
             return
         }

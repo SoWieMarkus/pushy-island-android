@@ -210,4 +210,35 @@ class MechanicsTest {
         assertEquals(Sprite.SHELL_OPEN_WITH_PEARL, game.state.value.entities[Coordinate(2, 1)].single())
         assertIs<Coconut>(game.board.entityAt(Coordinate(0, 1)))
     }
+
+    @Test
+    fun renderIdsAndEvents() {
+        val game = Game(level("---~-", "PB..T"))
+        val boxId = game.state.value.entityIds[Coordinate(0, 1)]!!
+        game.move(EAST)
+        assertEquals(boxId, game.state.value.entityIds[Coordinate(0, 2)], "ids follow pushed entities")
+        game.move(EAST)
+        assertEquals(listOf<GameEvent>(GameEvent.Consumed(boxId, Coordinate(0, 3))), game.state.value.events)
+        game.move(EAST)
+        game.move(EAST)
+        assertEquals(listOf<GameEvent>(GameEvent.Blocked(EAST)), game.state.value.events, "tree blocks")
+        game.move(WEST)
+        assertTrue(game.state.value.events.isEmpty(), "events are drained per state")
+    }
+
+    @Test
+    fun teleportEmitsEvent() {
+        val game = Game(level("-t---t", "P.....", terrain = mapOf('t' to TerrainType.TELEPORTER)))
+        val pushyId = game.pushy.id
+        game.move(EAST)
+        assertEquals(listOf<GameEvent>(GameEvent.Teleported(pushyId, Coordinate(0, 1))), game.state.value.events)
+    }
+
+    @Test
+    fun springEmitsJump() {
+        val game = Game(level("-s--", "P...", terrain = mapOf('s' to TerrainType.SPRING)))
+        game.move(EAST)
+        assertEquals("..P.", game.entityRows(), "spring launches Pushy one further")
+        assertEquals(listOf<GameEvent>(GameEvent.Jumped(game.pushy.id, Coordinate(0, 1))), game.state.value.events)
+    }
 }

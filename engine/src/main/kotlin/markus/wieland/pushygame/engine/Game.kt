@@ -60,6 +60,18 @@ data class GameState(
     val inventory: List<InventoryItem>,
     val moves: Int,
     val isFinished: Boolean,
+    /** Stable ids of the terrain fields, so the renderer can follow moving terrain (boats). */
+    val terrainIds: Grid<Int>,
+    /** Stable ids of the entities (null for empty cells), so the renderer can animate moves. */
+    val entityIds: Grid<Int?>,
+    /** Terrain height per cell (see [Terrain.ELEVATION_SAND] etc.). */
+    val elevation: Grid<Int>,
+    /** What happened since the previous state – see [GameEvent]. */
+    val events: List<GameEvent> = emptyList(),
+    /** Increases with every published state, so two identical-looking states stay distinct. */
+    val version: Long = 0,
+    /** Different for every [Game] instance – a change means the level was restarted. */
+    val gameId: Int = 0,
 )
 
 /**
@@ -76,6 +88,8 @@ class Game(level: LevelData) {
         ?: throw IllegalArgumentException("A level needs exactly one Pushy")
 
     private var moves = 0
+    private var version = 0L
+    private val pendingEvents = mutableListOf<GameEvent>()
     var isFinished = false
         private set
 
@@ -127,7 +141,9 @@ class Game(level: LevelData) {
     fun move(direction: Direction) {
         if (isFinished) return
         pushy.facing = direction
+        val before = pushy.coordinate
         pushy.move(pushy.coordinate.next(direction), this)
+        if (pushy.coordinate == before) emit(GameEvent.Blocked(direction))
         triggerPressurePlates()
         for (entity in board.entities) entity.isTeleported = board.terrain(entity) is Teleporter
         resetRound()
@@ -215,11 +231,13 @@ class Game(level: LevelData) {
         isStringActive = true
     }
 
-    internal fun teleport(from: Coordinate, to: Coordinate) {
+    /** Moves the entity at [from] to [to]; [jump] is purely cosmetic (springs launch, teleporters beam). */
+    internal fun teleport(from: Coordinate, to: Coordinate, jump: Boolean = false) {
         if (!board.isInside(to)) return
         val target = board.entityAt(to)
         val entity = board.entityAt(from) ?: return
         if (target == null || target is Collectible) {
+            emit(if (jump) GameEvent.Jumped(entity.id, from) else GameEvent.Teleported(entity.id, from))
             entity.isTeleported = true
             board.swapEntities(from, to)
         }
@@ -273,12 +291,16 @@ class Game(level: LevelData) {
         var direction = Direction.NORTH
         var next = slingshot.coordinate.next(direction)
         var steps = 0
+        val path = mutableListOf(slingshot.coordinate)
+        var hit = false
         while (board.isInside(next) && steps < MAX_SHOT_STEPS) {
+            if (path.size < MAX_SHOT_PATH) path += next
             val terrain = board.terrain(next)
             val entity = board.entityAt(next)
             if (entity is Leaf) direction = entity.direction
             next = next.next(direction)
             if (entity?.destroysFlyingStone() == true || terrain.destroysFlyingStone()) {
+                hit = true
                 if (entity is Tree && board.isInside(next) && board.terrain(next).elevation == Terrain.ELEVATION_SAND) {
                     board.setEntity(next, Entity.create(EntityType.COCONUT, next))
                 }
@@ -287,6 +309,8 @@ class Game(level: LevelData) {
             if (entity is Shell) entity.isOpen = true
             steps++
         }
+        if (!hit && path.size < MAX_SHOT_PATH) path += next // flies off the board
+        emit(GameEvent.Shot(path, hit))
     }
 
     /** Count blocks must be uncovered in order; a wrong one hides all of them again shortly after. */
@@ -300,6 +324,13 @@ class Game(level: LevelData) {
         }
         expectedCount++
     }
+
+    internal fun emit(event: GameEvent) {
+        pendingEvents += event
+    }
+
+    /** [entity] is about to vanish where it stands – lets the renderer finish its move first. */
+    internal fun consumed(entity: Entity) = emit(GameEvent.Consumed(entity.id, entity.coordinate))
 
     internal fun removeTowersIfAllLit() {
         val towers = board.entitiesOf<Tower>()
@@ -355,13 +386,25 @@ class Game(level: LevelData) {
     // State
     // -----------------------------------------------------------------------------------------
 
-    private fun snapshot() = GameState(
-        terrain = board.terrainSnapshot().map { _, terrain -> terrain.sprites },
-        entities = board.entitySnapshot().map { _, entity -> entity?.sprites.orEmpty() },
-        inventory = inventory.snapshot(),
-        moves = moves,
-        isFinished = isFinished,
-    )
+    private fun snapshot(): GameState {
+        val terrain = board.terrainSnapshot()
+        val entities = board.entitySnapshot()
+        val events = pendingEvents.toList()
+        pendingEvents.clear()
+        return GameState(
+            terrain = terrain.map { _, t -> t.sprites },
+            entities = entities.map { _, e -> e?.sprites.orEmpty() },
+            inventory = inventory.snapshot(),
+            moves = moves,
+            isFinished = isFinished,
+            terrainIds = terrain.map { _, t -> t.id },
+            entityIds = entities.map { _, e -> e?.id },
+            elevation = terrain.map { _, t -> t.elevation },
+            events = events,
+            version = version++,
+            gameId = pushy.id,
+        )
+    }
 
     private fun publish() {
         _state.value = snapshot()
@@ -369,6 +412,7 @@ class Game(level: LevelData) {
 
     companion object {
         const val MAX_SHOT_STEPS = 1000
+        private const val MAX_SHOT_PATH = 64
         const val COUNT_RESET_DELAY_MS = 500L
     }
 }
