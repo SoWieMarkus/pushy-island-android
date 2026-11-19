@@ -1,0 +1,52 @@
+{
+  "format": 2,
+  "name": "Kokutiki",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "b": "sand_top_right",
+    "-": "sand",
+    "c": "box_water",
+    "d": "coconut_tunnel",
+    "e": "coconut_tunnel_finish",
+    "f": "statue_finish_red",
+    "g": "sand_bottom_right",
+    "h": "sand_bottom_left",
+    "i": "hole",
+    "T": "tree",
+    "j": "statue_red",
+    "P": "pushy",
+    "k": "coconut",
+    "F": "finish"
+  },
+  "terrain": [
+    "~~~~ab~~~~~~~~~~~~~~",
+    "~~~~--b~~~a-b~~~~~~~",
+    "~a-----------ccc~~~~",
+    "~------------~~c~~~~",
+    "a------------b~c~~~~",
+    "--dded-f------~cccc~",
+    "--d----f-d----~~~~c~",
+    "--ddd---dded--~~~~c~",
+    "--d-dddddd---g~a-bc~",
+    "h----------g~~a---~~",
+    "~h-------g~~~~--iib~",
+    "~~h-g~~~~~~~~~h---g~"
+  ],
+  "entities": [
+    ".....T..............",
+    "....T.....TT........",
+    "..TT...TTT..........",
+    ".T..................",
+    "T..j.j.P....T.......",
+    "T...................",
+    ".............T......",
+    "T............T......",
+    "......k.k...T.......",
+    "T.........TT........",
+    ".T...TTTT.....TF....",
+    "...TT..............."
+  ]
+}

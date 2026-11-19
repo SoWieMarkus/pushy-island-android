@@ -1,0 +1,51 @@
+{
+  "format": 2,
+  "name": "Akua Asuliki",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "a": "ice",
+    "b": "sand_top_left",
+    "c": "sand_top_right",
+    "-": "sand",
+    "d": "statue_finish_red",
+    "e": "sand_bottom_left",
+    "f": "sand_bottom_right",
+    "g": "statue_finish_blue",
+    "h": "statue_finish_green",
+    "i": "statue_red",
+    "j": "statue_green",
+    "k": "statue_blue",
+    "F": "finish",
+    "o": "stone",
+    "P": "pushy"
+  },
+  "terrain": [
+    "aaaaaaaaaaaaaaaaaaaa",
+    "aaaabcaaaaaaaaaaaaaa",
+    "aaab-dcaaaaaaaab-caa",
+    "aaae--faaaaaaaa---aa",
+    "aaaaaaaaaaaaaaae-faa",
+    "aaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaa",
+    "aaaaaaaaaaaaaaaaaaaa",
+    "aaab---caaaaaaaaaaaa",
+    "aaa--g--caaaaaaab-ca",
+    "aaae----faaaaaab-h-a",
+    "aaaaaaaaaaaaaaae--fa"
+  ],
+  "entities": [
+    "....................",
+    "....................",
+    "....................",
+    "...............ijk..",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....F...............",
+    "...o...P............",
+    "....................",
+    "...................."
+  ]
+}

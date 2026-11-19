@@ -1,0 +1,52 @@
+{
+  "format": 2,
+  "name": "Ektokilli",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "b": "sand_top_right",
+    "-": "sand",
+    "c": "sand_bottom_left",
+    "d": "sand_bottom_right",
+    "e": "ice",
+    "f": "grass_top_left",
+    "g": "grass_top_right",
+    "=": "grass",
+    "h": "grass_bottom_left",
+    "i": "grass_bottom_right",
+    "j": "sea_star",
+    "o": "stone",
+    "F": "finish",
+    "P": "pushy"
+  },
+  "terrain": [
+    "~~~~~~ab~~~~~~~~~a-b",
+    "~~~~~~cd~~~~~eeee---",
+    "~~~a-beeeeee~eeeec--",
+    "~~~--deeeeeeeee~~~cd",
+    "~~~cd~ee~~eeeee~~~~~",
+    "~~~~~~ee~~~~~~~a-b~~",
+    "~~~~~a--b~~~~~~---b~",
+    "~~~~~-fg-eeee~a----~",
+    "~~~~~-==-eeeee-----~",
+    "~~~~~chi-~~eeec---d~",
+    "~~~~~~c-d~~~~~~~~~~~",
+    "~~~~~~~~~~~~~~~~~~~~"
+  ],
+  "entities": [
+    ".......j..........o.",
+    "...................o",
+    "...jo.............j.",
+    "....j...............",
+    "...j................",
+    "....................",
+    "...............oFo..",
+    ".....j..j........oj.",
+    "......o........Po...",
+    "..............j..j..",
+    "........j...........",
+    "...................."
+  ]
+}

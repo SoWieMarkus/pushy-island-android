@@ -1,0 +1,47 @@
+{
+  "format": 2,
+  "name": "Korallahoa",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "-": "sand",
+    "b": "sand_top_right",
+    "c": "sand_bottom_right",
+    "d": "ice",
+    "e": "sand_bottom_left",
+    "f": "shell_1",
+    "F": "finish",
+    "o": "stone",
+    "P": "pushy"
+  },
+  "terrain": [
+    "~~~~~~~~a-----b~~~~~",
+    "~~~~~a--cdddddeb~~~~",
+    "~~~~~-ddddddddd-~~~~",
+    "~~~~acddddddddd-~~~~",
+    "~~~~-dddddddddd-~~~~",
+    "~~~~-dddddabddde-b~~",
+    "~~~~-dddddecddddd-~~",
+    "~~~~-dddddddddddd-~~",
+    "~~~~-dddddddddddd-~~",
+    "~~~~ebddddddddda-c~~",
+    "~~~~~ebdddddddac~~~~",
+    "~~~~~~e-------c~~~~~"
+  ],
+  "entities": [
+    "..........f.f.......",
+    "......f.............",
+    "...............f....",
+    "....................",
+    "....................",
+    "....f.....Fo........",
+    ".................f..",
+    "....f...............",
+    "....................",
+    "................P...",
+    "....................",
+    "........f.f........."
+  ]
+}

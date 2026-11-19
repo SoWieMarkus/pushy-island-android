@@ -1,0 +1,51 @@
+{
+  "format": 2,
+  "name": "Ramaswamiki",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "-": "sand",
+    "b": "sand_top_right",
+    "c": "water_invisible",
+    "d": "sand_bottom_left",
+    "e": "sand_bottom_right",
+    "f": "boat",
+    "g": "box_water",
+    "h": "water_invisible_pressure_plate",
+    "T": "tree",
+    "F": "finish",
+    "i": "crab_baby",
+    "j": "crab_mother",
+    "P": "pushy"
+  },
+  "terrain": [
+    "~~~~~~~~~~~~~~~~~a-b",
+    "ccccc~cccccc~~~c~---",
+    "~~~~~~c~~~~c~~~c~d-e",
+    "~~~fc~c~~~~~~~c~~~g~",
+    "~~~~c~cccc~~~c~~~~g~",
+    "~~~~c~~~~~~~c~c~~~g~",
+    "~~~~c~~~~c~c~~~c~~g~",
+    "~ccccccccc~c~~~c~~g~",
+    "~~~~~~c~~~~~~~~~~~g~",
+    "a-b~~~c~~~~~~~~~~a-b",
+    "---gggggggggggggg-h-",
+    "d-e~~~~~~~~~~~~~~d-e"
+  ],
+  "entities": [
+    ".................TFT",
+    "i.....i.............",
+    "....................",
+    "..............i.....",
+    "........i...........",
+    "....................",
+    "....................",
+    "..i.................",
+    "....................",
+    "TjT.................",
+    "....................",
+    "..................P."
+  ]
+}

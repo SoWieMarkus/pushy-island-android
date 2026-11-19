@@ -1,0 +1,53 @@
+{
+  "format": 2,
+  "name": "Gandia Belika",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "-": "sand",
+    "b": "sand_top_right",
+    "c": "grass_top_left",
+    "=": "grass",
+    "d": "grass_top_right",
+    "e": "string_pressure_plate",
+    "f": "changeable_flower_green",
+    "g": "changeable_flower_red",
+    "h": "grass_bottom_left",
+    "i": "sand_bottom_left",
+    "j": "grass_bottom_right",
+    "k": "sand_bottom_right",
+    "T": "tree",
+    "F": "finish",
+    "P": "pushy"
+  },
+  "terrain": [
+    "~a--------------b~~~",
+    "~-------c=d-efgf-~~~",
+    "a-fgfff-===d-fff-b~~",
+    "--gg-fg-h===---g---b",
+    "-e-ff-f--===--gf----",
+    "i--gg----==j-ff----k",
+    "~~i-ff---==--ffff-k~",
+    "~~~--fff-==---gg-k~~",
+    "~~~i--ggc==-gffg-~~~",
+    "~~~~iffgh=jff---k~~~",
+    "~~~~~i-fffff--k~~~~~",
+    "~~~~~~~i---k~~~~~~~~"
+  ],
+  "entities": [
+    ".........T..........",
+    "...T.......T........",
+    ".........TT.........",
+    "..........T.....TTFT",
+    ".........T...T......",
+    ".....T....T.....T.P.",
+    "....................",
+    ".........TT..T......",
+    ".....T..............",
+    ".........T..........",
+    "....................",
+    ".........T.........."
+  ]
+}

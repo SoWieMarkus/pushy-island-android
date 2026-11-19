@@ -1,0 +1,49 @@
+{
+  "format": 2,
+  "name": "Very Last Island",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "a": "sand_top_left",
+    "-": "sand",
+    "b": "sand_top_right",
+    "c": "coconut_tunnel",
+    "d": "coconut_tunnel_finish",
+    "e": "hole",
+    "f": "sand_bottom_left",
+    "g": "sand_bottom_right",
+    "h": "coconut",
+    "P": "pushy",
+    "o": "stone",
+    "T": "tree",
+    "F": "finish"
+  },
+  "terrain": [
+    "a------------------b",
+    "--------------------",
+    "--ccd-c--c-ccd--ccc-",
+    "--c---cc-c-c--c-c---",
+    "--ccd-ccdc-c--c-dcc-",
+    "--c---c-cc-c--c-c---",
+    "--ccc-c--d-ccd--ccd-",
+    "--------------------",
+    "--------------------",
+    "--------------------",
+    "----e-e-e-e-e-e-e-e-",
+    "f------------------g"
+  ],
+  "entities": [
+    "....................",
+    "....................",
+    "....................",
+    "..h...h....h....h...",
+    "....................",
+    "..h...h....h....h...",
+    "....................",
+    "....................",
+    "....................",
+    ".P.oTooTooTooTooToFT",
+    "...................o",
+    ".oTooTooTooTooTooTo."
+  ]
+}

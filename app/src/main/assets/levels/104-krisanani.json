@@ -1,0 +1,52 @@
+{
+  "format": 2,
+  "name": "Krisanani",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "water_invisible",
+    "b": "box_water",
+    "c": "sand_top_left",
+    "d": "sand_top_right",
+    "-": "sand",
+    "e": "hole",
+    "f": "water_invisible_pressure_plate",
+    "g": "sand_bottom_right",
+    "h": "sand_bottom_left",
+    "i": "coconut",
+    "T": "tree",
+    "o": "stone",
+    "P": "pushy",
+    "F": "finish",
+    "j": "sea_star"
+  },
+  "terrain": [
+    "~~~~~~~~~~~~~~~~~~~~",
+    "~~~~~~~~~~aaaa~~~~~~",
+    "~~~~~~~aaaaa~a~~~~~~",
+    "~bb~~~aaa~aaaa~~~~~~",
+    "~bbbbbaaaaaa~a~~~~~~",
+    "~b~~~~aa~~aaaaa~~~~~",
+    "~b~~~~~aaaaa~~a~~~~~",
+    "~cd~~~~~~aaaaaa~~~~~",
+    "c--d~~~~~aaaaaa~~~cd",
+    "-e--~~~~~aaaa~aa~cf-",
+    "----~~~~~~aaa~~aa--g",
+    "h--g~~~~~~~~~~~~~hg~"
+  ],
+  "entities": [
+    "....................",
+    "....................",
+    "...........i........",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    ".........i..........",
+    "T..o................",
+    "T.o........i.......P",
+    "..F...............j.",
+    "...................."
+  ]
+}

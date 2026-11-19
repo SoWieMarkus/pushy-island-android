@@ -1,0 +1,1171 @@
+{
+  "format": 2,
+  "empty": ".",
+  "symbolPool": "abcdefghijklmnpqrstuvwxyzACDEGHIJKLMNOQRSUVWXYZ0123456789!#$%&()*,/:;<>?@[]^_`{|}'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ",
+  "v1NoEntity": 5,
+  "legacyNoEntity": "no_entity",
+  "tiles": [
+    {
+      "id": "water",
+      "layer": "terrain",
+      "sprite": "water",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": "~",
+      "v1Code": 0,
+      "legacyId": "water",
+      "ports": {}
+    },
+    {
+      "id": "box_water",
+      "layer": "terrain",
+      "sprite": "box_water",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 1,
+      "legacyId": "box_water",
+      "ports": {}
+    },
+    {
+      "id": "sand",
+      "layer": "terrain",
+      "sprite": "sand",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": "-",
+      "v1Code": 2,
+      "legacyId": "sand",
+      "ports": {}
+    },
+    {
+      "id": "sand_top_left",
+      "layer": "terrain",
+      "sprite": "sand_top_left",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 3,
+      "legacyId": "sand_top_left",
+      "ports": {}
+    },
+    {
+      "id": "sand_top_right",
+      "layer": "terrain",
+      "sprite": "sand_top_right",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 4,
+      "legacyId": "sand_top_right",
+      "ports": {}
+    },
+    {
+      "id": "sand_bottom_left",
+      "layer": "terrain",
+      "sprite": "sand_bottom_left",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 5,
+      "legacyId": "sand_bottom_left",
+      "ports": {}
+    },
+    {
+      "id": "sand_bottom_right",
+      "layer": "terrain",
+      "sprite": "sand_bottom_right",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 6,
+      "legacyId": "sand_bottom_right",
+      "ports": {}
+    },
+    {
+      "id": "grass",
+      "layer": "terrain",
+      "sprite": "grass",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": "=",
+      "v1Code": 7,
+      "legacyId": "grass",
+      "ports": {}
+    },
+    {
+      "id": "grass_top_left",
+      "layer": "terrain",
+      "sprite": "grass_top_left",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 8,
+      "legacyId": "grass_top_left",
+      "ports": {}
+    },
+    {
+      "id": "grass_top_right",
+      "layer": "terrain",
+      "sprite": "grass_top_right",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 9,
+      "legacyId": "grass_top_right",
+      "ports": {}
+    },
+    {
+      "id": "grass_bottom_left",
+      "layer": "terrain",
+      "sprite": "grass_bottom_left",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 10,
+      "legacyId": "grass_bottom_left",
+      "ports": {}
+    },
+    {
+      "id": "grass_bottom_right",
+      "layer": "terrain",
+      "sprite": "grass_bottom_right",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 11,
+      "legacyId": "grass_bottom_right",
+      "ports": {}
+    },
+    {
+      "id": "spring",
+      "layer": "terrain",
+      "sprite": "spring",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 12,
+      "legacyId": "spring",
+      "ports": {}
+    },
+    {
+      "id": "water_hole",
+      "layer": "terrain",
+      "sprite": "water_hole",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 13,
+      "legacyId": "sand_with_water",
+      "ports": {}
+    },
+    {
+      "id": "farm",
+      "layer": "terrain",
+      "sprite": "farm",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 14,
+      "legacyId": "sand_with_farm",
+      "ports": {}
+    },
+    {
+      "id": "statue_finish_red",
+      "layer": "terrain",
+      "sprite": "statue_finish_red",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 15,
+      "legacyId": "statue_finish_red",
+      "ports": {}
+    },
+    {
+      "id": "statue_finish_green",
+      "layer": "terrain",
+      "sprite": "statue_finish_green",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 17,
+      "legacyId": "statue_finish_green",
+      "ports": {}
+    },
+    {
+      "id": "statue_finish_blue",
+      "layer": "terrain",
+      "sprite": "statue_finish_blue",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 16,
+      "legacyId": "statue_finish_blue",
+      "ports": {}
+    },
+    {
+      "id": "bomb_field",
+      "layer": "terrain",
+      "sprite": "bomb_field",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 18,
+      "legacyId": "bomb_field",
+      "ports": {}
+    },
+    {
+      "id": "hole",
+      "layer": "terrain",
+      "sprite": "hole",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 19,
+      "legacyId": "hole",
+      "ports": {}
+    },
+    {
+      "id": "spike_pressure_plate",
+      "layer": "terrain",
+      "sprite": "spike_pressure_plate",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 20,
+      "legacyId": "spike_pressure_plate",
+      "ports": {}
+    },
+    {
+      "id": "spikes",
+      "layer": "terrain",
+      "sprite": "spikes",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 21,
+      "legacyId": "spikes",
+      "ports": {}
+    },
+    {
+      "id": "boat",
+      "layer": "terrain",
+      "sprite": "boat",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 22,
+      "legacyId": "boat",
+      "ports": {}
+    },
+    {
+      "id": "teleporter",
+      "layer": "terrain",
+      "sprite": "teleporter",
+      "maxInstances": 2,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 23,
+      "legacyId": "teleporter",
+      "ports": {}
+    },
+    {
+      "id": "water_invisible_pressure_plate",
+      "layer": "terrain",
+      "sprite": "water_invisible_pressure_plate",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 25,
+      "legacyId": "water_invisible_pressure_plate",
+      "ports": {}
+    },
+    {
+      "id": "water_invisible",
+      "layer": "terrain",
+      "sprite": "water_invisible",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 26,
+      "legacyId": "water_invisible",
+      "ports": {}
+    },
+    {
+      "id": "coconut_tunnel",
+      "layer": "terrain",
+      "sprite": "coconut_tunnel",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 27,
+      "legacyId": "coconut_tunnel",
+      "ports": {}
+    },
+    {
+      "id": "coconut_tunnel_finish",
+      "layer": "terrain",
+      "sprite": "coconut_tunnel_finish",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 28,
+      "legacyId": "coconut_tunnel_finish",
+      "ports": {}
+    },
+    {
+      "id": "item_teleporter",
+      "layer": "terrain",
+      "sprite": "item_teleporter",
+      "maxInstances": 2,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 29,
+      "legacyId": "item_teleporter",
+      "ports": {}
+    },
+    {
+      "id": "ice",
+      "layer": "terrain",
+      "sprite": "ice",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 30,
+      "legacyId": "ice",
+      "ports": {}
+    },
+    {
+      "id": "flower_red_pressure_plate",
+      "layer": "terrain",
+      "sprite": "flower_red_pressure_plate",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 31,
+      "legacyId": "flower_red_pressure_plate",
+      "ports": {}
+    },
+    {
+      "id": "flower_yellow_pressure_plate",
+      "layer": "terrain",
+      "sprite": "flower_yellow_pressure_plate",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 32,
+      "legacyId": "flower_pressure_plate",
+      "ports": {}
+    },
+    {
+      "id": "string_pressure_plate",
+      "layer": "terrain",
+      "sprite": "string_pressure_plate",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 33,
+      "legacyId": "string_pressure_plate",
+      "ports": {}
+    },
+    {
+      "id": "changeable_flower_red",
+      "layer": "terrain",
+      "sprite": "changeable_flower_red",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 34,
+      "legacyId": "changeable_flower_red",
+      "ports": {}
+    },
+    {
+      "id": "changeable_flower_green",
+      "layer": "terrain",
+      "sprite": "changeable_flower_green",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 35,
+      "legacyId": "changeable_flower_green",
+      "ports": {}
+    },
+    {
+      "id": "barrel_finish",
+      "layer": "terrain",
+      "sprite": "barrel_finish",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 36,
+      "legacyId": "barrel_finish",
+      "ports": {}
+    },
+    {
+      "id": "cable",
+      "layer": "terrain",
+      "sprite": "cable",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": "+",
+      "v1Code": 37,
+      "legacyId": "cable",
+      "ports": {}
+    },
+    {
+      "id": "logic_pressure_plate",
+      "layer": "terrain",
+      "sprite": "logic_pressure_plate",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 38,
+      "legacyId": "logic_pressure_plate",
+      "ports": {
+        "north": "output",
+        "south": "output",
+        "east": "output",
+        "west": "output"
+      }
+    },
+    {
+      "id": "door",
+      "layer": "terrain",
+      "sprite": "door",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 39,
+      "legacyId": "door",
+      "ports": {
+        "north": "input",
+        "south": "input",
+        "east": "input",
+        "west": "input"
+      }
+    },
+    {
+      "id": "tree",
+      "layer": "entity",
+      "sprite": "tree",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": "T",
+      "v1Code": 0,
+      "legacyId": "tree",
+      "ports": {}
+    },
+    {
+      "id": "box",
+      "layer": "entity",
+      "sprite": "box",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": "B",
+      "v1Code": 1,
+      "legacyId": "box",
+      "ports": {}
+    },
+    {
+      "id": "pushy",
+      "layer": "entity",
+      "sprite": "pushy",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": "P",
+      "v1Code": 2,
+      "legacyId": "pushy",
+      "ports": {}
+    },
+    {
+      "id": "finish",
+      "layer": "entity",
+      "sprite": "finish",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": "F",
+      "v1Code": 3,
+      "legacyId": "finish",
+      "ports": {}
+    },
+    {
+      "id": "stone",
+      "layer": "entity",
+      "sprite": "stone",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": "o",
+      "v1Code": 4,
+      "legacyId": "stone",
+      "ports": {}
+    },
+    {
+      "id": "sea_star",
+      "layer": "entity",
+      "sprite": "sea_star",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 6,
+      "legacyId": "sea_star",
+      "ports": {}
+    },
+    {
+      "id": "seed",
+      "layer": "entity",
+      "sprite": "seed",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 7,
+      "legacyId": "seed",
+      "ports": {}
+    },
+    {
+      "id": "bottle",
+      "layer": "entity",
+      "sprite": "bottle",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 8,
+      "legacyId": "bottle",
+      "ports": {}
+    },
+    {
+      "id": "statue_red",
+      "layer": "entity",
+      "sprite": "statue_red",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 9,
+      "legacyId": "statue_red",
+      "ports": {}
+    },
+    {
+      "id": "statue_green",
+      "layer": "entity",
+      "sprite": "statue_green",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 11,
+      "legacyId": "statue_green",
+      "ports": {}
+    },
+    {
+      "id": "statue_blue",
+      "layer": "entity",
+      "sprite": "statue_blue",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 10,
+      "legacyId": "statue_blue",
+      "ports": {}
+    },
+    {
+      "id": "bomb",
+      "layer": "entity",
+      "sprite": "bomb",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 12,
+      "legacyId": "bomb",
+      "ports": {}
+    },
+    {
+      "id": "crab_baby",
+      "layer": "entity",
+      "sprite": "crab_baby",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 13,
+      "legacyId": "crab_baby",
+      "ports": {}
+    },
+    {
+      "id": "crab_mother",
+      "layer": "entity",
+      "sprite": "crab_mother",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 14,
+      "legacyId": "crab_mother",
+      "ports": {}
+    },
+    {
+      "id": "slingshot",
+      "layer": "entity",
+      "sprite": "slingshot",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 15,
+      "legacyId": "slingshot",
+      "ports": {}
+    },
+    {
+      "id": "shot",
+      "layer": "entity",
+      "sprite": "shot",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 16,
+      "legacyId": "shot",
+      "ports": {}
+    },
+    {
+      "id": "coconut",
+      "layer": "entity",
+      "sprite": "coconut",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 17,
+      "legacyId": "coconut",
+      "ports": {}
+    },
+    {
+      "id": "leaf_down",
+      "layer": "entity",
+      "sprite": "leaf_down",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 18,
+      "legacyId": "leaf_down",
+      "ports": {}
+    },
+    {
+      "id": "leaf_up",
+      "layer": "entity",
+      "sprite": "leaf_up",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 19,
+      "legacyId": "leaf_up",
+      "ports": {}
+    },
+    {
+      "id": "leaf_left",
+      "layer": "entity",
+      "sprite": "leaf_left",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 20,
+      "legacyId": "leaf_left",
+      "ports": {}
+    },
+    {
+      "id": "leaf_right",
+      "layer": "entity",
+      "sprite": "leaf_right",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 21,
+      "legacyId": "leaf_right",
+      "ports": {}
+    },
+    {
+      "id": "pirate",
+      "layer": "entity",
+      "sprite": "pirate",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 22,
+      "legacyId": "pirate",
+      "ports": {}
+    },
+    {
+      "id": "pirate_hut",
+      "layer": "entity",
+      "sprite": "pirate_hut",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 23,
+      "legacyId": "pirate_hut",
+      "ports": {}
+    },
+    {
+      "id": "buoy",
+      "layer": "entity",
+      "sprite": "buoy",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 24,
+      "legacyId": "buoy",
+      "ports": {}
+    },
+    {
+      "id": "chest",
+      "layer": "entity",
+      "sprite": "chest",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 25,
+      "legacyId": "chest",
+      "ports": {}
+    },
+    {
+      "id": "coin",
+      "layer": "entity",
+      "sprite": "coin",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 26,
+      "legacyId": "coin",
+      "ports": {}
+    },
+    {
+      "id": "key",
+      "layer": "entity",
+      "sprite": "key",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 27,
+      "legacyId": "key",
+      "ports": {}
+    },
+    {
+      "id": "tower",
+      "layer": "entity",
+      "sprite": "tower",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 28,
+      "legacyId": "tower",
+      "ports": {}
+    },
+    {
+      "id": "pearl",
+      "layer": "entity",
+      "sprite": "pearl",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 29,
+      "legacyId": "pearl",
+      "ports": {}
+    },
+    {
+      "id": "shell",
+      "layer": "entity",
+      "sprite": "shell",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 30,
+      "legacyId": "shell",
+      "ports": {}
+    },
+    {
+      "id": "shell_open_with_pearl",
+      "layer": "entity",
+      "sprite": "shell_open_with_pearl",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 31,
+      "legacyId": "shell_open_with_pearl",
+      "ports": {}
+    },
+    {
+      "id": "count_one",
+      "layer": "entity",
+      "sprite": "count_one",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 32,
+      "legacyId": "count_one",
+      "ports": {}
+    },
+    {
+      "id": "count_two",
+      "layer": "entity",
+      "sprite": "count_two",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 33,
+      "legacyId": "count_two",
+      "ports": {}
+    },
+    {
+      "id": "count_three",
+      "layer": "entity",
+      "sprite": "count_three",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 34,
+      "legacyId": "count_three",
+      "ports": {}
+    },
+    {
+      "id": "count_four",
+      "layer": "entity",
+      "sprite": "count_four",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 35,
+      "legacyId": "count_four",
+      "ports": {}
+    },
+    {
+      "id": "count_five",
+      "layer": "entity",
+      "sprite": "count_five",
+      "maxInstances": 1,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 36,
+      "legacyId": "count_five",
+      "ports": {}
+    },
+    {
+      "id": "flower_yellow",
+      "layer": "entity",
+      "sprite": "flower_yellow",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 37,
+      "legacyId": "flower_yellow",
+      "ports": {}
+    },
+    {
+      "id": "flower_red",
+      "layer": "entity",
+      "sprite": "flower_red",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 38,
+      "legacyId": "flower_red",
+      "ports": {}
+    },
+    {
+      "id": "shell_1",
+      "layer": "entity",
+      "sprite": "shell_1",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 39,
+      "legacyId": "shell_1",
+      "ports": {}
+    },
+    {
+      "id": "shell_2",
+      "layer": "entity",
+      "sprite": "shell_2",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 40,
+      "legacyId": "shell_2",
+      "ports": {}
+    },
+    {
+      "id": "shell_3",
+      "layer": "entity",
+      "sprite": "shell_3",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 41,
+      "legacyId": "shell_3",
+      "ports": {}
+    },
+    {
+      "id": "octopus",
+      "layer": "entity",
+      "sprite": "octopus",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 42,
+      "legacyId": "octopus",
+      "ports": {}
+    },
+    {
+      "id": "barrel",
+      "layer": "entity",
+      "sprite": "barrel",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 43,
+      "legacyId": "barrel",
+      "ports": {}
+    },
+    {
+      "id": "leaf_changer_east",
+      "layer": "entity",
+      "sprite": "leaf_changer_east",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 44,
+      "legacyId": "leaf_changer_east",
+      "ports": {}
+    },
+    {
+      "id": "leaf_changer_west",
+      "layer": "entity",
+      "sprite": "leaf_changer_west",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 45,
+      "legacyId": "leaf_changer_west",
+      "ports": {}
+    },
+    {
+      "id": "leaf_changer_north",
+      "layer": "entity",
+      "sprite": "leaf_changer_north",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 46,
+      "legacyId": "leaf_changer_north",
+      "ports": {}
+    },
+    {
+      "id": "leaf_changer_south",
+      "layer": "entity",
+      "sprite": "leaf_changer_south",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 47,
+      "legacyId": "leaf_changer_south",
+      "ports": {}
+    },
+    {
+      "id": "logic_gate_and",
+      "layer": "entity",
+      "sprite": "logic_gate_and",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 48,
+      "legacyId": "logic_gate_and",
+      "ports": {
+        "north": "output",
+        "east": "input",
+        "west": "input"
+      }
+    },
+    {
+      "id": "logic_gate_or",
+      "layer": "entity",
+      "sprite": "logic_gate_or",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 49,
+      "legacyId": "logic_gate_or",
+      "ports": {
+        "north": "output",
+        "east": "input",
+        "west": "input"
+      }
+    },
+    {
+      "id": "logic_gate_xor",
+      "layer": "entity",
+      "sprite": "logic_gate_xor",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 50,
+      "legacyId": "logic_gate_xor",
+      "ports": {
+        "north": "output",
+        "east": "input",
+        "west": "input"
+      }
+    },
+    {
+      "id": "lamp",
+      "layer": "entity",
+      "sprite": "lamp",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 51,
+      "legacyId": "logic_gate_lamp",
+      "ports": {
+        "north": "input",
+        "south": "input",
+        "east": "input",
+        "west": "input"
+      }
+    },
+    {
+      "id": "lever",
+      "layer": "entity",
+      "sprite": "lever",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 52,
+      "legacyId": "lever",
+      "ports": {
+        "north": "output",
+        "south": "output",
+        "east": "output",
+        "west": "output"
+      }
+    },
+    {
+      "id": "power_block",
+      "layer": "entity",
+      "sprite": "power_block",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 53,
+      "legacyId": "power_block",
+      "ports": {
+        "north": "output",
+        "south": "output",
+        "east": "output",
+        "west": "output"
+      }
+    },
+    {
+      "id": "logic_gate_not",
+      "layer": "entity",
+      "sprite": "logic_gate_not",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 54,
+      "legacyId": "logic_gate_not",
+      "ports": {
+        "north": "output",
+        "south": "input"
+      }
+    },
+    {
+      "id": "energy",
+      "layer": "entity",
+      "sprite": "energy",
+      "maxInstances": null,
+      "isLogic": false,
+      "symbol": null,
+      "v1Code": 55,
+      "legacyId": "energy",
+      "ports": {}
+    },
+    {
+      "id": "button",
+      "layer": "entity",
+      "sprite": "button",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 56,
+      "legacyId": "button",
+      "ports": {
+        "north": "output",
+        "south": "output",
+        "east": "output",
+        "west": "output"
+      }
+    },
+    {
+      "id": "count_down",
+      "layer": "entity",
+      "sprite": "count_down_three",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 57,
+      "legacyId": "count_down",
+      "ports": {
+        "north": "input",
+        "south": "input",
+        "east": "input",
+        "west": "input"
+      }
+    },
+    {
+      "id": "repeater_north",
+      "layer": "entity",
+      "sprite": "repeater_north_active",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 58,
+      "legacyId": "repeater_north",
+      "ports": {
+        "north": "output",
+        "south": "input"
+      }
+    },
+    {
+      "id": "repeater_south",
+      "layer": "entity",
+      "sprite": "repeater_south_active",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 59,
+      "legacyId": "repeater_south",
+      "ports": {
+        "north": "input",
+        "south": "output"
+      }
+    },
+    {
+      "id": "repeater_west",
+      "layer": "entity",
+      "sprite": "repeater_west_active",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 60,
+      "legacyId": "repeater_west",
+      "ports": {
+        "east": "input",
+        "west": "output"
+      }
+    },
+    {
+      "id": "repeater_east",
+      "layer": "entity",
+      "sprite": "repeater_east_active",
+      "maxInstances": null,
+      "isLogic": true,
+      "symbol": null,
+      "v1Code": 61,
+      "legacyId": "repeater_east",
+      "ports": {
+        "east": "output",
+        "west": "input"
+      }
+    }
+  ]
+}

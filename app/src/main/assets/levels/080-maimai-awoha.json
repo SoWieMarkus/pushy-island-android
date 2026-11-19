@@ -1,0 +1,48 @@
+{
+  "format": 2,
+  "name": "Maimai Awoha",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "ice",
+    "b": "sand_top_left",
+    "c": "sand_top_right",
+    "-": "sand",
+    "d": "sand_bottom_left",
+    "e": "sand_bottom_right",
+    "f": "crab_baby",
+    "o": "stone",
+    "F": "finish",
+    "g": "crab_mother",
+    "P": "pushy"
+  },
+  "terrain": [
+    "~~~~~~~~aaa~~~~~~~~~",
+    "~~~~~~~~a~a~aa~~~~~~",
+    "~~~aaaaaa~aaaa~~~~~~",
+    "~~~aaaaaa~~aaa~~~~~~",
+    "~~~aaa~~bc~~~aa~~~~~",
+    "~~~~aa~b--c~~~aa~~~~",
+    "~aaaaa~----~~aaa~~~~",
+    "~a~aaa~----caaaa~~~~",
+    "~a~~aa~d---e~~~~~~~~",
+    "~aaaaaa~~a~~~~~~~~~~",
+    "~~~~~aaaaa~~~~~~~~~~",
+    "~~~~~~aaaa~~~~~~~~~~"
+  ],
+  "entities": [
+    ".........f..........",
+    "..........f.ff......",
+    "....f.f.f.f.........",
+    "...fff.f...fff......",
+    ".....f........f.....",
+    "....f...oF.....f....",
+    ".....f..g.o...ff....",
+    "...f.....P...f......",
+    "....f...............",
+    "..f.ff..............",
+    "......f.ff..........",
+    ".......ff..........."
+  ]
+}

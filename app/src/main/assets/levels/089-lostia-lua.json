@@ -1,0 +1,53 @@
+{
+  "format": 2,
+  "name": "Lostia Lua",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "b": "sand_top_right",
+    "c": "water_invisible",
+    "d": "sand_bottom_left",
+    "e": "sand_bottom_right",
+    "-": "sand",
+    "f": "boat",
+    "g": "water_invisible_pressure_plate",
+    "F": "finish",
+    "h": "coin",
+    "i": "buoy",
+    "j": "pirate",
+    "T": "tree",
+    "k": "pirate_hut",
+    "P": "pushy",
+    "o": "stone"
+  },
+  "terrain": [
+    "~~~~~~~~~~~~~~~~~~ab",
+    "~c~ccc~~~ccc~~c~~~de",
+    "~ccc~ccc~c~c~cccc~~~",
+    "~~~~~~c~~c~c~c~~cccc",
+    "~~~~~~cc~c~cccc~~~c~",
+    "~~~ab~~cccc~c~~cccc~",
+    "~~a--f~~~~~~~ccc~~~c",
+    "~~-----bccc~~~~ccc~c",
+    "~~------b~ccc~~~~c~c",
+    "~~d----g-~~~c~~ccccc",
+    "~~~d----ec~ccc~c~~c~",
+    "~~~~~~~~~ccc~ccc~~cc"
+  ],
+  "entities": [
+    "...................F",
+    ".h...h.....h..h.....",
+    ".......h........h...",
+    ".....ih............h",
+    "..............h.....",
+    ".......h..h.h..h....",
+    ".....j.......h.....h",
+    "..T..k...........h..",
+    "..T.......h.........",
+    "...T.P.........h....",
+    "....o...Th.h.h......",
+    "...................h"
+  ]
+}

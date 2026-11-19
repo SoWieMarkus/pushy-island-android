@@ -1,0 +1,52 @@
+{
+  "format": 2,
+  "name": "Bravkika",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "-": "sand",
+    "b": "sand_top_right",
+    "c": "coconut_tunnel",
+    "d": "coconut_tunnel_finish",
+    "e": "hole",
+    "f": "sand_bottom_left",
+    "g": "sand_bottom_right",
+    "T": "tree",
+    "h": "crab_baby",
+    "i": "coconut",
+    "P": "pushy",
+    "F": "finish",
+    "j": "crab_mother",
+    "o": "stone"
+  },
+  "terrain": [
+    "~~~~~~~~~~~~~a-b~~~~",
+    "~~~~~a--b~~~a---~~~~",
+    "~~~~~------------b~~",
+    "~~a---c-----ccdc---b",
+    "a-----ccdcccc--c----",
+    "------c---c-cccc----",
+    "------ccccc---------",
+    "---ccccc------------",
+    "---c---c---~~~-~~---",
+    "--cccdccc--~a-eb~---",
+    "f----------~fee-~f--",
+    "~~f-------g~~f-g~~fg"
+  ],
+  "entities": [
+    "..............T.....",
+    "......T.....T..T....",
+    ".....T...TT.....T...",
+    "....T.h........h..T.",
+    "..T...h..h..h.......",
+    ".TT..........hih...T",
+    ".T....h.h.i.......P.",
+    "T..h..ih...TT.......",
+    "T.........T.......TF",
+    "T.h.h..hh...jT.T....",
+    "..........T....o..T.",
+    "...TT...TT...oTo...T"
+  ]
+}

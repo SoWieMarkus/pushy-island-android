@@ -1,0 +1,51 @@
+{
+  "format": 2,
+  "name": "Iwanaka",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "sand_top_left",
+    "-": "sand",
+    "b": "sand_top_right",
+    "c": "sand_bottom_right",
+    "d": "ice",
+    "e": "sand_bottom_left",
+    "f": "hole",
+    "T": "tree",
+    "g": "leaf_left",
+    "P": "pushy",
+    "o": "stone",
+    "F": "finish",
+    "h": "slingshot",
+    "i": "shot"
+  },
+  "terrain": [
+    "~~~~~~~~a-----b~~~~~",
+    "~~~~~a--cdddddeb~~~~",
+    "~~~~~-ddddddddd-~~~~",
+    "~~~~acddddddddd-~~~~",
+    "~~~~-dddabddddd-~~~~",
+    "~~~~-dddecddddde-b~~",
+    "~~~~-dddddddddddd-~~",
+    "~~~~-dddddddddddd-~~",
+    "~~~~-dddddddddddd-~~",
+    "~~~~ebddddddddda-c~~",
+    "~~~~~ebdda-bdda--~~~",
+    "~~~~~~e---f-----c~~~"
+  ],
+  "entities": [
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "....................",
+    "........T...........",
+    "....................",
+    ".........g..........",
+    "....................",
+    "................P...",
+    ".........oFo...h....",
+    "..............i....."
+  ]
+}

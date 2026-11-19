@@ -1,0 +1,53 @@
+{
+  "format": 2,
+  "name": "El Doradui",
+  "width": 20,
+  "height": 12,
+  "legend": {
+    "~": "water",
+    "a": "ice",
+    "b": "water_invisible",
+    "c": "sand_top_left",
+    "d": "sand_top_right",
+    "e": "boat",
+    "-": "sand",
+    "f": "water_invisible_pressure_plate",
+    "g": "sand_bottom_left",
+    "h": "sand_bottom_right",
+    "i": "coin",
+    "j": "pirate",
+    "P": "pushy",
+    "k": "pirate_hut",
+    "B": "box",
+    "F": "finish",
+    "o": "stone"
+  },
+  "terrain": [
+    "~~~~~~~~~~~~~~~~~~~~",
+    "~aaaa~ab~abaaa~~aaaa",
+    "~a~~a~ab~a~abbaba~~a",
+    "~a~~a~ab~a~aaab~ab~a",
+    "~a~~a~ab~a~a~~a~ab~a",
+    "~aaaabaaaa~abba~aaaa",
+    "~~~b~~~~~~~~~~~~b~~~",
+    "~~~bb~~~~~~~~~bbb~~~",
+    "~~~~b~~~~~bbbbb~~~~~",
+    "cde~cd~~~bb~~~~~~~~~",
+    "----f-~bbb~~~~~~c-d~",
+    "g----h~~~~~~~~~~g-h~"
+  ],
+  "entities": [
+    "....................",
+    ".iiii.i..i.iii..iiii",
+    ".i..i.i..i.i..i.i..i",
+    ".i..i.i..i.iii..i..i",
+    ".i..i.i..i.i..i.i..i",
+    ".iiii.iiii.i..i.iiii",
+    "....................",
+    "....................",
+    "....................",
+    "..j.................",
+    ".Pk....B.........Fo.",
+    "...................."
+  ]
+}
