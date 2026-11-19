@@ -23,7 +23,6 @@ class Board(private val terrainGrid: Grid<Terrain>, private val entityGrid: Grid
     fun entityAt(field: Field): Entity? = entityAt(field.coordinate)
 
     fun terrainAt(c: Coordinate): Terrain? = if (isInside(c)) terrainGrid[c] else null
-    fun terrainAt(field: Field): Terrain? = terrainAt(field.coordinate)
 
     /** Terrain at a coordinate that is known to be on the board. */
     fun terrain(c: Coordinate): Terrain = terrainGrid[c]

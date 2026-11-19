@@ -145,7 +145,7 @@ class PirateReward : Collectible(null, Coordinate.NONE) {
 }
 
 // ---------------------------------------------------------------------------------------------
-// Interactables: Pushy walks against them instead of pushing them.
+// Interactable: Pushy walks against them instead of pushing them.
 // ---------------------------------------------------------------------------------------------
 
 abstract class Interactable(type: EntityType, c: Coordinate) : Entity(type, c) {

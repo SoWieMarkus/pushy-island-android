@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import markus.wieland.pushygame.engine.model.Sprite
 import markus.wieland.pushygame.render.LocalSprites
 
-/** Colours of a pixel-art plank, matching the sprite palette (tools/sprites/canvas.py). */
+/** Colors of a pixel-art plank, matching the sprite palette (tools/sprites/canvas.py). */
 class PlankColors internal constructor(val face: Color, val grain: Color, val highlight: Color, val lip: Color, val text: Color)
 
 internal val Outline = Color(0xFF2B1D2E)
@@ -153,7 +153,7 @@ fun PixelGlyph(rows: List<String>, modifier: Modifier = Modifier, pixel: Dp = 2.
     val h = rows.size
     Canvas(modifier.size(pixel * (w + 2), pixel * (h + 3))) {
         val p = pixel.toPx()
-        fun filled(x: Int, y: Int) = y in 0 until h && x in 0 until rows[y].length && rows[y][x] == '#'
+        fun filled(x: Int, y: Int) = y in 0 until h && x in rows[y].indices && rows[y][x] == '#'
         // outline + shadow first
         for (y in -1..h + 1) for (x in -1..w) {
             val near = (-1..1).any { dy -> (-1..1).any { dx -> filled(x + dx, y + dy) || filled(x + dx, y + dy - 1) } }

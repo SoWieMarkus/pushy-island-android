@@ -104,7 +104,7 @@ class NotGate(type: EntityType, c: Coordinate) : LogicGate(type, c) {
     }
 }
 
-/** Lights up while any neighbour feeds it a signal. Every lamp has to be lit to finish the level. */
+/** Lights up while any neighbor feeds it a signal. Every lamp has to be lit to finish the level. */
 open class Lamp(type: EntityType, c: Coordinate) : LogicGate(type, c), GoalEntity {
     var isActive = false
         protected set

@@ -21,7 +21,7 @@ import markus.wieland.pushygame.ui.menu.MenuScreen
 @Serializable data object CampaignRoute : NavKey
 @Serializable data object CustomLevelsRoute : NavKey
 
-/** [isTest] = playing a custom level: no "next level" afterwards. */
+/** [isTest] = playing a custom level: no "next level" afterward. */
 @Serializable data class GameRoute(val levelId: Long, val isTest: Boolean = false) : NavKey
 
 /** [levelId] = 0 creates a new level. */

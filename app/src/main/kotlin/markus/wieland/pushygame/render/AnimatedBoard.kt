@@ -217,9 +217,6 @@ private class Transition(val from: GameState, val to: GameState) {
 
     private class Pop(val sprites: List<Sprite>, val at: Coordinate, val delay: Float, val appearing: Boolean)
 
-    private val cols = to.terrain.width
-    private val rows = to.terrain.height
-
     // --- terrain ------------------------------------------------------------------------------
     /** Cells whose terrain field moved here (boats); the field that was here before is drawn below it. */
     private val terrainSlides = mutableListOf<Slide>()
@@ -467,7 +464,7 @@ private class Transition(val from: GameState, val to: GameState) {
             size = Size(cell.width * (0.6f - height * 0.2f), cell.height * 0.18f),
         )
         // squash on take-off and landing, stretch in the air
-        val squash = if (p < 0.12f || p > 0.9f) 0.1f else 0f
+        val squash = if (p !in 0.12f..0.9f) 0.1f else 0f
         drawCell(sprites, slide.sprites, x, y - height, cell, now, scale = 1f + 0.12f * sin(PI.toFloat() * p) - squash)
     }
 

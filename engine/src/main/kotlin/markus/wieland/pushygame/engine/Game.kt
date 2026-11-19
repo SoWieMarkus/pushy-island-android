@@ -66,18 +66,18 @@ data class GameState(
     val entityIds: Grid<Int?>,
     /** Terrain height per cell (see [Terrain.ELEVATION_SAND] etc.). */
     val elevation: Grid<Int>,
-    /** What happened since the previous state – see [GameEvent]. */
+    /** What happened since the previous state ï¿½ see [GameEvent]. */
     val events: List<GameEvent> = emptyList(),
     /** Increases with every published state, so two identical-looking states stay distinct. */
     val version: Long = 0,
-    /** Different for every [Game] instance – a change means the level was restarted. */
+    /** Different for every [Game] instance ï¿½ a change means the level was restarted. */
     val gameId: Int = 0,
 )
 
 /**
  * One play-through of a level. Not thread-safe: call [move] and [advance] from one thread.
  *
- * All timed behaviour runs on [scheduler]; the UI drives it by calling [advance] every frame.
+ * All timed behavior runs on [scheduler]; the UI drives it by calling [advance] every frame.
  */
 class Game(level: LevelData) {
 
@@ -155,8 +155,6 @@ class Game(level: LevelData) {
     fun advance(ms: Long) {
         if (scheduler.advance(ms)) publish()
     }
-
-    val hasPendingTimers: Boolean get() = scheduler.hasPendingTasks
 
     // -----------------------------------------------------------------------------------------
     // Win condition
@@ -257,7 +255,7 @@ class Game(level: LevelData) {
         board.swapTerrain(from, destination)
     }
 
-    /** All statues of the pushed colour move together; Pushy follows into the freed field. */
+    /** All statues of the pushed color move together; Pushy follows into the freed field. */
     internal fun pushStatues(from: Coordinate, next: Coordinate) {
         val direction = from.directionTo(next) ?: return
         val pushed = board.entityAt(from) as? Statue ?: return
@@ -273,7 +271,7 @@ class Game(level: LevelData) {
         pushy.afterMove(follower, this)
     }
 
-    /** Grows flowers of the same colour across grass in [direction]. */
+    /** Grows flowers of the same color across grass in [direction]. */
     internal fun growFlowers(flower: Flower, direction: Direction) {
         val type = flower.type ?: return
         var next = flower.coordinate.next(direction)
@@ -329,7 +327,7 @@ class Game(level: LevelData) {
         pendingEvents += event
     }
 
-    /** [entity] is about to vanish where it stands – lets the renderer finish its move first. */
+    /** [entity] is about to vanish where it stands ï¿½ lets the renderer finish its move first. */
     internal fun consumed(entity: Entity) = emit(GameEvent.Consumed(entity.id, entity.coordinate))
 
     internal fun removeTowersIfAllLit() {
@@ -341,7 +339,7 @@ class Game(level: LevelData) {
     // Logic signals
     // -----------------------------------------------------------------------------------------
 
-    /** Sends a signal change travelling in [direction] into the field at [at]. */
+    /** Sends a signal change traveling in [direction] into the field at [at]. */
     fun propagate(at: Coordinate, direction: Direction) {
         val edge = Edge()
         val entity = board.entityAt(at)

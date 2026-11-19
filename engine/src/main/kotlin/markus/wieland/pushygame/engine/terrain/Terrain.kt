@@ -170,7 +170,7 @@ class Cable(type: TerrainType, c: Coordinate) : Sand(type, c) {
     var isActive = false
     private var directions: List<Direction> = Direction.entries
 
-    /** Recomputes which arms of the cable are drawn, based on its neighbours. */
+    /** Recomputes which arms of the cable are drawn, based on its neighbors. */
     fun updateConnections(board: Board) {
         directions = Direction.entries.filter { connectsTo(board, it) }.ifEmpty { Direction.entries }
     }

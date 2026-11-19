@@ -10,7 +10,7 @@ import markus.wieland.pushygame.engine.terrain.Cable
 /**
  * A logic part that consumes a signal.
  *
- * Direction convention (kept from the original game): `isInput(d)` asks whether a signal travelling
+ * Direction convention (kept from the original game): `isInput(d)` asks whether a signal traveling
  * in direction `d` can enter this field, i.e. whether the port facing `d.opposite` is an input.
  */
 interface LogicInput {
@@ -18,7 +18,7 @@ interface LogicInput {
     fun update(game: Game)
 
     companion object {
-        /** Whether the neighbour of [at] in [direction] currently feeds a signal into [at]. */
+        /** Whether the neighbor of [at] in [direction] currently feeds a signal into [at]. */
         fun isInputActive(game: Game, direction: Direction, at: Coordinate): Boolean {
             val c = at.next(direction)
             if (!game.board.isInside(c)) return false

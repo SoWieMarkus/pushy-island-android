@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,7 +37,6 @@ import markus.wieland.pushygame.ui.IslandBackground
 import markus.wieland.pushygame.ui.LevelCard
 import markus.wieland.pushygame.ui.LevelPreview
 import markus.wieland.pushygame.ui.PixelGlyph
-import markus.wieland.pushygame.ui.PushyColors
 import markus.wieland.pushygame.ui.ScreenHeader
 import markus.wieland.pushygame.ui.SolvedBadge
 import markus.wieland.pushygame.ui.pixelTextStyle
@@ -57,7 +55,11 @@ fun CampaignScreen(onBack: () -> Unit, onPlay: (Long) -> Unit) {
         Column(Modifier.fillMaxSize()) {
             ScreenHeader(stringResource(R.string.campaign_title), onBack) {
                 Text(
-                    stringResource(R.string.campaign_progress, levels.count { it.solved }, levels.size),
+                    stringResource(
+                        R.string.campaign_progress,
+                        levels.count { it.solved },
+                        levels.size
+                    ),
                     style = pixelTextStyle(11.sp, shadow = 4f),
                     modifier = Modifier.padding(end = 16.dp),
                 )
@@ -71,7 +73,10 @@ fun CampaignScreen(onBack: () -> Unit, onPlay: (Long) -> Unit) {
             ) {
                 items(levels, key = { it.id }) { level ->
                     val index = level.campaignNumber!! - 1
-                    CampaignCard(level, locked = index > firstUnsolved, onClick = { onPlay(level.id) })
+                    CampaignCard(
+                        level,
+                        locked = index > firstUnsolved,
+                        onClick = { onPlay(level.id) })
                 }
             }
         }
@@ -96,11 +101,19 @@ private fun CampaignCard(level: LevelEntity, locked: Boolean, onClick: () -> Uni
                     pixel = 4.dp,
                 )
             }
-            if (level.solved) SolvedBadge(Modifier.align(Alignment.TopEnd).padding(6.dp))
+            if (level.solved) SolvedBadge(Modifier
+                .align(Alignment.TopEnd)
+                .padding(6.dp))
         },
         footer = {
-            Row(Modifier.padding(top = 8.dp, start = 2.dp, end = 2.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("%03d".format(level.campaignNumber), style = pixelTextStyle(10.sp, Color(0xFFFFE066), shadow = 3f))
+            Row(
+                Modifier.padding(top = 8.dp, start = 2.dp, end = 2.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "%03d".format(level.campaignNumber),
+                    style = pixelTextStyle(10.sp, Color(0xFFFFE066), shadow = 3f)
+                )
                 Spacer(Modifier.width(8.dp))
                 Text(
                     level.name,

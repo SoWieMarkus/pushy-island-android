@@ -345,12 +345,12 @@ private fun Inventory(items: List<InventoryItem>, modifier: Modifier = Modifier)
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        for (item in items) {
+        for ((sprite, count) in items) {
             Box(Modifier
                 .size(46.dp)
                 .pixelSlot()) {
                 Image(
-                    bitmap = sprites[item.sprite],
+                    bitmap = sprites[sprite],
                     contentDescription = null,
                     filterQuality = FilterQuality.None,
                     modifier = Modifier
@@ -358,7 +358,7 @@ private fun Inventory(items: List<InventoryItem>, modifier: Modifier = Modifier)
                         .align(Alignment.Center),
                 )
                 Text(
-                    "${item.count}",
+                    "$count",
                     style = pixelTextStyle(9.sp, shadow = 3f),
                     modifier = Modifier
                         .align(Alignment.BottomEnd)

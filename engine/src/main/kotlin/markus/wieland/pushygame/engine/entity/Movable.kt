@@ -38,7 +38,7 @@ abstract class Movable(type: EntityType?, c: Coordinate) : Entity(type, c) {
         val terrain = board.terrain(this)
         val nextTerrain = board.terrain(next)
 
-        // Sailing: the boat event moves Pushy and the boat itself, so the regular move is cancelled.
+        // Sailing: the boat event moves Pushy and the boat itself, so the regular move is canceled.
         if (terrain is Boat && nextTerrain.elevation == Terrain.ELEVATION_WATER && canUseBoat) {
             game.sail(coordinate, next)
             return false
@@ -194,8 +194,9 @@ class Coconut(type: EntityType, c: Coordinate) : Movable(type, c) {
     override fun isMovePossible(next: Coordinate, game: Game): Boolean {
         val possible = super.isMovePossible(next, game)
         val nextTerrain = game.board.terrainAt(next) ?: return false
-        if (game.board.terrain(this).isCoconutTunnel && !nextTerrain.coconutCanEnterFromTunnel) return false
-        return possible || nextTerrain is Hole
+        return !(game.board.terrain(this).isCoconutTunnel
+                && !nextTerrain.coconutCanEnterFromTunnel)
+                && (possible || nextTerrain is Hole)
     }
 
     override fun move(next: Coordinate, game: Game): Boolean {

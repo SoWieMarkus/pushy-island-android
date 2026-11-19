@@ -11,11 +11,9 @@ class Scheduler {
         private set
 
     private var sequence = 0L
-    private val queue = PriorityQueue<Task>(compareBy<Task> { it.time }.thenBy { it.sequence })
+    private val queue = PriorityQueue(compareBy<Task> { it.time }.thenBy { it.sequence })
 
     private class Task(val time: Long, val sequence: Long, val action: () -> Unit)
-
-    val hasPendingTasks: Boolean get() = queue.isNotEmpty()
 
     fun schedule(delayMs: Long, action: () -> Unit) {
         queue += Task(now + delayMs, sequence++, action)

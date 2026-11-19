@@ -17,6 +17,7 @@ import markus.wieland.pushygame.engine.Game
 import markus.wieland.pushygame.engine.GameState
 import markus.wieland.pushygame.engine.level.LevelData
 import markus.wieland.pushygame.engine.model.Direction
+import kotlin.time.Duration.Companion.milliseconds
 
 data class GameUi(
     val name: String = "",
@@ -62,7 +63,7 @@ class GameViewModel(
             // Drive the game clock (logic gates, buttons, …) with real time.
             var last = SystemClock.uptimeMillis()
             while (isActive) {
-                delay(FRAME_MS)
+                delay(FRAME_MS.milliseconds)
                 val now = SystemClock.uptimeMillis()
                 game.advance(now - last)
                 last = now

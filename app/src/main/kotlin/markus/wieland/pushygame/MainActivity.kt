@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PushyTheme {
                 CompositionLocalProvider(LocalSprites provides sprites) {
-                    // Surface provides the background colour and light text for all screens.
+                    // Surface provides the background color and light text for all screens.
                     Surface(color = MaterialTheme.colorScheme.background) {
                         PushyNavigation()
                     }
