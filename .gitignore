@@ -7,9 +7,7 @@ local.properties
 /captures
 .externalNativeBuild
 .cxx
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+
+# IDE and tool settings (regenerated locally)
+.idea/
+.claude/
