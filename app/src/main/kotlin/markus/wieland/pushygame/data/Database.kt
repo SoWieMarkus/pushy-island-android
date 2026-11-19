@@ -56,9 +56,6 @@ interface LevelDao {
     @Query("UPDATE levels SET solved = 1 WHERE id = :id")
     suspend fun markSolved(id: Long)
 
-    @Query("UPDATE levels SET solved = 1 WHERE campaignNumber IS NOT NULL")
-    suspend fun markCampaignSolved()
-
     @Query("DELETE FROM levels WHERE campaignNumber > :lastNumber")
     suspend fun deleteCampaignAfter(lastNumber: Int)
 }

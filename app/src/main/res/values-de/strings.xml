@@ -2,7 +2,12 @@
     <string name="menu_campaign">Kampagne</string>
     <string name="menu_custom_levels">Eigene Level</string>
     <string name="menu_custom_levels_locked">Löse Level 1 zum Freischalten</string>
-    <string name="menu_debug_solve_all">Debug: alle lösen</string>
+    <string name="menu_settings">Einstellungen</string>
+
+    <string name="settings_title">Einstellungen</string>
+    <string name="settings_panel_side">Steuerung und Inventar</string>
+    <string name="settings_left">Links</string>
+    <string name="settings_right">Rechts</string>
 
     <string name="back">Zurück</string>
     <string name="cancel">Abbrechen</string>

@@ -3,7 +3,12 @@
     <string name="menu_campaign">Campaign</string>
     <string name="menu_custom_levels">Custom levels</string>
     <string name="menu_custom_levels_locked">Solve level 1 to unlock</string>
-    <string name="menu_debug_solve_all">Debug: solve all</string>
+    <string name="menu_settings">Settings</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_panel_side">Controls and inventory</string>
+    <string name="settings_left">Left</string>
+    <string name="settings_right">Right</string>
 
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>

@@ -41,8 +41,6 @@ class LevelRepository(private val dao: LevelDao, private val assets: AssetManage
 
     suspend fun markSolved(id: Long) = dao.markSolved(id)
 
-    suspend fun markCampaignSolved() = dao.markCampaignSolved()
-
     /** Saves a custom level; editing a level resets its solved state because it has to be re-verified. */
     suspend fun saveCustom(id: Long?, level: LevelData): Long {
         val json = LevelFormat.toJson(level)

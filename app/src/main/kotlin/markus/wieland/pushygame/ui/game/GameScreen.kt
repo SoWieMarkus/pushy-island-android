@@ -59,6 +59,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.delay
 import markus.wieland.pushygame.R
 import markus.wieland.pushygame.appContainer
+import markus.wieland.pushygame.data.PanelSide
 import markus.wieland.pushygame.engine.InventoryItem
 import markus.wieland.pushygame.engine.model.Direction
 import markus.wieland.pushygame.engine.model.Sprite
@@ -78,7 +79,10 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun GameScreen(levelId: Long, isTest: Boolean, onBack: () -> Unit, onNextLevel: (Long) -> Unit) {
-    val repository = LocalContext.current.appContainer.levels
+    val container = LocalContext.current.appContainer
+    val repository = container.levels
+    val panelSide by container.settings.panelSide.collectAsStateWithLifecycle()
+    val panelSpace = PanelWidth + PanelMargin * 2
     val viewModel = viewModel { GameViewModel(levelId, isTest, repository) }
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val sprites = LocalSprites.current
@@ -109,7 +113,7 @@ fun GameScreen(levelId: Long, isTest: Boolean, onBack: () -> Unit, onNextLevel: 
                 true
             },
     ) {
-        // The sea fills the whole screen; the board is centred left of the panel.
+        // The sea fills the whole screen; the board is centred beside the panel.
         ui.state?.let { state ->
             AnimatedBoard(
                 state,
@@ -117,7 +121,8 @@ fun GameScreen(levelId: Long, isTest: Boolean, onBack: () -> Unit, onNextLevel: 
                 Modifier
                     .fillMaxSize()
                     .pointerInput(Unit) { detectSwipes(viewModel::move) },
-                endInset = PanelWidth + PanelMargin * 2,
+                startInset = if (panelSide == PanelSide.LEFT) panelSpace else 0.dp,
+                endInset = if (panelSide == PanelSide.RIGHT) panelSpace else 0.dp,
             )
         }
         SidePanel(
@@ -126,7 +131,7 @@ fun GameScreen(levelId: Long, isTest: Boolean, onBack: () -> Unit, onNextLevel: 
             onRestart = viewModel::restart,
             onMove = viewModel::move,
             modifier = Modifier
-                .align(Alignment.CenterEnd)
+                .align(if (panelSide == PanelSide.LEFT) Alignment.CenterStart else Alignment.CenterEnd)
                 .padding(PanelMargin)
                 .width(PanelWidth)
                 .fillMaxHeight(),
@@ -151,7 +156,8 @@ fun GameScreen(levelId: Long, isTest: Boolean, onBack: () -> Unit, onNextLevel: 
     }
 }
 
-private const val SOLVED_DELAY_MS = 450L
+/** Long enough for Pushy to walk into the hut and the confetti to settle (see AnimatedBoard). */
+private const val SOLVED_DELAY_MS = 1350L
 
 /** "Solved!" notice board: Pushy bounces for joy, plank buttons to go on. */
 @Composable

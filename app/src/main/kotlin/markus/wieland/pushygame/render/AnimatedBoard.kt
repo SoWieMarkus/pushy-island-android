@@ -42,6 +42,17 @@ private const val BLAST_MS = 420f
 private const val JUMP_MS = 300f
 private const val SHOT_STEP_MS = 45f
 private const val PUFF_MS = 220f
+private const val ENTER_MS = 380f
+private const val CELEBRATE_MS = 900f
+
+/** How long the foam a boat leaves behind stays on the water. */
+private const val WAKE_MS = 1400f
+
+/** Sprites are 16×16 pixel art; effects snap to the same pixel grid. */
+private const val SPRITE_PIXELS = 16
+
+/** Confetti colours for the level-finished burst. */
+private val CONFETTI = listOf(Color(0xFFFFD54A), Color(0xFFFF6B6B), Color(0xFF6BD6FF), Color(0xFF8BE07A), Color(0xFFFFFFFF))
 
 /** At most this many states wait behind the one being animated; older ones are skipped. */
 private const val MAX_BACKLOG = 2
@@ -59,30 +70,32 @@ private val PUSHY_SPRITES = setOf(Sprite.PUSHY, Sprite.PUSHY_EAST, Sprite.PUSHY_
  * back one after another, speeding up when the player is faster than the animations.
  */
 @Composable
-fun AnimatedBoard(state: GameState, sprites: SpriteSheet, modifier: Modifier = Modifier, endInset: Dp = 0.dp) {
+fun AnimatedBoard(state: GameState, sprites: SpriteSheet, modifier: Modifier = Modifier, startInset: Dp = 0.dp, endInset: Dp = 0.dp) {
     val animator = remember { BoardAnimator(state) }
     LaunchedEffect(state) { animator.offer(state) }
     LaunchedEffect(animator) {
         while (true) withFrameMillis { animator.tick(it, keepTicking = sprites.hasAnimations) }
     }
 
-    // Fills its whole area: the board sits centred (left of [endInset]) and the sea continues
+    // Fills its whole area: the board sits centred between [startInset] and [endInset] and the sea continues
     // around it on the same grid, so the island floats in an endless ocean.
     Canvas(modifier) {
         val now = animator.clock // read on every frame → redraws while something animates
         val cols = state.terrain.width
         val rows = state.terrain.height
-        val usable = size.width - endInset.toPx()
+        val start = startInset.toPx()
+        val usable = size.width - start - endInset.toPx()
         val side = floor(min(usable / cols, size.height / rows)).coerceAtLeast(1f)
         val cell = Size(side, side)
-        val origin = Offset(((usable - side * cols) / 2).roundToInt().toFloat(), ((size.height - side * rows) / 2).roundToInt().toFloat())
+        val wakes = { scope: DrawScope -> animator.wakes.forEach { scope.drawWake(it, now, cell) } }
+        val origin = Offset((start + (usable - side * cols) / 2).roundToInt().toFloat(), ((size.height - side * rows) / 2).roundToInt().toFloat())
         drawSea(sprites, now, cell, origin, cols, rows)
         translate(origin.x, origin.y) {
             val transition = animator.transition
             if (transition == null) {
-                drawStill(animator.shown, sprites, now, cell)
+                drawStill(animator.shown, sprites, now, cell, wakes)
             } else {
-                transition.draw(this, sprites, now, animator.elapsed(now), cell)
+                transition.draw(this, sprites, now, animator.elapsed(now), cell, wakes)
             }
         }
     }
@@ -114,6 +127,9 @@ private class BoardAnimator(initial: GameState) {
     var clock by mutableLongStateOf(0L)
         private set
 
+    /** Boat wakes still visible on the water; they outlive the transition that made them. */
+    val wakes = mutableListOf<Wake>()
+
     private val backlog = ArrayDeque<GameState>()
     private var startedAt = 0L
     private var speed = 1f
@@ -124,6 +140,7 @@ private class BoardAnimator(initial: GameState) {
         if (state.gameId != latest.gameId) {
             // A new game (restart): jump straight there.
             backlog.clear()
+            wakes.clear()
             transition = null
             shown = state
             return
@@ -149,15 +166,22 @@ private class BoardAnimator(initial: GameState) {
                 transition = planned
                 startedAt = now
                 speed = if (backlog.isEmpty()) 1f else CATCH_UP_SPEED
+                for (boat in planned.boats) wakes += Wake(boat, now, speed, next)
             }
         }
-        if (keepTicking || transition != null) clock = now
+        wakes.removeAll { it.isGone(now) }
+        if (keepTicking || transition != null || wakes.isNotEmpty()) clock = now
     }
 }
 
-private fun DrawScope.drawStill(state: GameState, sprites: SpriteSheet, now: Long, cell: Size) {
+private fun DrawScope.drawStill(state: GameState, sprites: SpriteSheet, now: Long, cell: Size, overTerrain: (DrawScope) -> Unit) {
     for (c in state.terrain.coordinates) drawCell(sprites, state.terrain[c], c.col.toFloat(), c.row.toFloat(), cell, now + terrainPhase(c))
-    for (c in state.entities.coordinates) drawCell(sprites, state.entities[c], c.col.toFloat(), c.row.toFloat(), cell, now + phase(c))
+    overTerrain(this)
+    for (c in state.entities.coordinates) {
+        // Once the level is finished Pushy is inside the hut.
+        val layers = if (state.isFinished) state.entities[c].filterNot { it in PUSHY_SPRITES } else state.entities[c]
+        drawCell(sprites, layers, c.col.toFloat(), c.row.toFloat(), cell, now + phase(c))
+    }
 }
 
 /** Entities of the same kind shouldn't all blink in lockstep. */
@@ -199,27 +223,76 @@ private fun easeOutBack(x: Float): Float {
 
 private fun distance(a: Coordinate, b: Coordinate) = abs(a.row - b.row) + abs(a.col - b.col)
 
+private class Slide(val sprites: List<Sprite>, val start: Coordinate, val end: Coordinate, val delay: Float = 0f) {
+    val cells = distance(start, end)
+    val duration = cells * STEP_MS
+    val endTime get() = delay + duration
+
+    /** Position (col, row) at time [t]. */
+    fun at(t: Float): Offset {
+        val raw = progress(t, delay, duration)
+        val p = if (cells == 1) FastOutSlowInEasing.transform(raw) else 1f - (1f - raw).pow(2)
+        return Offset(start.col + (end.col - start.col) * p, start.row + (end.row - start.row) * p)
+    }
+}
+
+/** Foam a sailing boat leaves on the water, timed in the same animation clock as its [boat] slide. */
+private class Wake(val boat: Slide, val startedAt: Long, val speed: Float, private val state: GameState) {
+    /** Foam only shows on open water, never on the beach next to it. */
+    fun isWater(col: Int, row: Int): Boolean {
+        val c = Coordinate(row, col)
+        if (row !in 0 until state.terrain.height || col !in 0 until state.terrain.width) return true
+        return state.terrain[c].any { it == Sprite.WATER || it == Sprite.BOAT }
+    }
+
+    fun elapsed(now: Long) = (now - startedAt) * speed
+    fun isGone(now: Long) = elapsed(now) > boat.endTime + WAKE_MS
+}
+
+private val FOAM = Color(0xFFEAFBFF)
+
+/**
+ * Two lines of foam spreading out in a V behind the boat, plus a churned streak down the middle,
+ * all fading out a while after the boat has passed.
+ */
+private fun DrawScope.drawWake(wake: Wake, now: Long, cell: Size) {
+    val boat = wake.boat
+    if (boat.cells == 0) return
+    val t = wake.elapsed(now)
+    val pixel = cell.width / SPRITE_PIXELS
+    val dirX = (boat.end.col - boat.start.col).toFloat() / boat.cells
+    val dirY = (boat.end.row - boat.start.row).toFloat() / boat.cells
+    fun dot(x: Float, y: Float, color: Color, size: Float = pixel) {
+        if (!wake.isWater(floor(x / cell.width).toInt(), floor(y / cell.height).toInt())) return
+        drawRect(color, topLeft = Offset(floor(x / pixel) * pixel, floor(y / pixel) * pixel), size = Size(size, size))
+    }
+    val samples = boat.cells * 6
+    for (k in 0..samples) {
+        val passedAt = boat.endTime * k / samples
+        if (passedAt > t) break
+        val age = (t - passedAt) / WAKE_MS
+        if (age >= 1f) continue
+        val alpha = (1f - age).pow(1.5f)
+        val pos = boat.at(passedAt)
+        // Start a little behind the boat's centre, at its stern.
+        val cx = (pos.x + 0.5f - dirX * 0.3f) * cell.width
+        val cy = (pos.y + 0.5f - dirY * 0.3f) * cell.height
+        val spread = cell.width * (0.18f + 0.32f * (1f - (1f - age).pow(2)))
+        dot(cx - dirY * spread, cy + dirX * spread, FOAM.copy(alpha = 0.85f * alpha))
+        dot(cx + dirY * spread, cy - dirX * spread, FOAM.copy(alpha = 0.85f * alpha))
+        if (k % 2 == 0) dot(cx, cy, FOAM.copy(alpha = 0.35f * alpha), pixel * 2)
+    }
+}
+
 /** Everything needed to animate from [from] to [to]. Times are in milliseconds from the start. */
 private class Transition(val from: GameState, val to: GameState) {
-
-    private class Slide(val sprites: List<Sprite>, val start: Coordinate, val end: Coordinate, val delay: Float = 0f) {
-        val cells = distance(start, end)
-        val duration = cells * STEP_MS
-        val endTime get() = delay + duration
-
-        /** Position (col, row) at time [t]. */
-        fun at(t: Float): Offset {
-            val raw = progress(t, delay, duration)
-            val p = if (cells == 1) FastOutSlowInEasing.transform(raw) else 1f - (1f - raw).pow(2)
-            return Offset(start.col + (end.col - start.col) * p, start.row + (end.row - start.row) * p)
-        }
-    }
 
     private class Pop(val sprites: List<Sprite>, val at: Coordinate, val delay: Float, val appearing: Boolean)
 
     // --- terrain ------------------------------------------------------------------------------
     /** Cells whose terrain field moved here (boats); the field that was here before is drawn below it. */
     private val terrainSlides = mutableListOf<Slide>()
+    val boats: List<Slide> get() = terrainSlides
     private val terrainUnder = mutableMapOf<Coordinate, List<Sprite>>()
     private val crossfades = mutableMapOf<Coordinate, List<Sprite>>()
 
@@ -239,6 +312,9 @@ private class Transition(val from: GameState, val to: GameState) {
     private var pushyHops = false
     private var bump: Direction? = null
     private val blasts = mutableListOf<Coordinate>()
+
+    /** The hut Pushy walks into on the winning move, or null if this move doesn't finish the level. */
+    private var finish: Coordinate? = null
 
     /** When something arrives at a cell – plates, pick-ups and terrain changes react then. */
     private val arrival = mutableMapOf<Coordinate, Float>()
@@ -334,6 +410,11 @@ private class Transition(val from: GameState, val to: GameState) {
             pops += Pop(to.entities[end], end, arrival[end] ?: shotEnd, appearing = true)
         }
 
+        if (to.isFinished && !from.isFinished) {
+            finish = pushy?.end?.let { Coordinate(it.row - 1, it.col) }?.takeIf { Sprite.FINISH in to.entities[it] }
+            finish?.let { hut -> stills.removeAll { it.first == hut } }
+        }
+
         for (c in to.terrain.coordinates) {
             if (c in terrainUnder || terrainSlides.any { it.start == c }) continue
             if (from.terrain[c] != to.terrain[c]) crossfades[c] = from.terrain[c]
@@ -351,10 +432,11 @@ private class Transition(val from: GameState, val to: GameState) {
             crossfades.keys.maxOfOrNull { (arrival[it] ?: 0f) + CROSSFADE_MS },
             if (bump != null && pushy?.cells == 0) BUMP_MS else null,
             if (blasts.isNotEmpty()) BLAST_MS else null,
+            if (finish != null) ENTER_MS + CELEBRATE_MS else null,
         ).maxOrNull() ?: 0f
     }
 
-    fun draw(scope: DrawScope, sprites: SpriteSheet, now: Long, t: Float, cell: Size) = with(scope) {
+    fun draw(scope: DrawScope, sprites: SpriteSheet, now: Long, t: Float, cell: Size, overTerrain: (DrawScope) -> Unit) = with(scope) {
 
         // A little screen shake while a bomb goes off.
         val shake = if (blasts.isEmpty()) Offset.Zero else {
@@ -374,6 +456,7 @@ private class Transition(val from: GameState, val to: GameState) {
                     drawCell(sprites, old, c.col.toFloat(), c.row.toFloat(), cell, tNow, alpha = 1f - p)
                 }
             }
+            overTerrain(this)
             for (slide in terrainSlides) {
                 val pos = slide.at(t)
                 drawCell(sprites, slide.sprites, pos.x, pos.y, cell, now)
@@ -412,7 +495,8 @@ private class Transition(val from: GameState, val to: GameState) {
                 if (inP > 0f) drawSparkle(Offset((end.col + 0.5f) * cell.width, (end.row + 0.5f) * cell.height), cell, inP)
             }
             for ((slide, end) in jumps) drawJump(slide, end, sprites, cell, now, t)
-            pushy?.let { drawPushy(it, sprites, cell, now, t) }
+            val hut = finish
+            if (hut != null) drawFinish(hut, sprites, cell, now, t) else pushy?.let { drawPushy(it, sprites, cell, now, t) }
             shot?.let { drawShot(it, sprites, cell, now, t) }
 
             for (at in blasts) drawBlast(at, cell, progress(t, 0f, BLAST_MS))
@@ -444,6 +528,59 @@ private class Transition(val from: GameState, val to: GameState) {
             )
         }
         drawCell(sprites, slide.sprites, pos.x, pos.y, cell, now)
+    }
+
+    /** Pushy walks into the hut, which hops for joy and throws confetti. */
+    private fun DrawScope.drawFinish(hut: Coordinate, sprites: SpriteSheet, cell: Size, now: Long, t: Float) {
+        val walker = pushy ?: return
+        val enter = progress(t, 0f, ENTER_MS)
+        val celebrate = progress(t, ENTER_MS, CELEBRATE_MS)
+
+        // The hut: a squash as Pushy steps in, then two little hops.
+        val hop = if (celebrate <= 0f) 0f else abs(sin(2 * PI.toFloat() * celebrate)) * 0.22f * (1f - celebrate)
+        val squash = 0.08f * sin(PI.toFloat() * progress(t, ENTER_MS * 0.6f, ENTER_MS * 0.6f))
+        val hutX = hut.col.toFloat()
+        val hutY = hut.row.toFloat()
+        if (hop > 0f) {
+            drawOval(
+                Color.Black.copy(alpha = 0.22f * (1f - hop * 2f)),
+                topLeft = Offset((hutX + 0.18f) * cell.width, (hutY + 0.8f) * cell.height),
+                size = Size(cell.width * 0.64f, cell.height * 0.16f),
+            )
+        }
+        val w = cell.width * (1f + squash)
+        val h = cell.height * (1f - squash)
+        val left = hutX * cell.width + (cell.width - w) / 2
+        val top = (hutY - hop) * cell.height + (cell.height - h)
+        for (sprite in to.entities[hut]) drawSprite(sprites.frame(sprite, now + phase(hut)), left, top, w, h)
+
+        // Pushy: a hop towards the door, shrinking and fading as it disappears inside.
+        if (enter < 1f) {
+            val e = FastOutSlowInEasing.transform(enter)
+            val x = walker.end.col.toFloat()
+            val y = walker.end.row - 0.55f * e - 0.12f * sin(PI.toFloat() * enter)
+            val fade = progress(t, ENTER_MS * 0.45f, ENTER_MS * 0.55f)
+            drawCell(sprites, walker.sprites, x, y, cell, now, alpha = 1f - fade, scale = 1f - 0.45f * e)
+        }
+
+        // Confetti bursting out of the hut and drifting down.
+        if (celebrate > 0f && celebrate < 1f) {
+            val center = Offset((hutX + 0.5f) * cell.width, (hutY + 0.35f) * cell.height)
+            val dot = cell.width / 9f
+            val ease = 1f - (1f - celebrate).pow(3)
+            for (i in 0 until 18) {
+                val angle = -PI.toFloat() / 2 + (i - 8.5f) * 0.17f + ((i * 29) % 7 - 3) * 0.04f
+                val speed = cell.width * (0.9f + 0.6f * ((i * 41) % 10) / 10f)
+                val gravity = cell.height * 1.4f * celebrate * celebrate
+                val pos = Offset(center.x + cos(angle) * speed * ease, center.y + sin(angle) * speed * ease + gravity)
+                drawRect(
+                    CONFETTI[i % CONFETTI.size].copy(alpha = (1f - celebrate).coerceIn(0f, 1f).pow(0.5f)),
+                    topLeft = Offset(pos.x - dot / 2, pos.y - dot / 2),
+                    size = Size(dot, if ((i + (t / 80f).toInt()) % 2 == 0) dot else dot / 2),
+                )
+            }
+            drawSparkle(center, cell, progress(t, ENTER_MS, CELEBRATE_MS * 0.5f))
+        }
     }
 
     /** Walks onto the spring, then gets flung in an arc to [end]. */

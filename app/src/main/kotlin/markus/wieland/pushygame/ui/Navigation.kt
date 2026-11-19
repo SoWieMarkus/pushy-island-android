@@ -16,10 +16,12 @@ import markus.wieland.pushygame.ui.custom.CustomLevelsScreen
 import markus.wieland.pushygame.ui.editor.EditorScreen
 import markus.wieland.pushygame.ui.game.GameScreen
 import markus.wieland.pushygame.ui.menu.MenuScreen
+import markus.wieland.pushygame.ui.settings.SettingsScreen
 
 @Serializable data object MenuRoute : NavKey
 @Serializable data object CampaignRoute : NavKey
 @Serializable data object CustomLevelsRoute : NavKey
+@Serializable data object SettingsRoute : NavKey
 
 /** [isTest] = playing a custom level: no "next level" afterward. */
 @Serializable data class GameRoute(val levelId: Long, val isTest: Boolean = false) : NavKey
@@ -47,7 +49,11 @@ fun PushyNavigation() {
                 MenuScreen(
                     onCampaign = { backStack.add(CampaignRoute) },
                     onCustomLevels = { backStack.add(CustomLevelsRoute) },
+                    onSettings = { backStack.add(SettingsRoute) },
                 )
+            }
+            entry<SettingsRoute> {
+                SettingsScreen(onBack = back)
             }
             entry<CampaignRoute> {
                 CampaignScreen(onBack = back, onPlay = { backStack.add(GameRoute(it)) })

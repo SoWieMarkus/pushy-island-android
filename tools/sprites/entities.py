@@ -599,18 +599,34 @@ def tower(lit, frame=0):
     return finish(c, cy=14.4, rx=4.5, ry=1)
 
 
-def finish_flag(frame):
+def finish_hut(frame):
+    """Goal hut with an open archway at the bottom: Pushy can only walk in from the south."""
     c = Canvas()
-    c.ellipse(7, 14, 4, 1.4, "sand_shadow")
-    c.rect(4, 2, 4, 13, "wood_dark")
-    c.px(4, 1, "yellow")
-    c.px(4, 2, "yellow_light")
-    for y in range(2, 8):
-        for x in range(5, 13):
-            wave = round(math.sin((x - 5) / 2.2 + frame * 2 * math.pi / 3))
-            yy = y + wave if x > 6 else y
-            checker = ((x - 5) // 2 + (y - 2) // 2) % 2 == 0
-            c.px(x, yy, "white" if checker else "red")
+    c.art([
+        "................",
+        "................",
+        "................",
+        "...yyyyyyyyyy...",
+        "..yYlYYYlYYYYy..",
+        ".yYYYYlYYYYlYYy.",
+        ".dddddddddddddd.",
+        "..hWWWWWWWWWWw..",
+        "..hWWWWkkWWWWw..",
+        "..hWWkkkkkkWWw..",
+        "..hWkkkkkkkkWw..",
+        "..hWkkkkkkkkWw..",
+        "..hWkkkkkkkkWw..",
+        "..hWkkkkkkkkWw..",
+        "..wwkkkkkkkkww..",
+        "....ssssssss....",
+    ], {"y": "yellow_dark", "Y": "yellow", "l": "yellow_light", "d": "wood_dark", "W": "wood",
+        "h": "wood_light", "w": "wood_dark", "k": "outline", "s": "sand_shadow"})
+    # Pole with a little checkered pennant on the roof.
+    c.rect(7, 0, 7, 2, "wood_dark")
+    for y in range(0, 2):
+        for x in range(8, 12):
+            wave = round(0.6 * math.sin((x - 8) / 1.5 + frame * 2 * math.pi / 3)) if x > 8 else 0
+            c.px(x, y + wave, "white" if (x + y) % 2 == 0 else "red")
     return finish(c, shadow=False)
 
 
@@ -726,7 +742,7 @@ def build():
 
     out["tower"] = [tower(False)]
     out["tower_with_pearl"] = [tower(True, f) for f in range(3)]
-    out["finish"] = [finish_flag(f) for f in range(3)]
+    out["finish"] = [finish_hut(f) for f in range(3)]
 
     out["string_north_south"] = [string_piece(["north", "south"])]
     out["string_east_west"] = [string_piece(["east", "west"])]
