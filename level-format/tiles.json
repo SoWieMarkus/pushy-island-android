@@ -14,7 +14,8 @@
       "symbol": "~",
       "v1Code": 0,
       "legacyId": "water",
-      "ports": {}
+      "ports": {},
+      "surface": "water"
     },
     {
       "id": "box_water",
@@ -25,7 +26,8 @@
       "symbol": null,
       "v1Code": 1,
       "legacyId": "box_water",
-      "ports": {}
+      "ports": {},
+      "surface": "other"
     },
     {
       "id": "sand",
@@ -36,7 +38,8 @@
       "symbol": "-",
       "v1Code": 2,
       "legacyId": "sand",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "sand_top_left",
@@ -47,7 +50,8 @@
       "symbol": null,
       "v1Code": 3,
       "legacyId": "sand_top_left",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "sand_top_right",
@@ -58,7 +62,8 @@
       "symbol": null,
       "v1Code": 4,
       "legacyId": "sand_top_right",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "sand_bottom_left",
@@ -69,7 +74,8 @@
       "symbol": null,
       "v1Code": 5,
       "legacyId": "sand_bottom_left",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "sand_bottom_right",
@@ -80,7 +86,8 @@
       "symbol": null,
       "v1Code": 6,
       "legacyId": "sand_bottom_right",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "grass",
@@ -91,7 +98,8 @@
       "symbol": "=",
       "v1Code": 7,
       "legacyId": "grass",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "grass_top_left",
@@ -102,7 +110,8 @@
       "symbol": null,
       "v1Code": 8,
       "legacyId": "grass_top_left",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "grass_top_right",
@@ -113,7 +122,8 @@
       "symbol": null,
       "v1Code": 9,
       "legacyId": "grass_top_right",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "grass_bottom_left",
@@ -124,7 +134,8 @@
       "symbol": null,
       "v1Code": 10,
       "legacyId": "grass_bottom_left",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "grass_bottom_right",
@@ -135,7 +146,8 @@
       "symbol": null,
       "v1Code": 11,
       "legacyId": "grass_bottom_right",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "spring",
@@ -146,7 +158,8 @@
       "symbol": null,
       "v1Code": 12,
       "legacyId": "spring",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "water_hole",
@@ -157,7 +170,8 @@
       "symbol": null,
       "v1Code": 13,
       "legacyId": "sand_with_water",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "farm",
@@ -168,7 +182,8 @@
       "symbol": null,
       "v1Code": 14,
       "legacyId": "sand_with_farm",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "statue_finish_red",
@@ -179,7 +194,8 @@
       "symbol": null,
       "v1Code": 15,
       "legacyId": "statue_finish_red",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "statue_finish_green",
@@ -190,7 +206,8 @@
       "symbol": null,
       "v1Code": 17,
       "legacyId": "statue_finish_green",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "statue_finish_blue",
@@ -201,7 +218,8 @@
       "symbol": null,
       "v1Code": 16,
       "legacyId": "statue_finish_blue",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "bomb_field",
@@ -212,7 +230,8 @@
       "symbol": null,
       "v1Code": 18,
       "legacyId": "bomb_field",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "hole",
@@ -223,7 +242,8 @@
       "symbol": null,
       "v1Code": 19,
       "legacyId": "hole",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "spike_pressure_plate",
@@ -234,7 +254,8 @@
       "symbol": null,
       "v1Code": 20,
       "legacyId": "spike_pressure_plate",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "spikes",
@@ -245,7 +266,8 @@
       "symbol": null,
       "v1Code": 21,
       "legacyId": "spikes",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "boat",
@@ -256,7 +278,8 @@
       "symbol": null,
       "v1Code": 22,
       "legacyId": "boat",
-      "ports": {}
+      "ports": {},
+      "surface": "other"
     },
     {
       "id": "teleporter",
@@ -267,7 +290,8 @@
       "symbol": null,
       "v1Code": 23,
       "legacyId": "teleporter",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "water_invisible_pressure_plate",
@@ -278,7 +302,8 @@
       "symbol": null,
       "v1Code": 25,
       "legacyId": "water_invisible_pressure_plate",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "water_invisible",
@@ -289,7 +314,8 @@
       "symbol": null,
       "v1Code": 26,
       "legacyId": "water_invisible",
-      "ports": {}
+      "ports": {},
+      "surface": "other"
     },
     {
       "id": "coconut_tunnel",
@@ -300,7 +326,8 @@
       "symbol": null,
       "v1Code": 27,
       "legacyId": "coconut_tunnel",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "coconut_tunnel_finish",
@@ -311,7 +338,8 @@
       "symbol": null,
       "v1Code": 28,
       "legacyId": "coconut_tunnel_finish",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "item_teleporter",
@@ -322,7 +350,8 @@
       "symbol": null,
       "v1Code": 29,
       "legacyId": "item_teleporter",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "ice",
@@ -333,7 +362,8 @@
       "symbol": null,
       "v1Code": 30,
       "legacyId": "ice",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "flower_red_pressure_plate",
@@ -344,7 +374,8 @@
       "symbol": null,
       "v1Code": 31,
       "legacyId": "flower_red_pressure_plate",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "flower_yellow_pressure_plate",
@@ -355,7 +386,8 @@
       "symbol": null,
       "v1Code": 32,
       "legacyId": "flower_pressure_plate",
-      "ports": {}
+      "ports": {},
+      "surface": "grass"
     },
     {
       "id": "string_pressure_plate",
@@ -366,7 +398,8 @@
       "symbol": null,
       "v1Code": 33,
       "legacyId": "string_pressure_plate",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "changeable_flower_red",
@@ -377,7 +410,8 @@
       "symbol": null,
       "v1Code": 34,
       "legacyId": "changeable_flower_red",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "changeable_flower_green",
@@ -388,7 +422,8 @@
       "symbol": null,
       "v1Code": 35,
       "legacyId": "changeable_flower_green",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "barrel_finish",
@@ -399,7 +434,8 @@
       "symbol": null,
       "v1Code": 36,
       "legacyId": "barrel_finish",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "cable",
@@ -410,7 +446,8 @@
       "symbol": "+",
       "v1Code": 37,
       "legacyId": "cable",
-      "ports": {}
+      "ports": {},
+      "surface": "sand"
     },
     {
       "id": "logic_pressure_plate",
@@ -426,7 +463,8 @@
         "south": "output",
         "east": "output",
         "west": "output"
-      }
+      },
+      "surface": "sand"
     },
     {
       "id": "door",
@@ -442,7 +480,8 @@
         "south": "input",
         "east": "input",
         "west": "input"
-      }
+      },
+      "surface": "sand"
     },
     {
       "id": "tree",
@@ -453,7 +492,8 @@
       "symbol": "T",
       "v1Code": 0,
       "legacyId": "tree",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "box",
@@ -464,7 +504,8 @@
       "symbol": "B",
       "v1Code": 1,
       "legacyId": "box",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "pushy",
@@ -475,7 +516,8 @@
       "symbol": "P",
       "v1Code": 2,
       "legacyId": "pushy",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "finish",
@@ -486,7 +528,8 @@
       "symbol": "F",
       "v1Code": 3,
       "legacyId": "finish",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "stone",
@@ -497,7 +540,8 @@
       "symbol": "o",
       "v1Code": 4,
       "legacyId": "stone",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "sea_star",
@@ -508,7 +552,8 @@
       "symbol": null,
       "v1Code": 6,
       "legacyId": "sea_star",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "seed",
@@ -519,7 +564,8 @@
       "symbol": null,
       "v1Code": 7,
       "legacyId": "seed",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "bottle",
@@ -530,7 +576,8 @@
       "symbol": null,
       "v1Code": 8,
       "legacyId": "bottle",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "statue_red",
@@ -541,7 +588,8 @@
       "symbol": null,
       "v1Code": 9,
       "legacyId": "statue_red",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "statue_green",
@@ -552,7 +600,8 @@
       "symbol": null,
       "v1Code": 11,
       "legacyId": "statue_green",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "statue_blue",
@@ -563,7 +612,8 @@
       "symbol": null,
       "v1Code": 10,
       "legacyId": "statue_blue",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "bomb",
@@ -574,7 +624,8 @@
       "symbol": null,
       "v1Code": 12,
       "legacyId": "bomb",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "crab_baby",
@@ -585,7 +636,8 @@
       "symbol": null,
       "v1Code": 13,
       "legacyId": "crab_baby",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "crab_mother",
@@ -596,7 +648,8 @@
       "symbol": null,
       "v1Code": 14,
       "legacyId": "crab_mother",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "slingshot",
@@ -607,7 +660,8 @@
       "symbol": null,
       "v1Code": 15,
       "legacyId": "slingshot",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "shot",
@@ -618,7 +672,8 @@
       "symbol": null,
       "v1Code": 16,
       "legacyId": "shot",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "coconut",
@@ -629,7 +684,8 @@
       "symbol": null,
       "v1Code": 17,
       "legacyId": "coconut",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_down",
@@ -640,7 +696,8 @@
       "symbol": null,
       "v1Code": 18,
       "legacyId": "leaf_down",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_up",
@@ -651,7 +708,8 @@
       "symbol": null,
       "v1Code": 19,
       "legacyId": "leaf_up",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_left",
@@ -662,7 +720,8 @@
       "symbol": null,
       "v1Code": 20,
       "legacyId": "leaf_left",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_right",
@@ -673,7 +732,8 @@
       "symbol": null,
       "v1Code": 21,
       "legacyId": "leaf_right",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "pirate",
@@ -684,7 +744,8 @@
       "symbol": null,
       "v1Code": 22,
       "legacyId": "pirate",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "pirate_hut",
@@ -695,7 +756,8 @@
       "symbol": null,
       "v1Code": 23,
       "legacyId": "pirate_hut",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "buoy",
@@ -706,7 +768,8 @@
       "symbol": null,
       "v1Code": 24,
       "legacyId": "buoy",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "chest",
@@ -717,7 +780,8 @@
       "symbol": null,
       "v1Code": 25,
       "legacyId": "chest",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "coin",
@@ -728,7 +792,8 @@
       "symbol": null,
       "v1Code": 26,
       "legacyId": "coin",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "key",
@@ -739,7 +804,8 @@
       "symbol": null,
       "v1Code": 27,
       "legacyId": "key",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "tower",
@@ -750,7 +816,8 @@
       "symbol": null,
       "v1Code": 28,
       "legacyId": "tower",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "pearl",
@@ -761,7 +828,8 @@
       "symbol": null,
       "v1Code": 29,
       "legacyId": "pearl",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "shell",
@@ -772,7 +840,8 @@
       "symbol": null,
       "v1Code": 30,
       "legacyId": "shell",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "shell_open_with_pearl",
@@ -783,7 +852,8 @@
       "symbol": null,
       "v1Code": 31,
       "legacyId": "shell_open_with_pearl",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "count_one",
@@ -794,7 +864,8 @@
       "symbol": null,
       "v1Code": 32,
       "legacyId": "count_one",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "count_two",
@@ -805,7 +876,8 @@
       "symbol": null,
       "v1Code": 33,
       "legacyId": "count_two",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "count_three",
@@ -816,7 +888,8 @@
       "symbol": null,
       "v1Code": 34,
       "legacyId": "count_three",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "count_four",
@@ -827,7 +900,8 @@
       "symbol": null,
       "v1Code": 35,
       "legacyId": "count_four",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "count_five",
@@ -838,7 +912,8 @@
       "symbol": null,
       "v1Code": 36,
       "legacyId": "count_five",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "flower_yellow",
@@ -849,7 +924,8 @@
       "symbol": null,
       "v1Code": 37,
       "legacyId": "flower_yellow",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "flower_red",
@@ -860,7 +936,8 @@
       "symbol": null,
       "v1Code": 38,
       "legacyId": "flower_red",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "shell_1",
@@ -871,7 +948,8 @@
       "symbol": null,
       "v1Code": 39,
       "legacyId": "shell_1",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "shell_2",
@@ -882,7 +960,8 @@
       "symbol": null,
       "v1Code": 40,
       "legacyId": "shell_2",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "shell_3",
@@ -893,7 +972,8 @@
       "symbol": null,
       "v1Code": 41,
       "legacyId": "shell_3",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "octopus",
@@ -904,7 +984,8 @@
       "symbol": null,
       "v1Code": 42,
       "legacyId": "octopus",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "barrel",
@@ -915,7 +996,8 @@
       "symbol": null,
       "v1Code": 43,
       "legacyId": "barrel",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_changer_east",
@@ -926,7 +1008,8 @@
       "symbol": null,
       "v1Code": 44,
       "legacyId": "leaf_changer_east",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_changer_west",
@@ -937,7 +1020,8 @@
       "symbol": null,
       "v1Code": 45,
       "legacyId": "leaf_changer_west",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_changer_north",
@@ -948,7 +1032,8 @@
       "symbol": null,
       "v1Code": 46,
       "legacyId": "leaf_changer_north",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "leaf_changer_south",
@@ -959,7 +1044,8 @@
       "symbol": null,
       "v1Code": 47,
       "legacyId": "leaf_changer_south",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "logic_gate_and",
@@ -974,7 +1060,8 @@
         "north": "output",
         "east": "input",
         "west": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "logic_gate_or",
@@ -989,7 +1076,8 @@
         "north": "output",
         "east": "input",
         "west": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "logic_gate_xor",
@@ -1004,7 +1092,8 @@
         "north": "output",
         "east": "input",
         "west": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "lamp",
@@ -1020,7 +1109,8 @@
         "south": "input",
         "east": "input",
         "west": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "lever",
@@ -1036,7 +1126,8 @@
         "south": "output",
         "east": "output",
         "west": "output"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "power_block",
@@ -1052,7 +1143,8 @@
         "south": "output",
         "east": "output",
         "west": "output"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "logic_gate_not",
@@ -1066,7 +1158,8 @@
       "ports": {
         "north": "output",
         "south": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "energy",
@@ -1077,7 +1170,8 @@
       "symbol": null,
       "v1Code": 55,
       "legacyId": "energy",
-      "ports": {}
+      "ports": {},
+      "surface": "none"
     },
     {
       "id": "button",
@@ -1093,7 +1187,8 @@
         "south": "output",
         "east": "output",
         "west": "output"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "count_down",
@@ -1109,7 +1204,8 @@
         "south": "input",
         "east": "input",
         "west": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "repeater_north",
@@ -1123,7 +1219,8 @@
       "ports": {
         "north": "output",
         "south": "input"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "repeater_south",
@@ -1137,7 +1234,8 @@
       "ports": {
         "north": "input",
         "south": "output"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "repeater_west",
@@ -1151,7 +1249,8 @@
       "ports": {
         "east": "input",
         "west": "output"
-      }
+      },
+      "surface": "none"
     },
     {
       "id": "repeater_east",
@@ -1165,7 +1264,8 @@
       "ports": {
         "east": "output",
         "west": "input"
-      }
+      },
+      "surface": "none"
     }
   ]
 }

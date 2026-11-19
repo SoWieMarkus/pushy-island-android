@@ -46,6 +46,15 @@ class TileTableTest {
         }
     }
 
+    /** Terrain family the editor's corner smoothing looks at ("sand", "grass", "water" or "other"). */
+    private fun surface(tile: TileType): String = when (val field = (tile as? TerrainType)?.let { Terrain.create(it, Coordinate(0, 0)) }) {
+        null -> "none"
+        is markus.wieland.pushygame.engine.terrain.Grass -> "grass"
+        is markus.wieland.pushygame.engine.terrain.Sand -> "sand"
+        is markus.wieland.pushygame.engine.terrain.Water -> "water"
+        else -> "other"
+    }
+
     private fun generate(): String {
         val json = buildJsonObject {
             put("format", LevelFormat.VERSION)
@@ -64,6 +73,7 @@ class TileTableTest {
                     put("v1Code", tile.v1Code)
                     put("legacyId", tile.legacyId)
                     put("ports", ports(tile))
+                    put("surface", surface(tile))
                 }
             }
         }

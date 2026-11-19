@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.IntSize
 import markus.wieland.pushygame.engine.model.Coordinate
 import markus.wieland.pushygame.engine.model.Grid
 import markus.wieland.pushygame.engine.model.Sprite
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 /** All sprites decoded once from `assets/sprites`. They are tiny pixel-art PNGs. */
@@ -74,9 +75,22 @@ fun BoardCanvas(
                     },
                     onDrag = { change, _ ->
                         val cell = cellAt(change.position, size)
-                        if (cell != null && cell != last) {
+                        val previous = last
+                        if (cell != null && cell != previous) {
                             last = cell
-                            onCell.value?.invoke(cell, false)
+                            // Fast drags can skip cells – visit every cell on the line in between.
+                            val steps = if (previous == null) 0 else maxOf(abs(cell.row - previous.row), abs(cell.col - previous.col))
+                            for (i in 1..steps) {
+                                val t = i.toFloat() / steps
+                                onCell.value?.invoke(
+                                    Coordinate(
+                                        (previous!!.row + (cell.row - previous.row) * t).roundToInt(),
+                                        (previous.col + (cell.col - previous.col) * t).roundToInt(),
+                                    ),
+                                    false,
+                                )
+                            }
+                            if (steps == 0) onCell.value?.invoke(cell, false)
                         }
                     },
                 )

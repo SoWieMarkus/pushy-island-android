@@ -15,6 +15,8 @@ export interface Tile {
   v1Code: number
   legacyId: string
   ports: Partial<Record<Side, PortKind>>
+  /** Terrain family used by corner smoothing; `none` for entities. */
+  surface: 'sand' | 'grass' | 'water' | 'other' | 'none'
 }
 
 export const FORMAT_VERSION: number = table.format

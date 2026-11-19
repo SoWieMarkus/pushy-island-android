@@ -1,6 +1,6 @@
 # Pushy-Island
 
-> [!NOTE]  
+> [!NOTE]
 > Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">Lernwerkstatt</a>. No original code was used.
 
 ## Screenshots
@@ -14,35 +14,73 @@
 
 ### New entities not available in the original game
 
-I implemented all entities from the original game. Additionally to that I added some new entities. They are mostly logic gates (AND / OR / XOR).
+I implemented all entities from the original game. Additionally to that I added some new entities. They are mostly logic gates (AND / OR / XOR / NOT), levers, buttons, repeaters and lamps.
 
 ### Campaign
 
-All original level can be played in the game. Additionally I added some new level with my new entities to the campaign.
+All original levels can be played in the game. Additionally I added some new levels with my new entities to the campaign. Levels unlock one after another.
 
 ### Editor
 
-With the editor you can create your own level. It supports these functionalities:
+With the in-app editor (and the [web level editor](#web-level-editor)) you can create your own levels:
 
+- pencil (drag to paint), fill and erase
 - undo / redo
-- fill
-- erase
-- auto smoothing corners
+- auto smoothing of sand and grass corners
 - reset
 
-After you validated your level by completing it on your own you have to option to share your level with your friends. For that you can click on the share button and select the way you want to share your level. Your friend will receive a "code" which they can enter in their app.
+After you validated your level by solving it on your own, you can share it: the app creates a share code (`PUSHY2:…`) that your friends can paste into _Custom levels → Import code_.
 
-#### Level code version 1
+## Project layout
 
-Until today there is only one version for this level code. But if I will change the way levels are encoded I will add a documentation for that version here.
+| Folder          | What it is                                                                                     |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| `engine/`       | Pure Kotlin game engine (no Android): rules, level format, share codes, editor logic, tests    |
+| `app/`          | Android app – Jetpack Compose, Navigation 3, Room. Campaign levels and sprites live in `assets` |
+| `level-editor/` | Web level editor (React + TypeScript + Vite) and the converter for levels of the old app       |
+| `level-format/` | Format documentation, the shared tile table (`tiles.json`) and cross-platform test fixtures    |
 
-In the version 1 the whole string can be interpreted as a byte string in hexadecimal.
+## Building
 
-The first byte is the version number. So usually it should be "01", which is equal to 1 in decimal. Afterwards there are 12 (height) _ 20 (width) _ 6 bits (be careful **not** bytes) representing the terrain, followed by 12 _ 20 _ 6 bits representing the entities. So you have to decode the byte string in that range to a binary string and split it where the index mod 6 is 0. Those 6 bits represent a terrain type or entity type (depending on the position ofc.). You can see the "value" of a type <a href="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/java/markus/wieland/pushygame/engine/level/TerrainType.java">here (terrain)</a> and <a href="https://github.com/SoWieMarkus/Pushy-Island/blob/main/app/src/main/java/markus/wieland/pushygame/engine/level/EntityType.java">here (entities)</a>. After 20 tiles a new line begins. So the order is like this:
+Requirements: JDK 17+ (Android Studio's bundled JDK works), Android SDK with platform 37, Node.js 24+ for the web editor.
 
-```javascript
-01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20
-21 22 23 ...
+```sh
+./gradlew :engine:test          # engine tests, incl. loading all 186 campaign levels
+./gradlew :app:assembleDebug    # build the app
+./gradlew :app:lintDebug
 ```
 
-The remaining bytes represent the level name. Every byte represents one character. You get the character but just casting the value of the byte to a char.
+`level-format/tiles.json` is generated from the engine. After changing tiles in
+`engine/.../model/TileType.kt` regenerate it (and the share code fixture) with
+`UPDATE_GENERATED=1 ./gradlew :engine:test`.
+
+## Web level editor
+
+```sh
+cd level-editor
+npm install
+npm run dev           # editor on http://localhost:5173
+npm test              # format, share code and editor tests
+npm run lint          # oxlint
+npm run format        # oxfmt (npm run format:check in CI)
+npm run build         # static build in level-editor/dist
+```
+
+The web editor uses the same sprites as the app (`app/src/main/assets/sprites`) and reads/writes the same
+level files and share codes. It also imports share codes of the old app.
+
+## Level format
+
+Levels are stored as readable JSON (format v2) – see [level-format/README.md](./level-format/README.md).
+Campaign levels are in [`app/src/main/assets/levels`](./app/src/main/assets/levels).
+
+### Levels from the old app
+
+The old app used a hex "level code" (format v1). The web editor imports those codes directly. To convert
+codes or a folder of the old level JSON files on the command line:
+
+```sh
+cd level-editor
+node scripts/convert-v1.ts <v1 code>
+node scripts/convert-v1.ts --campaign <old level folder> <output folder>
+```
