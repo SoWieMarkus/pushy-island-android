@@ -14,8 +14,6 @@ A pixel-art puzzle game for Android: push boxes, sail boats, wire up logic gates
 | ![Campaign](./images/campaign.jpg)    | ![Editor](./images/editor.jpg)    |
 | ![Level 10](./images/example_lvl_1.jpg) | ![Level 77](./images/example_lvl_2.jpg) |
 
-New logic levels: levers, gates and cables decide which lamps light up.
-
 ![Logic gates](./images/logic_gates.jpg)
 
 ## Features
