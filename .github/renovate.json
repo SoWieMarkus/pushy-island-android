@@ -1,0 +1,133 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":semanticCommits",
+    ":semanticCommitScopeDisabled",
+    "helpers:pinGitHubActionDigestsToSemver"
+  ],
+  "assignees": ["SoWieMarkus"],
+  "timezone": "Europe/Berlin",
+  "schedule": [
+    "before 6am on monday"
+  ],
+  "semanticCommitType": "deps",
+  "labels": [
+    "dependencies"
+  ],
+  "prConcurrentLimit": 8,
+  "minimumReleaseAge": "28 days",
+  "internalChecksFilter": "strict",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "description": "Kotlin compiler, its Gradle plugins and KSP have to move together; always review",
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackageNames": [
+        "org.jetbrains.kotlin{/,}**",
+        "com.google.devtools.ksp{/,}**"
+      ],
+      "groupName": "kotlin"
+    },
+    {
+      "description": "Android Gradle plugin updates often need build changes; always review",
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackageNames": [
+        "com.android.application{/,}**",
+        "com.android.tools.build:gradle"
+      ],
+      "groupName": "android gradle plugin"
+    },
+    {
+      "description": "AndroidX, Compose and kotlinx libraries: automerge non-major once CI is green",
+      "matchManagers": [
+        "gradle"
+      ],
+      "matchPackageNames": [
+        "androidx.**",
+        "org.jetbrains.kotlinx:**"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "android libraries",
+      "automerge": true
+    },
+    {
+      "matchManagers": [
+        "gradle-wrapper"
+      ],
+      "groupName": "gradle wrapper"
+    },
+    {
+      "description": "Web editor dev tooling rarely breaks the editor",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "editor dev dependencies",
+      "automerge": true
+    },
+    {
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "editor dependencies"
+    },
+    {
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "groupName": "react"
+    },
+    {
+      "description": "Automerge non-major action updates only; majors need review",
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "groupName": "github actions",
+      "automerge": true
+    }
+  ],
+  "customManagers": [
+    {
+      "description": "Tool versions in workflows annotated with '# renovate:' comments",
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/.+\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+\\w+: (?<currentValue>\\S+)"
+      ]
+    }
+  ]
+}
