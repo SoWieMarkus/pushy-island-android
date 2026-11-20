@@ -17,18 +17,18 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: ./gradlew :engine:test :app:assembleDebug :app:lintDebug
 
-  level-editor:
+  editor:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: level-editor
+        working-directory: editor
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: level-editor/package-lock.json
+          cache-dependency-path: editor/package-lock.json
       - run: npm ci
       - run: npm run format:check
       - run: npm run lint
