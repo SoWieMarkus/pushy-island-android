@@ -468,7 +468,8 @@ def bottle(filled):
 
 
 def bomb(frame):
-    c = Canvas()
+    # The fuse and its spark reach the top edge – the margin keeps their outline from being cut off.
+    c = Canvas(margin=OVERHANG)
     c.circle(7.5, 9.5, 5, "metal_dark", shade=(P["metal_light"], P["black"]))
     c.rect(8, 3, 10, 4, "metal")
     c.line(10, 3, 12, 1, "rope_dark")

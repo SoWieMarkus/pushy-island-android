@@ -39,6 +39,7 @@ import markus.wieland.pushygame.engine.model.Field
 import markus.wieland.pushygame.engine.model.Grid
 import markus.wieland.pushygame.engine.model.Sprite
 import markus.wieland.pushygame.engine.model.TerrainType
+import markus.wieland.pushygame.engine.terrain.Boat
 import markus.wieland.pushygame.engine.terrain.Cable
 import markus.wieland.pushygame.engine.terrain.ChangeableFlower
 import markus.wieland.pushygame.engine.terrain.CoconutTunnelFinish
@@ -251,6 +252,7 @@ class Game(level: LevelData) {
             target = target.next(direction)
         }
         val destination = target.next(direction.opposite)
+        (board.terrain(from) as? Boat)?.heading = direction
         board.swapEntities(from, destination)
         board.swapTerrain(from, destination)
     }

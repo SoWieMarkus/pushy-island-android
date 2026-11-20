@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import markus.wieland.pushygame.engine.model.Coordinate
 import markus.wieland.pushygame.engine.model.Grid
 import markus.wieland.pushygame.engine.model.Sprite
+import markus.wieland.pushygame.engine.terrain.Boat
 
 /**
  * Soft transitions between water, sand and grass.
@@ -102,7 +103,7 @@ internal class TerrainEdges(private val terrain: Grid<List<Sprite>>) {
         private val WEST = Side("w", 0, -1)
         private val SIDES = listOf(NORTH, EAST, SOUTH, WEST)
 
-        private val WATER = setOf(Sprite.WATER, Sprite.BOAT, Sprite.BOX_WATER)
+        private val WATER = setOf(Sprite.WATER, Sprite.BOX_WATER) + Boat.SPRITES
         private val GRASS = setOf(
             Sprite.GRASS, Sprite.GRASS_TOP_LEFT, Sprite.GRASS_TOP_RIGHT, Sprite.GRASS_BOTTOM_LEFT, Sprite.GRASS_BOTTOM_RIGHT,
             Sprite.FLOWER_RED_PRESSURE_PLATE, Sprite.FLOWER_YELLOW_PRESSURE_PLATE,

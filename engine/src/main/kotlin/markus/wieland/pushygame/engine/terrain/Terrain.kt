@@ -80,7 +80,24 @@ class Water(type: TerrainType, c: Coordinate) : Terrain(type, c) {
 
 class BoxWater(type: TerrainType, c: Coordinate) : Terrain(type, c)
 
-class Boat(type: TerrainType, c: Coordinate) : Terrain(type, c)
+/** Points its bow where it last sailed (north until then). */
+class Boat(type: TerrainType, c: Coordinate) : Terrain(type, c) {
+    var heading = Direction.NORTH
+
+    override val sprites
+        get() = listOf(
+            when (heading) {
+                Direction.NORTH -> Sprite.BOAT
+                Direction.EAST -> Sprite.BOAT_EAST
+                Direction.SOUTH -> Sprite.BOAT_SOUTH
+                Direction.WEST -> Sprite.BOAT_WEST
+            },
+        )
+
+    companion object {
+        val SPRITES = setOf(Sprite.BOAT, Sprite.BOAT_EAST, Sprite.BOAT_SOUTH, Sprite.BOAT_WEST)
+    }
+}
 
 class WaterHole(type: TerrainType, c: Coordinate) : Sand(type, c)
 

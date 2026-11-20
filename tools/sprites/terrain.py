@@ -235,6 +235,63 @@ def edges():
 
 # --- decorated ground ----------------------------------------------------------------------
 
+VINE_FRAMES = 4
+
+
+def vine(sand_tile, frame):
+    """Spring: a vine grown from the watered seed, twisted into a coil like a spring.
+
+    The coil squashes and stretches a little so it looks ready to fling Pushy.
+    """
+    c = sand_tile.copy()
+    # the farm soil it grew from
+    c.ellipse(8, 12, 5.5, 2.6, "sand_shadow")
+    c.ellipse(8, 11.8, 4.6, 1.9, "wood")
+    c.ellipse(8, 12.2, 3, 1.1, "wood_dark")
+    # leaves at the base
+    for (lx, ly, dx) in [(3.6, 11.4, -1), (12.4, 11.4, 1)]:
+        c.ellipse(lx, ly, 2.4, 1.2, "leaf_dark")
+        c.ellipse(lx, ly - 0.4, 2.0, 0.9, "leaf")
+        c.px(int(lx) - dx, int(ly) - 1, "leaf_light")
+
+    squash = [0.0, 0.5, 1.0, 0.5][frame % VINE_FRAMES]
+    bottom, top = 11.0, 2.5 + squash
+    loops = 2
+    pitch = (bottom - top) / loops
+
+    def helix(front):
+        steps = 160
+        for i in range(steps + 1):
+            t = i / steps
+            a = t * loops * 2 * math.pi
+            is_front = math.cos(a) > 0
+            if is_front != front:
+                continue
+            rx = 4.6 - 1.4 * t
+            x = 8 + rx * math.sin(a)
+            y = bottom - t * (bottom - top) + 1.5 * math.cos(a)
+            if front:
+                color = "leaf_light" if math.sin(a) < -0.3 else "leaf"
+            else:
+                color = "leaf_dark"
+            c.px(int(round(x)), int(round(y)), color)
+            if front and abs(math.sin(a)) < 0.7:  # the front strands are a bit thicker
+                c.px(int(round(x)), int(round(y)) + 1, "leaf_dark")
+
+    helix(front=False)
+    helix(front=True)
+    # stem out of the soil, a curly tip and a little leaf on top
+    c.rect(8, int(bottom) + 1, 8, int(bottom) + 1, "leaf_dark")
+    tip = int(round(top)) - 1
+    c.px(8, tip, "leaf")
+    c.px(9, tip - 1, "leaf")
+    c.px(10, tip, "leaf_dark")
+    c.px(6, tip, "leaf_light")
+    c.px(5, tip - 1, "leaf_light")
+    c.px(6, tip - 1, "leaf")
+    return c
+
+
 def plate(base, inner="stone_light", ring="stone_dark"):
     """Round stone pressure plate set into the ground."""
     c = base.copy()
@@ -270,46 +327,75 @@ def build():
         out[f"sand_{corner}"] = [s.copy().over(bite("water", "sand", where))]
         out[f"grass_{corner}"] = [g.copy().over(bite("sand", "grass", where))]
 
-    # Sunken box: a soggy crate under the surface.
+    # Sunken box: a crate that sank until its lid is level with the surface – a little wooden raft
+    # Pushy can walk over. Water laps at its sides and a foam ring bobs around it.
     def box_water(frame):
         c = w[frame].copy()
-        c.rect(3, 3, 12, 12, mix(P["wood_dark"], P["water_deep"], 0.45))
-        c.rect(4, 4, 11, 11, mix(P["wood"], P["water"], 0.5))
-        c.line(4, 4, 11, 11, mix(P["wood_dark"], P["water_deep"], 0.4))
-        c.line(11, 4, 4, 11, mix(P["wood_dark"], P["water_deep"], 0.4))
-        sway = round(math.sin(2 * math.pi * frame / WATER_FRAMES))
-        for x in range(5 + sway, 10 + sway):
-            c.px(x, 2, "water_light")
-        c.px(7 + sway, 13, "foam")
+        t = 2 * math.pi * frame / WATER_FRAMES
+        bob = 1 if math.sin(t) > 0.5 else 0
+        # dark wet ring where the crate pushes the water down
+        c.rect(1, 2 + bob, 14, 14 + bob, "water_deep")
+        lid = Canvas()
+        lid.rect(2, 2, 13, 13, "wood")
+        # three planks with dark gaps, lighter top edges
+        for y0 in (2, 6, 10):
+            lid.rect(2, y0, 13, y0, "wood_light")
+            lid.rect(2, y0 + 3, 13, y0 + 3, "wood_dark")
+        lid.frame(2, 2, 13, 13, "wood_dark")
+        # nails in the corners
+        for (x, y) in [(3, 3), (12, 3), (3, 12), (12, 12)]:
+            lid.px(x, y, "stone_light")
+        # soaked: the lower part of the lid is darker and bluish
+        for y in range(9, 14):
+            for x in range(2, 14):
+                base = lid.get(x, y)
+                if base[3]:
+                    lid.px(x, y, mix(base, P["water_deep"], 0.18 + 0.06 * (y - 9)))
+        lid.outline()
+        c.over(lid, 0, bob)
+        # foam lapping at the sides, travelling around the crate
+        ring = [(x, 1) for x in range(2, 14)] + [(14, y) for y in range(2, 14)] +                [(x, 14) for x in range(13, 1, -1)] + [(1, y) for y in range(13, 1, -1)]
+        n = len(ring)
+        for k in range(3):
+            i = (frame * 4 + k * n // 3) % n
+            for j in range(3):
+                x, y = ring[(i + j) % n]
+                c.px(x, y + bob, "foam" if j == 1 else "water_light")
         return c
     out["box_water"] = [box_water(f) for f in range(WATER_FRAMES)]
 
-    # Boat (terrain on water) – top-down rowing boat, water moving underneath.
-    def boat(frame):
+    # Boat (terrain on water) – top-down rowing boat, water moving underneath. One sprite per
+    # heading: the bow points where the boat last sailed (north is the default).
+    hull = Canvas()
+    hull.art([
+        "................",
+        "......kkkk......",
+        ".....kwwwwk.....",
+        "....kwllllwk....",
+        "....kwlddlwk....",
+        "...kwlddddlwk...",
+        "...kwbbbbbbwk...",
+        "...kwlddddlwk...",
+        "...kwlddddlwk...",
+        "...kwbbbbbbwk...",
+        "...kwlddddlwk...",
+        "...kwlddddlwk...",
+        "....kwllllwk....",
+        "....kwwwwwwk....",
+        ".....kkkkkk.....",
+        "................",
+    ], {"k": "outline", "w": "wood_dark", "l": "wood_light", "d": "wood", "b": "wood_dark"})
+    hulls = {"boat": hull, "boat_east": hull.rot90()}
+    hulls["boat_south"] = hulls["boat_east"].rot90()
+    hulls["boat_west"] = hulls["boat_south"].rot90()
+
+    def boat(frame, shape):
         c = w[frame].copy()
-        hull = Canvas()
-        hull.art([
-            "................",
-            "......kkkk......",
-            ".....kwwwwk.....",
-            "....kwllllwk....",
-            "....kwlddlwk....",
-            "...kwlddddlwk...",
-            "...kwbbbbbbwk...",
-            "...kwlddddlwk...",
-            "...kwlddddlwk...",
-            "...kwbbbbbbwk...",
-            "...kwlddddlwk...",
-            "...kwlddddlwk...",
-            "....kwllllwk....",
-            "....kwwwwwwk....",
-            ".....kkkkkk.....",
-            "................",
-        ], {"k": "outline", "w": "wood_dark", "l": "wood_light", "d": "wood", "b": "wood_dark"})
         bob = 1 if frame in (2, 3, 4) else 0
-        c.over(hull, 0, bob)
+        c.over(shape, 0, bob)
         return c
-    out["boat"] = [boat(f) for f in range(WATER_FRAMES)]
+    for name, shape in hulls.items():
+        out[name] = [boat(f, shape) for f in range(WATER_FRAMES)]
 
     # Ponds on sand: spring, water hole.
     def pond(frame, spring):
@@ -329,7 +415,7 @@ def build():
             c.px(10 - frame % 3, 10, "water_light")
         c.px(4, 6, "sand_light")
         return c
-    out["spring"] = [pond(f, True) for f in range(WATER_FRAMES)]
+    out["spring"] = [vine(s, f) for f in range(VINE_FRAMES)]
     out["water_hole"] = [pond(f, False) for f in range(WATER_FRAMES)]
 
     # Farm: one small patch of dug-up soil – room for a single seed.

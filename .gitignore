@@ -11,3 +11,6 @@ local.properties
 # IDE settings (regenerated locally) and personal Claude Code settings
 .idea/
 .claude/settings.local.json
+
+# Python bytecode of the sprite/sound tools
+__pycache__/

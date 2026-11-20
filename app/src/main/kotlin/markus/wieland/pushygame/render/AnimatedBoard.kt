@@ -24,6 +24,7 @@ import markus.wieland.pushygame.engine.model.Coordinate
 import markus.wieland.pushygame.engine.model.Direction
 import markus.wieland.pushygame.engine.model.Grid
 import markus.wieland.pushygame.engine.model.Sprite
+import markus.wieland.pushygame.engine.terrain.Boat
 import markus.wieland.pushygame.engine.terrain.Terrain
 import kotlin.math.PI
 import kotlin.math.abs
@@ -253,7 +254,7 @@ private class Wake(val boat: Slide, val startedAt: Long, val speed: Float, priva
     fun isWater(col: Int, row: Int): Boolean {
         val c = Coordinate(row, col)
         if (row !in 0 until state.terrain.height || col !in 0 until state.terrain.width) return true
-        return state.terrain[c].any { it == Sprite.WATER || it == Sprite.BOAT }
+        return state.terrain[c].any { it == Sprite.WATER || it in Boat.SPRITES }
     }
 
     fun elapsed(now: Long) = (now - startedAt) * speed
@@ -354,7 +355,7 @@ private class Transition(val from: GameState, val to: GameState) {
         for (c in from.terrainIds.coordinates) oldTerrain[from.terrainIds[c]] = c
         for (c in to.terrainIds.coordinates) {
             val old = oldTerrain[to.terrainIds[c]]
-            if (old != null && old != c && Sprite.BOAT in to.terrain[c]) {
+            if (old != null && old != c && to.terrain[c].any { it in Boat.SPRITES }) {
                 terrainSlides += Slide(to.terrain[c], old, c)
                 terrainUnder[c] = from.terrain[c]
             }
