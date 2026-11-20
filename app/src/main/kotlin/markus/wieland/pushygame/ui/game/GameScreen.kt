@@ -123,6 +123,7 @@ fun GameScreen(levelId: Long, isTest: Boolean, onBack: () -> Unit, onNextLevel: 
                     .pointerInput(Unit) { detectSwipes(viewModel::move) },
                 startInset = if (panelSide == PanelSide.LEFT) panelSpace else 0.dp,
                 endInset = if (panelSide == PanelSide.RIGHT) panelSpace else 0.dp,
+                onSound = container.sounds::play,
             )
         }
         SidePanel(

@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Modifier
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import markus.wieland.pushygame.audio.Sound
 import markus.wieland.pushygame.engine.GameEvent
 import markus.wieland.pushygame.engine.GameState
 import markus.wieland.pushygame.engine.model.Coordinate
@@ -47,6 +49,9 @@ private const val PUFF_MS = 220f
 private const val ENTER_MS = 380f
 private const val CELEBRATE_MS = 900f
 
+/** The same sound isn't played twice within this many milliseconds of one transition. */
+private const val SOUND_GAP_MS = 60f
+
 /** How long the foam a boat leaves behind stays on the water. */
 private const val WAKE_MS = 1400f
 
@@ -60,6 +65,7 @@ private const val MAX_BACKLOG = 2
 private const val CATCH_UP_SPEED = 1.8f
 
 private val PUSHY_SPRITES = setOf(Sprite.PUSHY, Sprite.PUSHY_EAST, Sprite.PUSHY_SOUTH, Sprite.PUSHY_WEST)
+private val COUNT_DOWN = setOf(Sprite.COUNT_DOWN_THREE, Sprite.COUNT_DOWN_TWO, Sprite.COUNT_DOWN_ONE)
 
 /**
  * Game board that animates between consecutive [GameState]s: entities slide between cells, Pushy
@@ -67,10 +73,19 @@ private val PUSHY_SPRITES = setOf(Sprite.PUSHY, Sprite.PUSHY_EAST, Sprite.PUSHY_
  *
  * The engine applies moves instantly; this composable queues the resulting states and plays them
  * back one after another, speeding up when the player is faster than the animations.
+ * [onSound] is called in step with the animations (a splash when the box hits the water, …).
  */
 @Composable
-fun AnimatedBoard(state: GameState, sprites: SpriteSheet, modifier: Modifier = Modifier, startInset: Dp = 0.dp, endInset: Dp = 0.dp) {
-    val animator = remember { BoardAnimator(state) }
+fun AnimatedBoard(
+    state: GameState,
+    sprites: SpriteSheet,
+    modifier: Modifier = Modifier,
+    startInset: Dp = 0.dp,
+    endInset: Dp = 0.dp,
+    onSound: (Sound) -> Unit = {},
+) {
+    val sound by rememberUpdatedState(onSound)
+    val animator = remember { BoardAnimator(state) { sound(it) } }
     val edges = remember { TerrainEdgesCache() }
     LaunchedEffect(state) { animator.offer(state) }
     LaunchedEffect(animator) {
@@ -123,7 +138,7 @@ private fun DrawScope.drawSea(sprites: SpriteSheet, now: Long, cell: Size, origi
     }
 }
 
-private class BoardAnimator(initial: GameState) {
+private class BoardAnimator(initial: GameState, private val onSound: (Sound) -> Unit) {
     var shown by mutableStateOf(initial)
         private set
     var transition by mutableStateOf<Transition?>(null)
@@ -135,6 +150,9 @@ private class BoardAnimator(initial: GameState) {
     val wakes = mutableListOf<Wake>()
 
     private val backlog = ArrayDeque<GameState>()
+
+    /** Sounds of the running transition that are still to come, with the clock time they are due. */
+    private val pendingSounds = mutableListOf<Pair<Long, Sound>>()
     private var startedAt = 0L
     private var speed = 1f
 
@@ -145,6 +163,7 @@ private class BoardAnimator(initial: GameState) {
             // A new game (restart): jump straight there.
             backlog.clear()
             wakes.clear()
+            pendingSounds.clear()
             transition = null
             shown = state
             return
@@ -171,10 +190,16 @@ private class BoardAnimator(initial: GameState) {
                 startedAt = now
                 speed = if (backlog.isEmpty()) 1f else CATCH_UP_SPEED
                 for (boat in planned.boats) wakes += Wake(boat, now, speed, next)
+                for ((at, sound) in planned.sounds) pendingSounds += now + (at / speed).toLong() to sound
             }
         }
+        val due = pendingSounds.filter { it.first <= now }
+        if (due.isNotEmpty()) {
+            pendingSounds.removeAll(due)
+            due.forEach { onSound(it.second) }
+        }
         wakes.removeAll { it.isGone(now) }
-        if (keepTicking || transition != null || wakes.isNotEmpty()) clock = now
+        if (keepTicking || transition != null || wakes.isNotEmpty() || pendingSounds.isNotEmpty()) clock = now
     }
 }
 
@@ -333,6 +358,9 @@ private class Transition(val from: GameState, val to: GameState) {
 
     val duration: Float
 
+    /** Sounds to play during this transition: (time in ms from the start, sound). */
+    val sounds: List<Pair<Float, Sound>>
+
     init {
         val consumed = mutableMapOf<Int, Coordinate>()
         val teleported = mutableMapOf<Int, Coordinate>()
@@ -446,6 +474,78 @@ private class Transition(val from: GameState, val to: GameState) {
             if (blasts.isNotEmpty()) BLAST_MS else null,
             if (finish != null) ENTER_MS + CELEBRATE_MS else null,
         ).maxOrNull() ?: 0f
+        sounds = planSounds()
+    }
+
+    private fun planSounds(): List<Pair<Float, Sound>> {
+        val out = mutableListOf<Pair<Float, Sound>>()
+        fun play(at: Float, sound: Sound) {
+            if (out.none { it.second == sound && abs(it.first - at) < SOUND_GAP_MS }) out += at to sound
+        }
+        val walker = pushy
+        when {
+            finish != null -> play(ENTER_MS * 0.6f, Sound.WIN)
+            walker != null && walker.cells > 0 && terrainSlides.isEmpty() -> play(0f, Sound.STEP)
+            walker != null && bump != null -> {
+                // Walking against something: did it react (lever, chest, flower, …) or just block?
+                val b = bump!!
+                val front = Coordinate(walker.end.row + b.dRow, walker.end.col + b.dCol)
+                val reacted = front in changed || pops.any { !it.appearing && it.at == front } ||
+                    from.inventory != to.inventory || shot != null
+                if (!reacted) play(0f, Sound.BUMP) else if (shot == null) play(0f, Sound.CLICK)
+            }
+        }
+        if (terrainSlides.isNotEmpty()) play(0f, Sound.SAIL)
+        if (slides.isNotEmpty()) play(0f, Sound.PUSH)
+        for (sink in sinks) {
+            val wet = to.terrain[sink.end].any { it == Sprite.WATER || it == Sprite.BOX_WATER || it == Sprite.WATER_HOLE }
+            play(sink.endTime, if (wet) Sound.SPLASH else Sound.DROP)
+        }
+        if (blasts.isNotEmpty()) {
+            play(0f, Sound.EXPLOSION)
+        } else {
+            pops.filter { !it.appearing }.forEach { play(it.delay, Sound.PICKUP) }
+        }
+        for ((slide, _) in teleports) play(slide.endTime, Sound.TELEPORT)
+        for ((slide, _) in jumps) play(slide.endTime, Sound.JUMP)
+        shot?.let {
+            play(0f, Sound.SHOT)
+            if (it.hit) play(shotEnd, Sound.HIT)
+        }
+
+        // Terrain that changed (ice melting, spikes, doors, …) sounds when the change shows.
+        val settled = listOfNotNull(walker?.endTime, slides.maxOfOrNull { it.endTime }).maxOrNull() ?: 0f
+        for ((c, old) in crossfades) {
+            val sound = terrainSound(old, to.terrain[c]) ?: continue
+            if (sound == Sound.DROP && sinks.any { it.end == c }) continue // the coconut already plopped in
+            play(arrival[c] ?: settled, sound)
+        }
+        // Lamps lighting up (also when a timed signal arrives without a move).
+        for ((c, old) in changed) {
+            val now = to.entities[c]
+            val lit = Sprite.LAMP_ACTIVE in now && Sprite.LAMP_ACTIVE !in old
+            val counted = now.any { it in COUNT_DOWN } && now != old
+            if (lit || counted) play(arrival[c] ?: settled, Sound.LAMP_ON)
+        }
+        return out
+    }
+
+    private fun terrainSound(old: List<Sprite>, new: List<Sprite>): Sound? {
+        fun appeared(s: Sprite) = s in new && s !in old
+        fun vanished(s: Sprite) = s in old && s !in new
+        return when {
+            vanished(Sprite.ICE) -> Sound.ICE_MELT
+            appeared(Sprite.SPIKES_DEACTIVATED) -> Sound.SPIKES_DOWN
+            appeared(Sprite.SPIKES) -> Sound.SPIKES_UP
+            vanished(Sprite.DOOR) -> Sound.DOOR_OPEN
+            appeared(Sprite.DOOR) -> Sound.DOOR_CLOSE
+            appeared(Sprite.SPRING) -> Sound.GROW
+            appeared(Sprite.SEED) -> Sound.PLANT
+            appeared(Sprite.HOLE_FILLED) && vanished(Sprite.HOLE) -> Sound.DROP
+            appeared(Sprite.WATER_INVISIBLE) || vanished(Sprite.WATER_INVISIBLE) -> Sound.REVEAL
+            appeared(Sprite.CHANGEABLE_FLOWER_RED) || appeared(Sprite.CHANGEABLE_FLOWER_GREEN) -> Sound.REVEAL
+            else -> null
+        }
     }
 
     fun draw(

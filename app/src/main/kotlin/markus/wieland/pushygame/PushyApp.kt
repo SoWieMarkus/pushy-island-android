@@ -5,6 +5,7 @@ import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import markus.wieland.pushygame.audio.SoundEffects
 import markus.wieland.pushygame.data.LevelRepository
 import markus.wieland.pushygame.data.PushyDatabase
 import markus.wieland.pushygame.data.Settings
@@ -17,6 +18,7 @@ class AppContainer(context: Context) {
     val levels = LevelRepository(database.levels(), context.assets)
     val settings = Settings(context)
     val sprites by lazy { SpriteSheet.load(context.assets) }
+    val sounds by lazy { SoundEffects(context, settings.soundEnabled) }
 }
 
 class PushyApp : Application() {

@@ -32,6 +32,7 @@ import markus.wieland.pushygame.ui.pixelTextStyle
 fun SettingsScreen(onBack: () -> Unit) {
     val settings = LocalContext.current.appContainer.settings
     val panelSide by settings.panelSide.collectAsStateWithLifecycle()
+    val soundEnabled by settings.soundEnabled.collectAsStateWithLifecycle()
 
     IslandBackground {
         Column(Modifier.fillMaxSize()) {
@@ -59,6 +60,24 @@ fun SettingsScreen(onBack: () -> Unit) {
                         stringResource(R.string.settings_right),
                         selected = panelSide == PanelSide.RIGHT,
                         onClick = { settings.setPanelSide(PanelSide.RIGHT) },
+                    )
+                }
+                Spacer(Modifier.height(20.dp))
+                Text(
+                    stringResource(R.string.settings_sound),
+                    style = pixelTextStyle(11.sp, shadow = 4f),
+                )
+                Spacer(Modifier.height(14.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    SideOption(
+                        stringResource(R.string.settings_on),
+                        selected = soundEnabled,
+                        onClick = { settings.setSoundEnabled(true) },
+                    )
+                    SideOption(
+                        stringResource(R.string.settings_off),
+                        selected = !soundEnabled,
+                        onClick = { settings.setSoundEnabled(false) },
                     )
                 }
             }

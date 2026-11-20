@@ -25,7 +25,16 @@ class Settings(context: Context) {
         prefs.edit { putString(KEY_PANEL_SIDE, side.name) }
     }
 
+    private val _soundEnabled = MutableStateFlow(prefs.getBoolean(KEY_SOUND, true))
+    val soundEnabled: StateFlow<Boolean> = _soundEnabled.asStateFlow()
+
+    fun setSoundEnabled(enabled: Boolean) {
+        _soundEnabled.value = enabled
+        prefs.edit { putBoolean(KEY_SOUND, enabled) }
+    }
+
     private companion object {
         const val KEY_PANEL_SIDE = "panel_side"
+        const val KEY_SOUND = "sound"
     }
 }

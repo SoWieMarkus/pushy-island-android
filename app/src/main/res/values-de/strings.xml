@@ -8,6 +8,9 @@
     <string name="settings_panel_side">Steuerung und Inventar</string>
     <string name="settings_left">Links</string>
     <string name="settings_right">Rechts</string>
+    <string name="settings_sound">Ton</string>
+    <string name="settings_on">An</string>
+    <string name="settings_off">Aus</string>
 
     <string name="back">Zurück</string>
     <string name="cancel">Abbrechen</string>

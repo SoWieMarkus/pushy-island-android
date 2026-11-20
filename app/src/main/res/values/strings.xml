@@ -9,6 +9,9 @@
     <string name="settings_panel_side">Controls and inventory</string>
     <string name="settings_left">Left</string>
     <string name="settings_right">Right</string>
+    <string name="settings_sound">Sound</string>
+    <string name="settings_on">On</string>
+    <string name="settings_off">Off</string>
 
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
