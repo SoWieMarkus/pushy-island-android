@@ -3,8 +3,6 @@
 > [!NOTE]
 > Disclaimer: Based on the game _Pushy Island_ from <a href="http://www.lws9.de/">Lernwerkstatt</a>. No original code was used.
 
-A pixel-art puzzle game for Android: push boxes, sail boats, wire up logic gates and help Pushy find his way home.
-
 ![Main menu](./images/main.jpg)
 
 ## Screenshots
@@ -13,6 +11,8 @@ A pixel-art puzzle game for Android: push boxes, sail boats, wire up logic gates
 | ------------------------------------- | --------------------------------- |
 | ![Campaign](./images/campaign.jpg)    | ![Editor](./images/editor.jpg)    |
 | ![Level 10](./images/example_lvl_1.jpg) | ![Level 77](./images/example_lvl_2.jpg) |
+
+New logic levels: levers, gates and cables decide which lamps light up.
 
 ![Logic gates](./images/logic_gates.jpg)
 
