@@ -17,7 +17,7 @@ import kotlin.test.assertTrue
 
 class LevelFormatTest {
 
-    private val fixtures = File(repoRoot, "level-format/fixtures")
+    private val fixtures = File(repoRoot, "docs/level-format/fixtures")
     private val sampleJson get() = File(fixtures, "sample-level.json").readText()
 
     @Test

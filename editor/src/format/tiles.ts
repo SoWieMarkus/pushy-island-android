@@ -1,5 +1,5 @@
 // The tile table is generated from the Kotlin engine (see engine TileTableTest) so both sides agree.
-import table from '../../../level-format/tiles.json' with { type: 'json' }
+import table from '../../../docs/level-format/tiles.json' with { type: 'json' }
 
 export type Layer = 'terrain' | 'entity'
 export type Side = 'north' | 'south' | 'east' | 'west'

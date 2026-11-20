@@ -13,7 +13,7 @@ export interface LevelData {
   entities: (string | null)[][]
 }
 
-/** Level file format v2 (see level-format/README.md). Key order matches the Kotlin engine. */
+/** Level file format v2 (see docs/level-format/README.md). Key order matches the Kotlin engine. */
 export interface LevelFile {
   format: number
   name: string

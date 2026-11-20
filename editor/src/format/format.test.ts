@@ -14,7 +14,7 @@ import { ENTITY_TILES, TERRAIN_TILES, TILES } from './tiles.ts'
 import { decodeV1Code, looksLikeV1Code } from './v1.ts'
 
 const fixture = (name: string) =>
-  fileURLToPath(new URL(`../../../level-format/fixtures/${name}`, import.meta.url))
+  fileURLToPath(new URL(`../../../docs/level-format/fixtures/${name}`, import.meta.url))
 const sampleJson = readFileSync(fixture('sample-level.json'), 'utf8')
 
 describe('level format v2', () => {

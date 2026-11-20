@@ -1,5 +1,7 @@
 # Level format v2
 
+What each tile does is described in [Tiles](../tiles.md).
+
 A level is a JSON object. Both layers are written as one string per row with one character per cell; the
 `legend` maps characters to tile ids.
 
@@ -59,7 +61,7 @@ Whitespace inside a code is ignored, so codes survive line breaks in chat apps.
 
 ## Fixtures
 
-`fixtures/` holds one level plus share codes written by the Android side (`*.kotlin.code`), the web side
+[`fixtures/`](./fixtures) holds one level plus share codes written by the Android side (`*.kotlin.code`), the web side
 (`*.web.code`) and the old app (`*.v1.code`). Engine and web tests decode all of them, which keeps both
 implementations compatible.
 
@@ -67,4 +69,4 @@ implementations compatible.
 
 One version byte (`01`), then 12×20 terrain and 12×20 entity tiles with 6 bits each (row-major), followed by
 the level name with 8 bits per character – all written as a hex string. The 6-bit values are the `v1Code`s
-in `tiles.json` (`5` = no entity). `level-editor/src/format/v1.ts` decodes it.
+in `tiles.json` (`5` = no entity). The web editor ([`editor/src/format/v1.ts`](../../editor/src/format/v1.ts)) decodes it.

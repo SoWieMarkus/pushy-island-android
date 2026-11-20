@@ -23,12 +23,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * `level-format/tiles.json` is the tile table the web editor and the v1 converter use. It is generated
+ * `docs/level-format/tiles.json` is the tile table the web editor and the v1 converter use. It is generated
  * from the engine's enums; run the tests with `UPDATE_GENERATED=1` to regenerate it.
  */
 class TileTableTest {
 
-    private val file = File(repoRoot, "level-format/tiles.json")
+    private val file = File(repoRoot, "docs/level-format/tiles.json")
 
     /** Logic ports per side of the tile ("input"/"output"), used by the editor to draw cables. */
     private fun ports(tile: TileType) = buildJsonObject {

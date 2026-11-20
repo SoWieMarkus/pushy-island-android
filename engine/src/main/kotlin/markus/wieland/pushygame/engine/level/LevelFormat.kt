@@ -9,7 +9,7 @@ import markus.wieland.pushygame.engine.model.TerrainType
 import markus.wieland.pushygame.engine.model.TileType
 
 /**
- * Level file format v2 – see `level-format/README.md`.
+ * Level file format v2 – see `docs/level-format/README.md`.
  *
  * Each row of [terrain] / [entities] is a string with one character per cell; [legend] maps the
  * characters to tile ids. [EMPTY] in the entity layer means "no entity".
