@@ -76,7 +76,7 @@ class SpriteSheet(
         private const val EDGE_FRAME_MS = 420L
 
         private fun frameDurationMs(sprite: Sprite): Long = when (sprite) {
-            Sprite.WATER, Sprite.WATER_HOLE, Sprite.WATER_INVISIBLE, Sprite.BOX_WATER, Sprite.BUOY,
+            Sprite.WATER, Sprite.WATER_HOLE, Sprite.WATER_INVISIBLE, Sprite.BUOY,
             Sprite.BOAT, Sprite.BOAT_EAST, Sprite.BOAT_SOUTH, Sprite.BOAT_WEST -> 260
             Sprite.ENERGY, Sprite.LAMP_ACTIVE, Sprite.TELEPORTER, Sprite.ITEM_TELEPORTER -> 140
             Sprite.PUSHY, Sprite.PUSHY_EAST, Sprite.PUSHY_SOUTH, Sprite.PUSHY_WEST -> 260

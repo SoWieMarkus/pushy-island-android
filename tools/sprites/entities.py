@@ -79,18 +79,27 @@ def pushy_frames(facing):
 
 # --- simple blocks -------------------------------------------------------------------------
 
-def box():
+def crate(inset=0):
+    """The crate's face without outline or shadow – shared with the sunken box (terrain box_water).
+
+    [inset] shrinks it by that many pixels on every side, keeping the same planks, brace and nails.
+    """
     c = Canvas()
-    c.rect(2, 2, 13, 13, "wood")
-    c.rect(2, 2, 13, 3, "wood_light")
-    c.frame(2, 2, 13, 13, "wood_dark")
-    c.frame(3, 4, 12, 12, "wood_dark")
-    c.line(4, 5, 11, 11, "wood_light")
-    c.line(4, 4, 11, 10, "wood_dark")
-    c.rect(4, 12, 11, 12, "wood_dark")
-    for (x, y) in [(3, 3), (12, 3), (3, 12), (12, 12)]:
+    lo, hi = 2 + inset, 13 - inset
+    c.rect(lo, lo, hi, hi, "wood")
+    c.rect(lo, lo, hi, lo + 1, "wood_light")
+    c.frame(lo, lo, hi, hi, "wood_dark")
+    c.frame(lo + 1, lo + 2, hi - 1, hi - 1, "wood_dark")
+    c.line(lo + 2, lo + 3, hi - 2, hi - 2, "wood_light")
+    c.line(lo + 2, lo + 2, hi - 2, hi - 3, "wood_dark")
+    c.rect(lo + 2, hi - 1, hi - 2, hi - 1, "wood_dark")
+    for (x, y) in [(lo + 1, lo + 1), (hi - 1, lo + 1), (lo + 1, hi - 1), (hi - 1, hi - 1)]:
         c.px(x, y, "stone_light")
-    return finish(c, cy=14, rx=6.5)
+    return c
+
+
+def box():
+    return finish(crate(), cy=14, rx=6.5)
 
 
 def stone():

@@ -384,7 +384,8 @@ private class Transition(val from: GameState, val to: GameState) {
         for (c in to.terrainIds.coordinates) {
             val old = oldTerrain[to.terrainIds[c]]
             if (old != null && old != c && to.terrain[c].any { it in Boat.SPRITES }) {
-                terrainSlides += Slide(to.terrain[c], old, c)
+                // Only the hull sails; the water stays where it is.
+                terrainSlides += Slide(to.terrain[c].filter { it in Boat.SPRITES }, old, c)
                 terrainUnder[c] = from.terrain[c]
             }
         }

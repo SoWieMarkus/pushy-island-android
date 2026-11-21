@@ -80,12 +80,13 @@ class Water(type: TerrainType, c: Coordinate) : Terrain(type, c) {
 
 class BoxWater(type: TerrainType, c: Coordinate) : Terrain(type, c)
 
-/** Points its bow where it last sailed (north until then). */
+/** Points its bow where it last sailed (north until then). The hull sprite is drawn over water. */
 class Boat(type: TerrainType, c: Coordinate) : Terrain(type, c) {
     var heading = Direction.NORTH
 
     override val sprites
         get() = listOf(
+            Sprite.WATER,
             when (heading) {
                 Direction.NORTH -> Sprite.BOAT
                 Direction.EAST -> Sprite.BOAT_EAST

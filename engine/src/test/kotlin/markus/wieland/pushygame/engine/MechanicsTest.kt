@@ -50,14 +50,14 @@ class MechanicsTest {
     @Test
     fun boatSailsAndTurnsItsBow() {
         val game = Game(level("-b~~~-\n--~---", "P.....\n......", terrain = mapOf('b' to TerrainType.BOAT)))
-        assertEquals(Sprite.BOAT, game.state.value.terrain[Coordinate(0, 1)].single(), "points north before sailing")
+        assertEquals(Sprite.BOAT, game.state.value.terrain[Coordinate(0, 1)].last(), "points north before sailing")
         game.move(EAST) // onto the boat
         game.move(EAST) // sail east until the next field is no water
         assertEquals("....P.\n......", game.entityRows())
-        assertEquals(Sprite.BOAT_EAST, game.state.value.terrain[Coordinate(0, 4)].single())
+        assertEquals(Sprite.BOAT_EAST, game.state.value.terrain[Coordinate(0, 4)].last())
         game.move(WEST) // the boat left water behind at its old spot, so it sails all the way back
         assertEquals(".P....\n......", game.entityRows())
-        assertEquals(Sprite.BOAT_WEST, game.state.value.terrain[Coordinate(0, 1)].single())
+        assertEquals(Sprite.BOAT_WEST, game.state.value.terrain[Coordinate(0, 1)].last())
     }
 
     @Test

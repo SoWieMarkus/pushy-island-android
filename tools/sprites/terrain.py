@@ -117,7 +117,12 @@ def land_lip(high):
 # out from the actual outline of the grass, rounded corners included, so straight edges, curves
 # and inside corners all join up. Masks are functions (x, y) -> bool in the coordinates of the
 # cell being drawn; they may look into the neighbouring cells (negative or ≥ SIZE).
-SOFT_SHADOW = mix(P["sand"], P["sand_shadow"], 0.45)
+# The shadow is translucent so decorated ground below a hill (a teleporter, a hole, …) stays visible
+# under it instead of being cut off. Over plain sand it gives exactly sand_shadow (and a softer rim).
+SHADOW_ALPHA = 0.45
+SHADOW_INK = tuple(round(P["sand"][i] + (P["sand_shadow"][i] - P["sand"][i]) / SHADOW_ALPHA) for i in range(3))
+HARD_SHADOW = SHADOW_INK + (round(255 * SHADOW_ALPHA),)
+SOFT_SHADOW = SHADOW_INK + (round(255 * SHADOW_ALPHA * 0.45),)
 SIDE_OFFSET = {"n": (0, -SIZE), "e": (SIZE, 0), "s": (0, SIZE), "w": (-SIZE, 0)}
 
 
@@ -149,7 +154,7 @@ def drop_shadow(c, grass):
             if grass(x, y - 1):  # looking at the hill's face
                 c.px(x, y, "grass_edge")
             elif grass(x, y - 2) or grass(x - 1, y) or grass(x - 1, y - 1):
-                c.px(x, y, "sand_shadow")
+                c.px(x, y, HARD_SHADOW)
             elif grass(x, y - 3) or grass(x - 1, y - 2) or grass(x - 2, y) or grass(x - 2, y - 1):
                 c.px(x, y, SOFT_SHADOW)
     return c
@@ -327,44 +332,29 @@ def build():
         out[f"sand_{corner}"] = [s.copy().over(bite("water", "sand", where))]
         out[f"grass_{corner}"] = [g.copy().over(bite("sand", "grass", where))]
 
-    # Sunken box: a crate that sank until its lid is level with the surface – a little wooden raft
-    # Pushy can walk over. Water laps at its sides and a foam ring bobs around it.
-    def box_water(frame):
-        c = w[frame].copy()
-        t = 2 * math.pi * frame / WATER_FRAMES
-        bob = 1 if math.sin(t) > 0.5 else 0
-        # dark wet ring where the crate pushes the water down
-        c.rect(1, 2 + bob, 14, 14 + bob, "water_deep")
-        lid = Canvas()
-        lid.rect(2, 2, 13, 13, "wood")
-        # three planks with dark gaps, lighter top edges
-        for y0 in (2, 6, 10):
-            lid.rect(2, y0, 13, y0, "wood_light")
-            lid.rect(2, y0 + 3, 13, y0 + 3, "wood_dark")
-        lid.frame(2, 2, 13, 13, "wood_dark")
-        # nails in the corners
-        for (x, y) in [(3, 3), (12, 3), (3, 12), (12, 12)]:
-            lid.px(x, y, "stone_light")
-        # soaked: the lower part of the lid is darker and bluish
-        for y in range(9, 14):
-            for x in range(2, 14):
+    # Sunken box: the very crate Pushy pushed in, sunk until it lies just under the surface – a little
+    # raft Pushy can walk over. Same size as the pushable box, seen through a thin film of water.
+    # Deliberately still: no bobbing and no wavelets around it.
+    def box_water():
+        from entities import crate  # entities imports this module, so not at the top
+        c = Canvas("water")
+        lid = crate()
+        lid.outline()
+        # a thin layer of water over the whole crate, outline included
+        for y in range(SIZE):
+            for x in range(SIZE):
                 base = lid.get(x, y)
                 if base[3]:
-                    lid.px(x, y, mix(base, P["water_deep"], 0.18 + 0.06 * (y - 9)))
-        lid.outline()
-        c.over(lid, 0, bob)
-        # foam lapping at the sides, travelling around the crate
-        ring = [(x, 1) for x in range(2, 14)] + [(14, y) for y in range(2, 14)] +                [(x, 14) for x in range(13, 1, -1)] + [(1, y) for y in range(13, 1, -1)]
-        n = len(ring)
-        for k in range(3):
-            i = (frame * 4 + k * n // 3) % n
-            for j in range(3):
-                x, y = ring[(i + j) % n]
-                c.px(x, y + bob, "foam" if j == 1 else "water_light")
+                    lid.px(x, y, mix(base, P["water"], 0.25))
+        c.over(lid)
+        # a few faint glints on the film
+        for (x, y) in [(5, 4), (6, 4), (10, 8), (11, 8), (4, 11)]:
+            c.px(x, y, mix(c.get(x, y), P["water_light"], 0.5))
         return c
-    out["box_water"] = [box_water(f) for f in range(WATER_FRAMES)]
+    out["box_water"] = [box_water()]
 
-    # Boat (terrain on water) – top-down rowing boat, water moving underneath. One sprite per
+    # Boat (terrain on water) – top-down rowing boat on a transparent background; the renderer draws
+    # the water below it, so a sailing boat doesn't drag a square of water along. One sprite per
     # heading: the bow points where the boat last sailed (north is the default).
     hull = Canvas()
     hull.art([
@@ -390,8 +380,13 @@ def build():
     hulls["boat_west"] = hulls["boat_south"].rot90()
 
     def boat(frame, shape):
-        c = w[frame].copy()
+        c = Canvas()
         bob = 1 if frame in (2, 3, 4) else 0
+        # soft shadow in the water, down and to the right
+        for y in range(SIZE):
+            for x in range(SIZE):
+                if shape.get(x, y)[3]:
+                    c.px(x + 1, y + 1 + bob, P["water_deep"][:3] + (150,))
         c.over(shape, 0, bob)
         return c
     for name, shape in hulls.items():

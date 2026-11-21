@@ -44,6 +44,8 @@ export function terrainSprites(level: LevelData, row: number, col: number): stri
       return cableSprites(level, row, col)
     case 'ice':
       return ['water', 'ice']
+    case 'boat':
+      return ['water', 'boat']
     case 'spike_pressure_plate':
       return ['sand', 'spike_pressure_plate']
     default:
