@@ -14,7 +14,7 @@ class CampaignTest {
 
     @Test
     fun campaignIsComplete() {
-        assertEquals(186, files.size)
+        assertEquals(190, files.size)
         files.forEachIndexed { index, file ->
             assertTrue(file.name.startsWith("%03d-".format(index + 1)), "Unexpected file ${file.name}")
         }
