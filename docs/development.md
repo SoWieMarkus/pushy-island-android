@@ -24,6 +24,45 @@ Requirements: JDK 17+ (Android Studio's bundled JDK works) and the Android SDK w
 `engine/.../model/TileType.kt` regenerate it (and the share code fixture) with
 `UPDATE_GENERATED=1 ./gradlew :engine:test`.
 
+### Releases (downloadable APK)
+
+`.github/workflows/release.yml` builds the APK on GitHub Actions. Pushing a tag that starts with `v`
+publishes it as a GitHub Release with the APK attached; every run also keeps the APK as a workflow
+artifact. Tags with a `-` (e.g. `v2.1-beta`) become pre-releases.
+
+To cut a release:
+
+1. Raise `versionCode` and `versionName` in `app/build.gradle.kts` and merge that to `main`.
+2. Tag the commit and push the tag:
+
+   ```sh
+   git tag v2.1
+   git push origin v2.1
+   ```
+
+A manual run (*Actions → Release → Run workflow*) on a branch only builds the artifact; run it on a tag to
+re-publish that tag's release (the APK is replaced).
+
+**Signing.** A signed release APK needs these repository secrets (*Settings → Secrets and variables →
+Actions*):
+
+| Secret                      | Value                                               |
+| --------------------------- | --------------------------------------------------- |
+| `ANDROID_KEYSTORE_BASE64`   | The keystore file, base64 encoded (see below)       |
+| `ANDROID_KEYSTORE_PASSWORD` | Keystore password                                   |
+| `ANDROID_KEY_ALIAS`         | Alias of the signing key                            |
+| `ANDROID_KEY_PASSWORD`      | Password of the signing key                         |
+
+```sh
+keytool -genkeypair -v -keystore release.jks -alias pushy -keyalg RSA -keysize 4096 -validity 10000
+base64 -w0 release.jks            # Linux; PowerShell: [Convert]::ToBase64String([IO.File]::ReadAllBytes("release.jks"))
+```
+
+Keep the keystore safe and out of the repository: Android only installs updates signed with the same key.
+Without the secrets the workflow builds a debug APK instead (marked as a pre-release). Locally the same
+environment variables (`ANDROID_KEYSTORE_PATH` pointing at the file, plus the three passwords/alias) sign
+`./gradlew :app:assembleRelease`; without them the release build is unsigned.
+
 ## Web level editor
 
 Requirements: Node.js 24+.

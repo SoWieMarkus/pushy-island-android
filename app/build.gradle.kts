@@ -19,8 +19,21 @@ android {
         versionName = "2.0"
     }
 
+    // Release signing comes from environment variables (set by the release workflow from repository
+    // secrets). Without them the release build stays unsigned, so local builds work as before.
+    val releaseKeystore = providers.environmentVariable("ANDROID_KEYSTORE_PATH").orNull
+    val releaseSigning = releaseKeystore?.let {
+        signingConfigs.create("release") {
+            storeFile = file(it)
+            storePassword = providers.environmentVariable("ANDROID_KEYSTORE_PASSWORD").orNull
+            keyAlias = providers.environmentVariable("ANDROID_KEY_ALIAS").orNull
+            keyPassword = providers.environmentVariable("ANDROID_KEY_PASSWORD").orNull
+        }
+    }
+
     buildTypes {
         release {
+            if (releaseSigning != null) signingConfig = releaseSigning
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
