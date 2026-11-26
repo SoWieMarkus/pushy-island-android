@@ -1,26 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>SoWieMarkus/SoWieMarkus//renovate/default"],
-  "packageRules": [
-    {
-      "description": "Kotlin compiler, its Gradle plugins and KSP have to move together; always review",
-      "matchManagers": ["gradle"],
-      "matchPackageNames": ["org.jetbrains.kotlin{/,}**", "com.google.devtools.ksp{/,}**"],
-      "groupName": "kotlin",
-      "automerge": false
-    },
-    {
-      "description": "Android Gradle plugin updates often need build changes; always review",
-      "matchManagers": ["gradle"],
-      "matchPackageNames": ["com.android.application{/,}**", "com.android.tools.build:gradle"],
-      "groupName": "android gradle plugin",
-      "automerge": false
-    },
-    {
-      "description": "Never automerge the Gradle wrapper; it runs with full access at build time",
-      "matchManagers": ["gradle-wrapper"],
-      "groupName": "gradle wrapper",
-      "automerge": false
-    }
-  ]
+  "extends": ["github>SoWieMarkus/SoWieMarkus//renovate/default"]
 }
